@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
+import { useReferrals } from '@/context/ReferralContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, Eye, EyeOff, User, Mail, Phone, Lock } from 'lucide-react';
+import { ArrowLeft, Eye, EyeOff, User, Mail, Phone, Lock, Gift } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 const Auth = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { login, register, isLoading } = useAuth();
+  const { processReferral } = useReferrals();
   
   const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
@@ -21,11 +23,21 @@ const Auth = () => {
     email: '',
     phone: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    referralCode: ''
   });
   const [errors, setErrors] = useState<any>({});
 
   const from = location.state?.from?.pathname || '/';
+
+  // Check for referral code in URL parameters
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const refCode = urlParams.get('ref');
+    if (refCode) {
+      setRegisterData(prev => ({ ...prev, referralCode: refCode }));
+    }
+  }, [location.search]);
 
   const validateLogin = () => {
     const newErrors: any = {};
@@ -89,10 +101,36 @@ const Auth = () => {
     });
 
     if (success) {
-      toast({
-        title: "Account created!",
-        description: "Welcome to Prayan Masale! You are now logged in.",
-      });
+      // Process referral code if provided
+      if (registerData.referralCode.trim()) {
+        const users = JSON.parse(localStorage.getItem('prayan-users') || '[]');
+        const newUser = users[users.length - 1]; // Get the newly registered user
+        
+        const referralProcessed = processReferral(
+          registerData.referralCode.trim(),
+          newUser.id,
+          registerData.name,
+          registerData.email
+        );
+
+        if (referralProcessed) {
+          toast({
+            title: "Account created & Referral applied!",
+            description: "Welcome to Prayan Masale! You'll get 10% off on your first order.",
+          });
+        } else {
+          toast({
+            title: "Account created!",
+            description: "Welcome to Prayan Masale! Invalid referral code, but your account is ready.",
+          });
+        }
+      } else {
+        toast({
+          title: "Account created!",
+          description: "Welcome to Prayan Masale! You are now logged in.",
+        });
+      }
+      
       navigate(from, { replace: true });
     } else {
       toast({
@@ -273,6 +311,21 @@ const Auth = () => {
                       />
                     </div>
                     {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="register-referral-code">Referral Code (Optional)</Label>
+                    <div className="relative">
+                      <Gift className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                      <Input
+                        id="register-referral-code"
+                        placeholder="Enter referral code if you have one"
+                        value={registerData.referralCode}
+                        onChange={(e) => setRegisterData(prev => ({ ...prev, referralCode: e.target.value.toUpperCase() }))}
+                        className="pl-10"
+                      />
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">Get 10% off on your first order with a referral code!</p>
                   </div>
 
                   <Button 

@@ -3,15 +3,15 @@ export const BUSINESS_CONFIG = {
   // Contact Details
   phone: "+919876543210", // Replace with your actual number
   whatsapp: "+919876543210", // Replace with your actual WhatsApp number
-  email: "info@prayanmasale.com", // Replace with your business email
+  email: "contact@prayanmasale.com", // Replace with your business email
   
   // Business Address
   address: {
-    street: "123 Spice Market Street",
-    area: "Gandhi Nagar",
-    city: "Mumbai",
-    state: "Maharashtra",
-    pincode: "400001",
+    street: "Shop No. 15, Spice Market Complex",
+    area: "Khari Baoli",
+    city: "Delhi",
+    state: "Delhi",
+    pincode: "110006",
     country: "India"
   },
   
@@ -32,11 +32,16 @@ export const BUSINESS_CONFIG = {
     standardDeliveryCharge: 50,
     expressDeliveryCharge: 100,
     deliveryAreas: [
-      { pincode: "400001", area: "Mumbai Central", charge: 30 },
-      { pincode: "400002", area: "Mumbai Fort", charge: 30 },
-      { pincode: "400003", area: "Mumbai CST", charge: 40 },
-      { pincode: "400004", area: "Mumbai Girgaon", charge: 40 },
-      { pincode: "400005", area: "Mumbai Colaba", charge: 50 },
+      { pincode: "110001", area: "Delhi Cantt", charge: 30 },
+      { pincode: "110002", area: "Delhi GPO", charge: 30 },
+      { pincode: "110003", area: "New Delhi", charge: 40 },
+      { pincode: "110004", area: "Rashtrapati Bhawan", charge: 40 },
+      { pincode: "110005", area: "Karol Bagh", charge: 50 },
+      { pincode: "110006", area: "Khari Baoli", charge: 30 },
+      { pincode: "110007", area: "Daryaganj", charge: 40 },
+      { pincode: "110008", area: "New Delhi GPO", charge: 40 },
+      { pincode: "110009", area: "Connaught Place", charge: 50 },
+      { pincode: "110010", area: "Gole Market", charge: 50 },
       // Add more pincodes as needed
     ]
   },
@@ -53,8 +58,8 @@ export const BUSINESS_CONFIG = {
   info: {
     name: "Prayan Royal Spice Emporium",
     tagline: "Pure Taste, Pure Emotions",
-    description: "Premium quality Indian spices sourced directly from farmers",
-    gst: "27XXXXX1234X1ZX", // Replace with actual GST number
+    description: "Premium quality Indian spices sourced directly from farmers across India",
+    gst: "07XXXXX1234X1ZX", // Replace with actual GST number
     fssai: "12345678901234" // Replace with actual FSSAI number
   }
 };

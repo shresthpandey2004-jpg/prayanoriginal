@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Search, ShoppingBag, User, Heart, ChevronDown, LogOut } from 'lucide-react';
+import { Menu, X, Search, ShoppingBag, User, Heart, ChevronDown, LogOut, Gift } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
@@ -196,6 +196,14 @@ const Header: React.FC = () => {
                             <ShoppingBag className="w-4 h-4" />
                             My Orders
                           </Link>
+                          <Link
+                            to="/referrals"
+                            className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-secondary transition-colors"
+                            onClick={() => setShowUserMenu(false)}
+                          >
+                            <Gift className="w-4 h-4" />
+                            Refer & Earn
+                          </Link>
                           <button
                             onClick={() => {
                               logout();
@@ -295,6 +303,9 @@ const Header: React.FC = () => {
                     </Button>
                     <Button variant="outline" className="w-full" asChild>
                       <Link to="/my-orders">My Orders</Link>
+                    </Button>
+                    <Button variant="outline" className="w-full" asChild>
+                      <Link to="/referrals">Refer & Earn</Link>
                     </Button>
                     <Button variant="destructive" className="w-full" onClick={logout}>
                       Logout
