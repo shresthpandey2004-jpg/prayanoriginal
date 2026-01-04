@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useOrders } from '@/context/OrderContext';
+import { useOrders, Order } from '@/context/OrderContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, Phone, MessageCircle, Home, Copy } from 'lucide-react';
@@ -19,7 +19,7 @@ const OrderConfirmation = () => {
   const { orderId } = useParams();
   const navigate = useNavigate();
   const { getOrder } = useOrders();
-  const [order, setOrder] = useState<any>(null);
+  const [order, setOrder] = useState<Order | null>(null);
 
   useEffect(() => {
     if (orderId) {
