@@ -15,11 +15,11 @@ export interface Product {
   ingredients?: string[];
   benefits?: string[];
   usageIdeas?: string[];
-  // Inventory Management
-  stock: number;
-  lowStockThreshold: number;
-  isInStock: boolean;
-  sku: string;
+  // Inventory Management (optional for now)
+  stock?: number;
+  lowStockThreshold?: number;
+  isInStock?: boolean;
+  sku?: string;
 }
 
 export const products: Product[] = [
@@ -60,7 +60,7 @@ export const products: Product[] = [
     stock: 200,
     lowStockThreshold: 30,
     isInStock: true,
-    sku: 'PM-TP-200'
+    sku: 'PM-TP-200',
     ingredients: ['100% Pure Turmeric'],
     benefits: ['Anti-inflammatory', 'Immunity booster', 'Skin health'],
     usageIdeas: ['Golden milk', 'Curries', 'Rice dishes', 'Face masks']
@@ -80,7 +80,11 @@ export const products: Product[] = [
     isNew: true,
     ingredients: ['100% Kashmiri Red Chilli'],
     benefits: ['Rich in Vitamin C', 'Metabolism booster', 'Natural color'],
-    usageIdeas: ['Tandoori dishes', 'Gravies', 'Marinades']
+    usageIdeas: ['Tandoori dishes', 'Gravies', 'Marinades'],
+    stock: 120,
+    lowStockThreshold: 25,
+    isInStock: true,
+    sku: 'PM-RC-100'
   },
   {
     id: 'coriander-powder',
@@ -96,7 +100,11 @@ export const products: Product[] = [
     reviews: 2156,
     ingredients: ['100% Pure Coriander Seeds'],
     benefits: ['Aids digestion', 'Rich in fiber', 'Good for skin'],
-    usageIdeas: ['Curries', 'Chutneys', 'Marinades']
+    usageIdeas: ['Curries', 'Chutneys', 'Marinades'],
+    stock: 180,
+    lowStockThreshold: 30,
+    isInStock: true,
+    sku: 'PM-CP-200'
   },
   {
     id: 'cumin-powder',

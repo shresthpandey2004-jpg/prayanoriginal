@@ -126,7 +126,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
             OUT OF STOCK
           </span>
         )}
-        {product.isInStock && product.stock <= product.lowStockThreshold && (
+        {product.isInStock && product.stock && product.lowStockThreshold && product.stock <= product.lowStockThreshold && (
           <span className="bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">
             LOW STOCK
           </span>
@@ -219,10 +219,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
           variant="premium"
           className="w-full gap-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
           onClick={handleAddToCart}
-          disabled={!product.isInStock}
+          disabled={product.isInStock === false}
         >
           <ShoppingBag size={16} />
-          {product.isInStock ? 'Add to Cart' : 'Out of Stock'}
+          {product.isInStock === false ? 'Out of Stock' : 'Add to Cart'}
         </Button>
       </div>
     </Link>

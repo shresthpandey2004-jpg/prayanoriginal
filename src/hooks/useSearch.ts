@@ -50,7 +50,7 @@ export const useSearch = (products: Product[]) => {
 
     // Filter by stock availability
     if (filters.inStock) {
-      filtered = filtered.filter(product => product.isInStock);
+      filtered = filtered.filter(product => product.isInStock !== false);
     }
 
     // Filter by rating

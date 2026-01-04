@@ -15,7 +15,7 @@ import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import MyOrders from "./pages/MyOrders";
 import Auth from "./pages/Auth";
-import Account from "./pages/Account";
+import AccountSimple from "./pages/AccountSimple";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
@@ -40,7 +40,7 @@ const App = () => (
                     <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
                     <Route path="/my-orders" element={<MyOrders />} />
                     <Route path="/auth" element={<Auth />} />
-                    <Route path="/account" element={<Account />} />
+                    <Route path="/account" element={<AccountSimple />} />
                     <Route path="/admin" element={<AdminDashboard />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
