@@ -22,6 +22,7 @@ import AccountSimple from "./pages/AccountSimple";
 import AdminDashboard from "./pages/AdminDashboard";
 import Referrals from "./pages/Referrals";
 import Loyalty from "./pages/Loyalty";
+import ReturnPolicy from "./pages/ReturnPolicy";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -51,6 +52,7 @@ const App = () => (
                           <Route path="/account" element={<AccountSimple />} />
                           <Route path="/referrals" element={<Referrals />} />
                           <Route path="/loyalty" element={<Loyalty />} />
+                          <Route path="/return-policy" element={<ReturnPolicy />} />
                           <Route path="/admin" element={<AdminDashboard />} />
                           <Route path="*" element={<NotFound />} />
                         </Routes>
