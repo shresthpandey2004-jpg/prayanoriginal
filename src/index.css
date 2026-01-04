@@ -1,0 +1,347 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* PRAYAN - Premium Indian Spices Brand Design System */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* Core Brand Colors - Warm Indian Heritage Palette */
+    --background: 30 50% 98%;
+    --foreground: 25 30% 18%;
+
+    --card: 30 40% 97%;
+    --card-foreground: 25 30% 18%;
+
+    --popover: 30 50% 99%;
+    --popover-foreground: 25 30% 18%;
+
+    /* Saffron Gold - Primary Brand Color */
+    --primary: 32 52% 65%;
+    --primary-foreground: 30 50% 98%;
+
+    /* Warm Cream - Secondary */
+    --secondary: 35 40% 94%;
+    --secondary-foreground: 25 30% 25%;
+
+    /* Muted Tones */
+    --muted: 30 25% 92%;
+    --muted-foreground: 25 15% 45%;
+
+    /* Deep Burgundy - Accent */
+    --accent: 352 55% 35%;
+    --accent-foreground: 30 50% 98%;
+
+    /* Rich Brown */
+    --brown: 25 35% 25%;
+    --brown-foreground: 30 50% 98%;
+
+    /* Gold Highlight */
+    --gold: 38 70% 55%;
+    --gold-light: 40 75% 75%;
+    --gold-dark: 35 65% 40%;
+
+    /* Saffron Glow */
+    --saffron: 32 85% 58%;
+    --saffron-light: 35 90% 78%;
+    --saffron-dark: 28 80% 45%;
+
+    /* Spice Colors */
+    --turmeric: 45 90% 55%;
+    --chili: 5 85% 50%;
+    --cardamom: 145 35% 45%;
+    --cinnamon: 15 55% 35%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 30 50% 98%;
+
+    --border: 30 30% 88%;
+    --input: 30 30% 88%;
+    --ring: 32 52% 65%;
+
+    --radius: 0.75rem;
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(25 30% 18% / 0.08);
+    --shadow-medium: 0 8px 30px -6px hsl(25 30% 18% / 0.12);
+    --shadow-glow: 0 0 40px hsl(32 52% 65% / 0.3);
+    --shadow-gold: 0 0 30px hsl(38 70% 55% / 0.25);
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(30 50% 98%) 0%, hsl(35 45% 95%) 50%, hsl(32 40% 92%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(38 70% 55%) 0%, hsl(32 52% 65%) 100%);
+    --gradient-saffron: linear-gradient(135deg, hsl(35 90% 78%) 0%, hsl(32 85% 58%) 100%);
+    --gradient-warm: linear-gradient(180deg, hsl(30 50% 98%) 0%, hsl(35 40% 94%) 100%);
+    --gradient-overlay: linear-gradient(180deg, transparent 0%, hsl(25 30% 18% / 0.6) 100%);
+
+    /* Typography */
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Poppins', sans-serif;
+
+    /* Sidebar */
+    --sidebar-background: 30 40% 97%;
+    --sidebar-foreground: 25 30% 25%;
+    --sidebar-primary: 32 52% 65%;
+    --sidebar-primary-foreground: 30 50% 98%;
+    --sidebar-accent: 35 40% 94%;
+    --sidebar-accent-foreground: 25 30% 25%;
+    --sidebar-border: 30 30% 88%;
+    --sidebar-ring: 32 52% 65%;
+  }
+
+  .dark {
+    --background: 25 25% 8%;
+    --foreground: 30 30% 95%;
+
+    --card: 25 20% 12%;
+    --card-foreground: 30 30% 95%;
+
+    --popover: 25 20% 10%;
+    --popover-foreground: 30 30% 95%;
+
+    --primary: 32 55% 60%;
+    --primary-foreground: 25 25% 8%;
+
+    --secondary: 25 20% 18%;
+    --secondary-foreground: 30 30% 90%;
+
+    --muted: 25 15% 20%;
+    --muted-foreground: 30 20% 65%;
+
+    --accent: 352 50% 45%;
+    --accent-foreground: 30 30% 95%;
+
+    --brown: 25 25% 70%;
+    --brown-foreground: 25 25% 8%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 30 30% 95%;
+
+    --border: 25 15% 20%;
+    --input: 25 15% 20%;
+    --ring: 32 55% 60%;
+
+    --sidebar-background: 25 20% 10%;
+    --sidebar-foreground: 30 30% 90%;
+    --sidebar-primary: 32 55% 60%;
+    --sidebar-primary-foreground: 25 25% 8%;
+    --sidebar-accent: 25 15% 18%;
+    --sidebar-accent-foreground: 30 30% 90%;
+    --sidebar-border: 25 15% 20%;
+    --sidebar-ring: 32 55% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  /* Mandala Pattern Background */
+  .pattern-mandala {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a574' fill-opacity='0.06'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20v40c11.046 0 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20V10c-11.046 0-20 8.954-20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* Spice Texture Overlay */
+  .texture-spice {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+  }
+
+  /* Premium Glow Effect */
+  .glow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  .glow-saffron {
+    box-shadow: 0 0 40px hsl(var(--saffron) / 0.4);
+  }
+
+  /* Floating Animation */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 6s ease-in-out infinite 2s;
+  }
+
+  /* Shimmer Effect */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--gold) / 0.3) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  /* Reveal Animation */
+  .reveal-up {
+    animation: revealUp 0.8s ease-out forwards;
+  }
+
+  /* Premium Button Styles */
+  .btn-premium {
+    @apply relative overflow-hidden transition-all duration-300;
+    background: var(--gradient-gold);
+  }
+
+  .btn-premium::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, hsl(var(--gold-light)) 0%, hsl(var(--saffron)) 100%);
+  }
+
+  .btn-premium:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Glass Effect */
+  .glass {
+    @apply backdrop-blur-md;
+    background: hsl(var(--background) / 0.8);
+  }
+
+  /* Indian Border Pattern */
+  .border-indian {
+    border-image: linear-gradient(
+      90deg,
+      hsl(var(--gold)),
+      hsl(var(--saffron)),
+      hsl(var(--gold))
+    ) 1;
+  }
+
+  /* Particle Container */
+  .particles-container {
+    @apply pointer-events-none absolute inset-0 overflow-hidden;
+  }
+}
+
+@layer utilities {
+  /* Text Gradient */
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-gold);
+  }
+
+  .text-gradient-saffron {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-saffron);
+  }
+
+  /* Hover Scale */
+  .hover-lift {
+    @apply transition-transform duration-300 ease-out;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-2;
+  }
+
+  /* Smooth Entrance */
+  .entrance {
+    @apply opacity-0 translate-y-4;
+    animation: entrance 0.6s ease-out forwards;
+  }
+
+  .entrance-delay-1 { animation-delay: 0.1s; }
+  .entrance-delay-2 { animation-delay: 0.2s; }
+  .entrance-delay-3 { animation-delay: 0.3s; }
+  .entrance-delay-4 { animation-delay: 0.4s; }
+}
+
+/* Keyframes */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(3deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes entrance {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(var(--gold) / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(var(--gold) / 0.5);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.8);
+}
