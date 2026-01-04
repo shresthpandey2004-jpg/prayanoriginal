@@ -1,8 +1,8 @@
 // Business Configuration
 export const BUSINESS_CONFIG = {
   // Contact Details
-  phone: "+919876543210", // Replace with your actual number
-  whatsapp: "+919876543210", // Replace with your actual WhatsApp number
+  phone: "+918866658919", // Your actual number
+  whatsapp: "+918866658919", // Your actual WhatsApp number
   email: "contact@prayanmasale.com", // Replace with your business email
   
   // Business Address
