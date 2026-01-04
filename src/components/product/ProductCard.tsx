@@ -9,9 +9,10 @@ import { cn } from '@/lib/utils';
 interface ProductCardProps {
   product: Product;
   className?: string;
+  viewMode?: 'grid' | 'list';
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode = 'grid' }) => {
   const { addToCart } = useCart();
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -29,6 +30,71 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
+
+  // List view layout
+  if (viewMode === 'list') {
+    return (
+      <Link
+        to={`/product/${product.id}`}
+        className={cn(
+          'group flex bg-card rounded-xl overflow-hidden border border-border transition-all duration-300 hover:shadow-md',
+          className
+        )}
+      >
+        <div className="relative w-48 h-32 flex-shrink-0">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=300&fit=crop';
+            }}
+          />
+          {discount > 0 && (
+            <span className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+              -{discount}%
+            </span>
+          )}
+        </div>
+        
+        <div className="flex-1 p-4 flex flex-col justify-between">
+          <div>
+            <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
+            {product.nameHindi && (
+              <p className="text-sm text-muted-foreground mb-2">{product.nameHindi}</p>
+            )}
+            <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{product.description}</p>
+            
+            <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-1">
+                <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                <span className="text-sm font-medium">{product.rating}</span>
+              </div>
+              <span className="text-xs text-muted-foreground">({product.reviews} reviews)</span>
+              <span className="text-xs bg-secondary px-2 py-1 rounded">{product.weight}</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-xl font-bold text-primary">₹{product.price}</span>
+              {product.originalPrice && (
+                <span className="text-sm text-muted-foreground line-through">₹{product.originalPrice}</span>
+              )}
+            </div>
+            <Button
+              onClick={handleAddToCart}
+              size="sm"
+              className="flex items-center gap-2"
+            >
+              <ShoppingBag className="w-4 h-4" />
+              Add to Cart
+            </Button>
+          </div>
+        </div>
+      </Link>
+    );
+  }
 
   return (
     <Link
@@ -53,6 +119,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
         {discount > 0 && (
           <span className="bg-chili text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
             -{discount}%
+          </span>
+        )}
+        {!product.isInStock && (
+          <span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+            OUT OF STOCK
+          </span>
+        )}
+        {product.isInStock && product.stock <= product.lowStockThreshold && (
+          <span className="bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+            LOW STOCK
           </span>
         )}
       </div>
@@ -143,9 +219,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
           variant="premium"
           className="w-full gap-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
           onClick={handleAddToCart}
+          disabled={!product.isInStock}
         >
           <ShoppingBag size={16} />
-          Add to Cart
+          {product.isInStock ? 'Add to Cart' : 'Out of Stock'}
         </Button>
       </div>
     </Link>

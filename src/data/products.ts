@@ -15,6 +15,11 @@ export interface Product {
   ingredients?: string[];
   benefits?: string[];
   usageIdeas?: string[];
+  // Inventory Management
+  stock: number;
+  lowStockThreshold: number;
+  isInStock: boolean;
+  sku: string;
 }
 
 export const products: Product[] = [
@@ -33,7 +38,11 @@ export const products: Product[] = [
     isBestSeller: true,
     ingredients: ['Cinnamon', 'Cardamom', 'Cloves', 'Cumin', 'Coriander', 'Black Pepper', 'Bay Leaves'],
     benefits: ['Improves digestion', 'Boosts metabolism', 'Rich in antioxidants'],
-    usageIdeas: ['Add to curries', 'Sprinkle on rice dishes', 'Perfect for biryanis']
+    usageIdeas: ['Add to curries', 'Sprinkle on rice dishes', 'Perfect for biryanis'],
+    stock: 150,
+    lowStockThreshold: 20,
+    isInStock: true,
+    sku: 'PM-GM-100'
   },
   {
     id: 'turmeric-powder',
@@ -48,6 +57,10 @@ export const products: Product[] = [
     rating: 4.8,
     reviews: 3214,
     isBestSeller: true,
+    stock: 200,
+    lowStockThreshold: 30,
+    isInStock: true,
+    sku: 'PM-TP-200'
     ingredients: ['100% Pure Turmeric'],
     benefits: ['Anti-inflammatory', 'Immunity booster', 'Skin health'],
     usageIdeas: ['Golden milk', 'Curries', 'Rice dishes', 'Face masks']

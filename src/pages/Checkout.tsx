@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useOrders } from '@/context/OrderContext';
+import { BUSINESS_CONFIG } from '@/config/business';
+import { calculateDeliveryCharge, getEstimatedDeliveryDate } from '@/utils/delivery';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -28,6 +30,7 @@ const Checkout = () => {
   const { addOrder } = useOrders();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [deliveryInfo, setDeliveryInfo] = useState({ charge: 0, isFree: false, area: '', estimatedDays: '' });
   
   const [customerDetails, setCustomerDetails] = useState<CustomerDetails>({
     name: '',
@@ -41,6 +44,16 @@ const Checkout = () => {
   });
 
   const [errors, setErrors] = useState<Partial<CustomerDetails>>({});
+
+  // Calculate delivery charges when pincode changes
+  useEffect(() => {
+    if (customerDetails.pincode && /^\d{6}$/.test(customerDetails.pincode)) {
+      const delivery = calculateDeliveryCharge(customerDetails.pincode, totalPrice);
+      setDeliveryInfo(delivery);
+    } else {
+      setDeliveryInfo({ charge: 0, isFree: false, area: '', estimatedDays: '' });
+    }
+  }, [customerDetails.pincode, totalPrice]);
 
   const validateForm = () => {
     const newErrors: Partial<CustomerDetails> = {};
@@ -139,7 +152,7 @@ ${itemsList}
       clearCart();
 
       // Open WhatsApp with pre-filled message
-      const whatsappUrl = `https://wa.me/+919876543210?text=${encodeURIComponent(whatsappMessage)}`;
+      const whatsappUrl = `https://wa.me/${BUSINESS_CONFIG.whatsapp.replace('+', '')}?text=${encodeURIComponent(whatsappMessage)}`;
       window.open(whatsappUrl, '_blank');
 
       toast({
@@ -351,12 +364,28 @@ ${itemsList}
                   </div>
                   <div className="flex justify-between">
                     <span>Delivery Charges</span>
-                    <span className="text-green-600">FREE</span>
+                    {deliveryInfo.isFree ? (
+                      <span className="text-green-600">FREE</span>
+                    ) : (
+                      <span>₹{deliveryInfo.charge}</span>
+                    )}
                   </div>
+                  {deliveryInfo.area && (
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Delivery Area</span>
+                      <span>{deliveryInfo.area}</span>
+                    </div>
+                  )}
+                  {customerDetails.pincode && deliveryInfo.estimatedDays && (
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Estimated Delivery</span>
+                      <span>{getEstimatedDeliveryDate(customerDetails.pincode)}</span>
+                    </div>
+                  )}
                   <Separator />
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total</span>
-                    <span>₹{totalPrice}</span>
+                    <span>₹{totalPrice + deliveryInfo.charge}</span>
                   </div>
                 </div>
 
@@ -366,7 +395,7 @@ ${itemsList}
                   className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600"
                   size="lg"
                 >
-                  {isLoading ? 'Placing Order...' : `Place Order - ₹${totalPrice}`}
+                  {isLoading ? 'Placing Order...' : `Place Order - ₹${totalPrice + deliveryInfo.charge}`}
                 </Button>
 
                 <p className="text-xs text-gray-500 text-center">
