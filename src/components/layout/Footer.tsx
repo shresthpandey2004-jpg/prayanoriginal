@@ -85,16 +85,54 @@ const Footer: React.FC = () => {
           <div>
             <h5 className="font-display text-lg font-semibold mb-6">Customer Care</h5>
             <ul className="space-y-3">
-              {['Track Order', 'Shipping Policy', 'Returns & Refunds', 'FAQs', 'Privacy Policy', 'Terms & Conditions'].map((item) => (
-                <li key={item}>
-                  <Link
-                    to={`/${item.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
-                    className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link
+                  to="/my-orders"
+                  className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
+                >
+                  Track Order
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/shipping-policy"
+                  className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
+                >
+                  Shipping Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/return-policy"
+                  className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
+                >
+                  Returns & Refunds
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/faqs"
+                  className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
+                >
+                  FAQs
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/privacy-policy"
+                  className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/terms-conditions"
+                  className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
+                >
+                  Terms & Conditions
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -112,14 +150,14 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-3 text-sm">
                 <Phone size={18} className="text-gold shrink-0" />
-                <a href="tel:+919876543210" className="text-brown-foreground/80 hover:text-gold transition-colors">
-                  +91 98765 43210
+                <a href="tel:+918866658919" className="text-brown-foreground/80 hover:text-gold transition-colors">
+                  +91 88666 58919
                 </a>
               </li>
               <li className="flex items-center gap-3 text-sm">
                 <Mail size={18} className="text-gold shrink-0" />
-                <a href="mailto:hello@prayan.in" className="text-brown-foreground/80 hover:text-gold transition-colors">
-                  hello@prayan.in
+                <a href="mailto:contact@prayanmasale.com" className="text-brown-foreground/80 hover:text-gold transition-colors">
+                  contact@prayanmasale.com
                 </a>
               </li>
             </ul>
