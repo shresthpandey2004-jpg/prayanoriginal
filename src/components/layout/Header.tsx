@@ -147,9 +147,9 @@ const Header: React.FC = () => {
               </Link>
 
               <Link
-                to="/account"
+                to="/my-orders"
                 className="hidden sm:flex p-2.5 rounded-full hover:bg-secondary transition-colors"
-                aria-label="Account"
+                aria-label="My Orders"
               >
                 <User size={20} />
               </Link>
@@ -220,7 +220,10 @@ const Header: React.FC = () => {
                 ))}
               </nav>
 
-              <div className="mt-8 pt-8 border-t border-border">
+              <div className="mt-8 pt-8 border-t border-border space-y-3">
+                <Button variant="outline" className="w-full" asChild>
+                  <Link to="/my-orders">My Orders</Link>
+                </Button>
                 <Button variant="premium" className="w-full" asChild>
                   <Link to="/account">Login / Sign Up</Link>
                 </Button>
