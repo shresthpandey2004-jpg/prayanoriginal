@@ -4,9 +4,73 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prayan Royal Spice Emporium</title>
+    <meta name="description" content="Premium Indian spices and masalas - Fresh, authentic, and delivered to your doorstep" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#ea580c" />
+    <style>
+      /* Fallback styles in case CSS doesn't load */
+      body { 
+        margin: 0; 
+        font-family: system-ui, -apple-system, sans-serif; 
+        background: #fef7ed;
+      }
+      #root { 
+        min-height: 100vh; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+      }
+      .loading {
+        text-align: center;
+        padding: 2rem;
+      }
+      .loading h1 {
+        color: #ea580c;
+        margin-bottom: 1rem;
+      }
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #ea580c;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="loading">
+        <div class="spinner"></div>
+        <h1>🌶️ Prayan Royal Spice Emporium</h1>
+        <p>Loading premium spices...</p>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Fallback error handling
+      window.addEventListener('error', function(e) {
+        console.error('App loading error:', e);
+        document.getElementById('root').innerHTML = `
+          <div style="text-align: center; padding: 2rem; font-family: system-ui;">
+            <h1 style="color: #ea580c;">🌶️ Prayan Royal Spice Emporium</h1>
+            <p>Premium Indian Spices & Masalas</p>
+            <p>📱 WhatsApp: <a href="https://wa.me/918866658919" style="color: #ea580c;">+91 8866658919</a></p>
+            <p>🛒 Order fresh spices directly via WhatsApp</p>
+            <div style="margin-top: 2rem;">
+              <button onclick="location.reload()" style="background: #ea580c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                Reload Page
+              </button>
+            </div>
+          </div>
+        `;
+      });
+    </script>
   </body>
 </html>
