@@ -1,23 +1,23 @@
 # 🚀 PRAYAN MASALE - DEPLOYMENT INFO
 
 ## 📊 **Current Status:**
-- **Git Repository:** `https://github.com/shresthpandey2004-jpg/prayanmasale.git`
-- **Latest Commit:** `c96eab3 - STATIC FILE ROUTING FIX`
+- **Git Repository:** `https://github.com/shresthpandey2004-jpg/prayanoriginal.git`
+- **Latest Commit:** `b6f32a4 - DEPLOYMENT INFO: Complete Guide`
 - **Branch:** `main`
-- **Status:** ✅ All changes pushed successfully
+- **Status:** ✅ All changes pushed successfully to NEW REPOSITORY
 
 ## 🌐 **Vercel Deployment URLs:**
 
 ### **Primary Deployment:**
-Based on your GitHub repository, your Vercel URL should be:
-- **Main URL:** `https://prayanmasale.vercel.app`
-- **Alternative:** `https://prayanmasale-git-main-shresthpandey2004-jpg.vercel.app`
+Based on your NEW GitHub repository, your Vercel URL should be:
+- **Main URL:** `https://prayanoriginal.vercel.app`
+- **Alternative:** `https://prayanoriginal-git-main-shresthpandey2004-jpg.vercel.app`
 
 ### **Test URLs to Try:**
-1. **Homepage:** `https://prayanmasale.vercel.app/`
-2. **Static Test:** `https://prayanmasale.vercel.app/test-static.html`
-3. **Recipe Test:** `https://prayanmasale.vercel.app/recipe-test.html`
-4. **Butter Chicken:** `https://prayanmasale.vercel.app/recipe/butter-chicken.html`
+1. **Homepage:** `https://prayanoriginal.vercel.app/`
+2. **Static Test:** `https://prayanoriginal.vercel.app/test-static.html`
+3. **Recipe Test:** `https://prayanoriginal.vercel.app/recipe-test.html`
+4. **Butter Chicken:** `https://prayanoriginal.vercel.app/recipe/butter-chicken.html`
 
 ## 📁 **Files Deployed:**
 
@@ -104,3 +104,18 @@ Your project might be deployed on:
 4. **If needed** - create fresh deployment
 
 **Bhai ab Vercel dashboard me ja kar apna exact URL dhund kar test kar!** 🔍
+
+## 🚀 **NEW VERCEL DEPLOYMENT STEPS:**
+
+1. **Go to Vercel Dashboard:** `https://vercel.com/dashboard`
+2. **Click "New Project"**
+3. **Import from GitHub:** `prayanoriginal`
+4. **Use these settings:**
+   - Framework: **Vite**
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+   - Node.js Version: **18.x**
+5. **Deploy!**
+
+**New Repository:** `https://github.com/shresthpandey2004-jpg/prayanoriginal.git`
+**Expected URL:** `https://prayanoriginal.vercel.app`
