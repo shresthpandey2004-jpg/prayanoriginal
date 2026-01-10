@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static Test - Prayan Masale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fef7ed, #fed7aa);
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #ea580c;
+            margin-bottom: 20px;
+        }
+        .test-btn {
+            background: #ea580c;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .test-btn:hover {
+            background: #dc2626;
+        }
+        .success {
+            background: #dcfce7;
+            border: 2px solid #16a34a;
+            color: #15803d;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Static File Test</h1>
+        
+        <div class="success">
+            ✅ SUCCESS! Static HTML files are working on Vercel!
+        </div>
+        
+        <p><strong>Current URL:</strong> <span id="current-url"></span></p>
+        <p><strong>Timestamp:</strong> <span id="timestamp"></span></p>
+        
+        <h2>Test Links:</h2>
+        
+        <div style="margin: 20px 0;">
+            <a href="/recipe/butter-chicken.html" class="test-btn">Test Butter Chicken Recipe</a>
+        </div>
+        
+        <div style="margin: 20px 0;">
+            <a href="/recipe-test.html" class="test-btn">Test Recipe Data</a>
+        </div>
+        
+        <div style="margin: 20px 0;">
+            <a href="/" class="test-btn">Back to Homepage</a>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 20px; background: #fef3c7; border-radius: 8px;">
+            <h3>🔧 Instructions:</h3>
+            <p>1. Click "Test Butter Chicken Recipe" - should show full recipe page</p>
+            <p>2. If it shows blank, the static files aren't being served properly</p>
+            <p>3. Try accessing directly: your-domain.com/recipe/butter-chicken.html</p>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <button class="test-btn" onclick="testWhatsApp()">Test WhatsApp</button>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('current-url').textContent = window.location.href;
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        
+        function testWhatsApp() {
+            const message = "Hi! Testing WhatsApp integration from Prayan Masale website.";
+            const whatsappUrl = `https://wa.me/918866658919?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        console.log('Static test page loaded successfully');
+        console.log('Testing static file serving on Vercel');
+    </script>
+</body>
+</html>

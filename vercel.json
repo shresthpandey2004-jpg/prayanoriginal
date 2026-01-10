@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/recipe/butter-chicken.html",
+      "destination": "/recipe/butter-chicken.html"
+    },
+    {
+      "source": "/recipe-test.html",
+      "destination": "/recipe-test.html"
+    },
+    {
       "source": "/",
       "destination": "/index.html"
     },
