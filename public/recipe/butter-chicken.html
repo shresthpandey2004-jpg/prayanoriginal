@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Butter Chicken Recipe - Prayan Royal Spice Emporium</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fef7ed, #fed7aa);
+            min-height: 100vh;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .back-btn {
+            background: #6b7280;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .back-btn:hover {
+            background: #4b5563;
+        }
+        
+        .recipe-title {
+            color: #ea580c;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .recipe-hindi {
+            color: #ea580c;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .recipe-info {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .recipe-details {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .recipe-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            color: #ea580c;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #fed7aa;
+            padding-bottom: 10px;
+        }
+        
+        .instructions {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+        
+        .instructions li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .instructions li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #ea580c;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .tips {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .tips ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .tips li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .tips li::before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+        }
+        
+        .spice-cart {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .cart-title {
+            color: #ea580c;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .spice-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .spice-item:hover {
+            border-color: #ea580c;
+            background: #fef7ed;
+        }
+        
+        .spice-item.selected {
+            border-color: #ea580c;
+            background: #fef7ed;
+        }
+        
+        .spice-name {
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+        
+        .spice-quantity {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .spice-price {
+            color: #ea580c;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .qty-btn {
+            background: #ea580c;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .qty-btn:hover {
+            background: #dc2626;
+        }
+        
+        .qty-btn:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+        }
+        
+        .cart-summary {
+            border-top: 2px solid #e5e7eb;
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .total-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ea580c;
+        }
+        
+        .order-btn {
+            background: #ea580c;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .order-btn:hover {
+            background: #dc2626;
+        }
+        
+        .order-btn:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+        }
+        
+        .nutrition {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .nutrition-item {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .nutrition-value {
+            font-weight: bold;
+            color: #1f2937;
+            font-size: 1.1rem;
+        }
+        
+        .nutrition-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .recipe-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .recipe-title {
+                font-size: 2rem;
+            }
+            
+            .nutrition {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="/" class="back-btn">← Back to Home</a>
+            <h1 class="recipe-title">🍛 Butter Chicken</h1>
+            <p class="recipe-hindi">बटर चिकन</p>
+            <p>Creamy, rich and delicious butter chicken made with tender chicken pieces in a tomato-based curry</p>
+            
+            <div class="recipe-info">
+                <div class="info-item">
+                    <span>⏱️</span>
+                    <span>45 mins</span>
+                </div>
+                <div class="info-item">
+                    <span>👥</span>
+                    <span>4 people</span>
+                </div>
+                <div class="info-item">
+                    <span>👨‍🍳</span>
+                    <span>Medium</span>
+                </div>
+                <div class="info-item">
+                    <span>🥘</span>
+                    <span>Non-Vegetarian</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="recipe-details">
+                <img src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500" alt="Butter Chicken" class="recipe-image">
+                
+                <h2 class="section-title">Instructions</h2>
+                <ol class="instructions">
+                    <li>Marinate chicken with yogurt, ginger-garlic paste, and spices for 30 minutes</li>
+                    <li>Cook marinated chicken in a pan until 80% done</li>
+                    <li>In another pan, make tomato puree with onions and spices</li>
+                    <li>Add cooked chicken to the tomato gravy</li>
+                    <li>Add cream and butter, simmer for 10 minutes</li>
+                    <li>Garnish with fresh coriander and serve hot</li>
+                </ol>
+                
+                <div class="tips">
+                    <h3 style="color: #f59e0b; margin-bottom: 15px;">👨‍🍳 Chef's Tips</h3>
+                    <ul>
+                        <li>Use fresh cream for best taste</li>
+                        <li>Don't overcook the chicken</li>
+                        <li>Adjust spice levels according to preference</li>
+                    </ul>
+                </div>
+                
+                <h2 class="section-title">Nutrition Information</h2>
+                <div class="nutrition">
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">420 kcal</div>
+                        <div class="nutrition-label">Calories</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">35g</div>
+                        <div class="nutrition-label">Protein</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">12g</div>
+                        <div class="nutrition-label">Carbs</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">28g</div>
+                        <div class="nutrition-label">Fat</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="spice-cart">
+                <h3 class="cart-title">🛒 Required Spices</h3>
+                <p style="color: #6b7280; margin-bottom: 20px; font-size: 0.9rem;">Click to add/remove spices for this recipe</p>
+                
+                <div class="spice-item selected" data-spice="garam-masala" data-price="120">
+                    <div class="spice-name">Garam Masala</div>
+                    <div class="spice-quantity">Recipe needs: 2 tsp</div>
+                    <div class="spice-price">₹120 per pack</div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="updateQuantity('garam-masala', -1)">-</button>
+                        <span id="qty-garam-masala">1</span>
+                        <button class="qty-btn" onclick="updateQuantity('garam-masala', 1)">+</button>
+                    </div>
+                </div>
+                
+                <div class="spice-item selected" data-spice="red-chili-powder" data-price="80">
+                    <div class="spice-name">Red Chili Powder</div>
+                    <div class="spice-quantity">Recipe needs: 1 tsp</div>
+                    <div class="spice-price">₹80 per pack</div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="updateQuantity('red-chili-powder', -1)">-</button>
+                        <span id="qty-red-chili-powder">1</span>
+                        <button class="qty-btn" onclick="updateQuantity('red-chili-powder', 1)">+</button>
+                    </div>
+                </div>
+                
+                <div class="spice-item selected" data-spice="turmeric-powder" data-price="60">
+                    <div class="spice-name">Turmeric Powder</div>
+                    <div class="spice-quantity">Recipe needs: 1/2 tsp</div>
+                    <div class="spice-price">₹60 per pack</div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="updateQuantity('turmeric-powder', -1)">-</button>
+                        <span id="qty-turmeric-powder">1</span>
+                        <button class="qty-btn" onclick="updateQuantity('turmeric-powder', 1)">+</button>
+                    </div>
+                </div>
+                
+                <div class="spice-item selected" data-spice="coriander-powder" data-price="70">
+                    <div class="spice-name">Coriander Powder</div>
+                    <div class="spice-quantity">Recipe needs: 1 tsp</div>
+                    <div class="spice-price">₹70 per pack</div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="updateQuantity('coriander-powder', -1)">-</button>
+                        <span id="qty-coriander-powder">1</span>
+                        <button class="qty-btn" onclick="updateQuantity('coriander-powder', 1)">+</button>
+                    </div>
+                </div>
+                
+                <div class="spice-item selected" data-spice="cumin-powder" data-price="90">
+                    <div class="spice-name">Cumin Powder</div>
+                    <div class="spice-quantity">Recipe needs: 1/2 tsp</div>
+                    <div class="spice-price">₹90 per pack</div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="updateQuantity('cumin-powder', -1)">-</button>
+                        <span id="qty-cumin-powder">1</span>
+                        <button class="qty-btn" onclick="updateQuantity('cumin-powder', 1)">+</button>
+                    </div>
+                </div>
+                
+                <div class="spice-item selected" data-spice="kashmiri-red-chili" data-price="100">
+                    <div class="spice-name">Kashmiri Red Chili Powder</div>
+                    <div class="spice-quantity">Recipe needs: 1 tsp</div>
+                    <div class="spice-price">₹100 per pack</div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="updateQuantity('kashmiri-red-chili', -1)">-</button>
+                        <span id="qty-kashmiri-red-chili">1</span>
+                        <button class="qty-btn" onclick="updateQuantity('kashmiri-red-chili', 1)">+</button>
+                    </div>
+                </div>
+                
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Selected Spices:</span>
+                        <span id="selected-count">6</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Total Price:</span>
+                        <span class="total-price" id="total-price">₹520</span>
+                    </div>
+                    
+                    <button class="order-btn" onclick="orderAllSpices()">
+                        Order All Spices via WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let quantities = {
+            'garam-masala': 1,
+            'red-chili-powder': 1,
+            'turmeric-powder': 1,
+            'coriander-powder': 1,
+            'cumin-powder': 1,
+            'kashmiri-red-chili': 1
+        };
+        
+        let prices = {
+            'garam-masala': 120,
+            'red-chili-powder': 80,
+            'turmeric-powder': 60,
+            'coriander-powder': 70,
+            'cumin-powder': 90,
+            'kashmiri-red-chili': 100
+        };
+        
+        function updateQuantity(spice, change) {
+            quantities[spice] = Math.max(1, quantities[spice] + change);
+            document.getElementById(`qty-${spice}`).textContent = quantities[spice];
+            updateTotal();
+        }
+        
+        function updateTotal() {
+            let total = 0;
+            let count = 0;
+            
+            for (let spice in quantities) {
+                if (quantities[spice] > 0) {
+                    total += prices[spice] * quantities[spice];
+                    count++;
+                }
+            }
+            
+            document.getElementById('total-price').textContent = `₹${total}`;
+            document.getElementById('selected-count').textContent = count;
+        }
+        
+        function orderAllSpices() {
+            let orderList = [];
+            
+            for (let spice in quantities) {
+                if (quantities[spice] > 0) {
+                    const spiceName = document.querySelector(`[data-spice="${spice}"] .spice-name`).textContent;
+                    orderList.push(`${spiceName} (${quantities[spice]} pack${quantities[spice] > 1 ? 's' : ''})`);
+                }
+            }
+            
+            const total = document.getElementById('total-price').textContent;
+            const message = `Hi! I want to order these spices for Butter Chicken recipe:
+
+${orderList.join('\n')}
+
+Total: ${total}
+
+Please confirm availability and delivery details.`;
+            
+            const whatsappUrl = `https://wa.me/918866658919?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // Toggle spice selection
+        document.querySelectorAll('.spice-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (e.target.classList.contains('qty-btn')) return;
+                
+                this.classList.toggle('selected');
+                const spice = this.dataset.spice;
+                
+                if (this.classList.contains('selected')) {
+                    quantities[spice] = Math.max(1, quantities[spice]);
+                } else {
+                    quantities[spice] = 0;
+                }
+                
+                updateTotal();
+            });
+        });
+        
+        console.log('Butter Chicken recipe page loaded');
+        console.log('WhatsApp: +91 8866658919');
+    </script>
+</body>
+</html>
