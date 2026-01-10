@@ -92,7 +92,7 @@ const Recipes = () => {
             <Card 
               key={recipe.id} 
               className="hover:shadow-lg transition-shadow cursor-pointer group"
-              onClick={() => window.location.href = `/recipe/${recipe.id}.html`}
+              onClick={() => navigate(`/recipe/${recipe.id}`)}
             >
               <div className="relative overflow-hidden rounded-t-lg">
                 <img 
@@ -145,8 +145,7 @@ const Recipes = () => {
                   className="w-full mt-4 bg-orange-600 hover:bg-orange-700"
                   onClick={(e) => {
                     e.stopPropagation();
-                    // Navigate to static HTML pages instead of React routes
-                    window.location.href = `/recipe/${recipe.id}.html`;
+                    navigate(`/recipe/${recipe.id}`);
                   }}
                 >
                   View Recipe & Buy Spices

@@ -74,14 +74,16 @@ const RecipesSection: React.FC = () => {
               Traditional <span className="text-orange-600">Recipes</span>
             </h2>
             <p className="text-gray-600 mt-3 max-w-lg">
-              Discover authentic Indian recipes with all the spices you need. Coming soon - recipe-to-cart feature!
+              Discover authentic Indian recipes with all the spices you need. Click any recipe to view ingredients and add spices to cart!
             </p>
           </div>
-          <Button variant="outline" size="lg" className="border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white">
-            <span className="gap-2 flex items-center">
-              Coming Soon <ArrowRight size={18} />
-            </span>
-          </Button>
+          <Link to="/recipes">
+            <Button variant="outline" size="lg" className="border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white">
+              <span className="gap-2 flex items-center">
+                View All Recipes <ArrowRight size={18} />
+              </span>
+            </Button>
+          </Link>
         </div>
 
         {/* Recipes Grid */}
@@ -138,9 +140,11 @@ const RecipesSection: React.FC = () => {
 
                 {/* Call to Action */}
                 <div className="mt-4 pt-3 border-t border-gray-100">
-                  <p className="text-xs text-center text-gray-500">
-                    Recipe feature coming soon! 🍛
-                  </p>
+                  <Link to={`/recipe/${recipe.id}`}>
+                    <Button size="sm" className="w-full bg-orange-600 hover:bg-orange-700 text-xs">
+                      View Recipe & Buy Spices
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -151,15 +155,17 @@ const RecipesSection: React.FC = () => {
         <div className="text-center mt-12">
           <div className="bg-white rounded-2xl p-8 shadow-lg border border-orange-200">
             <h3 className="text-2xl font-bold text-gray-800 mb-4">
-              🍛 Recipe-to-Cart Feature Coming Soon!
+              🍛 Discover Authentic Indian Recipes!
             </h3>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              We're working on an amazing feature where you can view recipes and add all required spices directly to your cart with one click. 
-              Stay tuned for this exciting update!
+              Browse our collection of traditional recipes and add all required spices directly to your cart with one click. 
+              Perfect for home cooking enthusiasts!
             </p>
-            <Button className="bg-orange-600 hover:bg-orange-700" disabled>
-              Coming Soon
-            </Button>
+            <Link to="/recipes">
+              <Button className="bg-orange-600 hover:bg-orange-700">
+                Explore All Recipes
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

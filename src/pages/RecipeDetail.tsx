@@ -371,6 +371,14 @@ const RecipeDetail = () => {
                   >
                     Buy Now
                   </Button>
+                  
+                  <Button 
+                    onClick={() => window.open(`/recipe/${recipe.id}.html`, '_blank')}
+                    variant="secondary"
+                    className="w-full mt-2"
+                  >
+                    View Full Recipe Page
+                  </Button>
                 </div>
               </CardContent>
             </Card>
