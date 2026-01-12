@@ -34,10 +34,42 @@ import Contact from "./pages/Contact";
 import ShippingPolicy from "./pages/ShippingPolicy";
 import FAQs from "./pages/FAQs";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsConditions from "./pages/TermsConditions";
 import NotFound from "./pages/NotFound";
 import MobileBottomNav from "./components/mobile/MobileBottomNav";
 import PWAInstallPrompt from "./components/mobile/PWAInstallPrompt";
+
+// Simple Terms & Conditions component
+const TermsConditions = () => {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-yellow-50">
+      <div className="container mx-auto px-4 py-16">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl font-bold text-center mb-8">Terms & Conditions</h1>
+          <div className="bg-white rounded-2xl p-8 shadow-lg">
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold mb-3">1. Acceptance of Terms</h2>
+                <p className="text-gray-600">By using PRAYAN website, you agree to these terms and conditions.</p>
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold mb-3">2. Products & Orders</h2>
+                <p className="text-gray-600">All orders are subject to availability. We reserve the right to refuse any order.</p>
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold mb-3">3. Returns & Refunds</h2>
+                <p className="text-gray-600">30-day return policy for unopened products. Quality issues accepted within 7 days.</p>
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold mb-3">4. Contact</h2>
+                <p className="text-gray-600">For questions: legal@prayan.com | +91 88666 58919</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const queryClient = new QueryClient();
 
