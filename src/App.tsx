@@ -34,7 +34,7 @@ import Contact from "./pages/Contact";
 import ShippingPolicy from "./pages/ShippingPolicy";
 import FAQs from "./pages/FAQs";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-// import TermsConditions from "./pages/TermsConditions";
+import TermsConditions from "./pages/TermsConditions";
 import NotFound from "./pages/NotFound";
 import MobileBottomNav from "./components/mobile/MobileBottomNav";
 import PWAInstallPrompt from "./components/mobile/PWAInstallPrompt";
@@ -80,7 +80,7 @@ const App = () => {
                               <Route path="/shipping-policy" element={<ShippingPolicy />} />
                               <Route path="/faqs" element={<FAQs />} />
                               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                              {/* <Route path="/terms-conditions" element={<TermsConditions />} /> */}
+                              <Route path="/terms-conditions" element={<TermsConditions />} />
                               <Route path="/admin" element={<AdminDashboard />} />
                               <Route path="*" element={<NotFound />} />
                             </Routes>
