@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Heart, Award, Users, Leaf, Star, MapPin, Clock, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import { Link } from 'react-router-dom';
 
 const OurStory = () => {
@@ -422,6 +423,8 @@ const OurStory = () => {
           </motion.div>
         </div>
       </section>
+      
+      <Footer />
     </div>
   );
 };
