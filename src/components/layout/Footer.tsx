@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-3">
               <li>
                 <Link
-                  to="/shop"
+                  to="/shop-all"
                   className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
                 >
                   Shop All
