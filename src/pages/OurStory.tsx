@@ -105,8 +105,10 @@ const OurStory = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
           >
-            <Button size="lg" className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-8 py-4 text-lg">
-              Discover Our Spices
+            <Button size="lg" className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-8 py-4 text-lg" asChild>
+              <Link to="/shop">
+                Discover Our Spices
+              </Link>
             </Button>
           </motion.div>
         </motion.div>
