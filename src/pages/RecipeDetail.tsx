@@ -21,10 +21,40 @@ const RecipeDetail = () => {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   
   console.log('RecipeDetail - ID from params:', id);
+  console.log('RecipeDetail - All recipes:', recipes.map(r => r.id));
   
   const recipe = id ? getRecipeById(id) : null;
   
   console.log('RecipeDetail - Recipe found:', recipe);
+  
+  // Early return for debugging
+  if (!id) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">No Recipe ID provided</h2>
+          <Button onClick={() => navigate('/recipes')}>Back to Recipes</Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!recipe) {
+    console.log('Recipe not found for ID:', id);
+    console.log('Available recipe IDs:', recipes.map(r => r.id));
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Recipe not found</h2>
+          <p className="mb-4">Recipe ID: {id}</p>
+          <p className="mb-4">Available IDs: {recipes.map(r => r.id).join(', ')}</p>
+          <Button onClick={() => navigate('/recipes')}>
+            Back to Recipes
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     if (recipe) {
@@ -118,11 +148,14 @@ const RecipeDetail = () => {
   };
 
   if (!recipe) {
+    console.log('Recipe not found for ID:', id);
+    console.log('Available recipe IDs:', recipes.map(r => r.id));
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Recipe not found</h2>
           <p className="mb-4">Recipe ID: {id}</p>
+          <p className="mb-4">Available IDs: {recipes.map(r => r.id).join(', ')}</p>
           <Button onClick={() => navigate('/recipes')}>
             Back to Recipes
           </Button>
