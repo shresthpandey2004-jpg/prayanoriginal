@@ -38,35 +38,221 @@ import NotFound from "./pages/NotFound";
 import MobileBottomNav from "./components/mobile/MobileBottomNav";
 import PWAInstallPrompt from "./components/mobile/PWAInstallPrompt";
 
-// Simple Terms & Conditions component
+// Premium Terms & Conditions component with animations
 const TermsConditions = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-yellow-50">
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-8">Terms & Conditions</h1>
-          <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <div className="space-y-6">
-              <div>
-                <h2 className="text-2xl font-bold mb-3">1. Acceptance of Terms</h2>
-                <p className="text-gray-600">By using PRAYAN website, you agree to these terms and conditions.</p>
+      {/* Hero Section */}
+      <section className="py-20 bg-gradient-to-r from-orange-600 to-red-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="animate-fade-in-up">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6">
+              Terms & <span className="text-yellow-300">Conditions</span>
+            </h1>
+            <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">
+              Your trust is our foundation. Please read these terms carefully.
+            </p>
+          </div>
+        </div>
+        {/* Floating spice elements */}
+        <div className="absolute top-10 left-10 w-4 h-4 bg-yellow-300 rounded-full animate-bounce opacity-60"></div>
+        <div className="absolute top-20 right-20 w-3 h-3 bg-orange-300 rounded-full animate-pulse opacity-50"></div>
+        <div className="absolute bottom-10 left-1/4 w-2 h-2 bg-red-300 rounded-full animate-ping opacity-40"></div>
+      </section>
+
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            {/* Introduction Card */}
+            <div className="bg-white rounded-2xl p-8 shadow-xl mb-8 border-l-4 border-orange-500 animate-fade-in">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-white font-bold text-xl">प्</span>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-800">PRAYAN Spices Pvt. Ltd.</h2>
+                  <p className="text-orange-600 font-medium">Established 1985 • Trusted by Millions</p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-2xl font-bold mb-3">2. Products & Orders</h2>
-                <p className="text-gray-600">All orders are subject to availability. We reserve the right to refuse any order.</p>
+              <p className="text-gray-600 leading-relaxed">
+                Welcome to PRAYAN - India's premium spice destination. These terms govern your relationship with us 
+                and ensure a transparent, trustworthy shopping experience for authentic Indian spices.
+              </p>
+            </div>
+
+            {/* Terms Grid */}
+            <div className="grid gap-6">
+              {/* Term 1 */}
+              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] animate-slide-up">
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                    <span className="text-orange-600 font-bold">1</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">Acceptance of Terms</h3>
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      By accessing and using the PRAYAN website, mobile app, or any of our services, you accept and agree to be 
+                      bound by these terms and conditions. If you do not agree to these terms, please do not use our services.
+                    </p>
+                    <div className="bg-orange-50 rounded-lg p-4">
+                      <p className="text-orange-800 font-medium text-sm">
+                        ✓ Applies to website, mobile app, and all PRAYAN services
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h2 className="text-2xl font-bold mb-3">3. Returns & Refunds</h2>
-                <p className="text-gray-600">30-day return policy for unopened products. Quality issues accepted within 7 days.</p>
+
+              {/* Term 2 */}
+              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] animate-slide-up delay-100">
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                    <span className="text-red-600 font-bold">2</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">Product Information & Quality</h3>
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      We strive to provide accurate product descriptions, images, and pricing. All our spices undergo 
+                      rigorous quality checks and are sourced directly from trusted farmers across India.
+                    </p>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-green-50 rounded-lg p-4">
+                        <p className="text-green-800 font-medium text-sm">✓ 100% Pure & Natural</p>
+                      </div>
+                      <div className="bg-blue-50 rounded-lg p-4">
+                        <p className="text-blue-800 font-medium text-sm">✓ Lab Tested Quality</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h2 className="text-2xl font-bold mb-3">4. Contact</h2>
-                <p className="text-gray-600">For questions: legal@prayan.com | +91 88666 58919</p>
+
+              {/* Term 3 */}
+              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] animate-slide-up delay-200">
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                    <span className="text-yellow-600 font-bold">3</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">Orders & Payment</h3>
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      All orders are subject to availability and confirmation. We accept multiple payment methods 
+                      including UPI, cards, net banking, and Cash on Delivery for your convenience.
+                    </p>
+                    <div className="grid md:grid-cols-3 gap-3">
+                      <div className="bg-purple-50 rounded-lg p-3 text-center">
+                        <p className="text-purple-800 font-medium text-sm">💳 Cards</p>
+                      </div>
+                      <div className="bg-indigo-50 rounded-lg p-3 text-center">
+                        <p className="text-indigo-800 font-medium text-sm">📱 UPI</p>
+                      </div>
+                      <div className="bg-teal-50 rounded-lg p-3 text-center">
+                        <p className="text-teal-800 font-medium text-sm">💰 COD</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Term 4 */}
+              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] animate-slide-up delay-300">
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                    <span className="text-green-600 font-bold">4</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">Shipping & Delivery</h3>
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      We deliver across India to serviceable pincodes. Our packaging ensures freshness and quality 
+                      during transit. Delivery timelines are estimates and may vary based on location.
+                    </p>
+                    <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-4">
+                      <p className="text-gray-700 font-medium">🚚 Free shipping on orders above ₹499</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Term 5 */}
+              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] animate-slide-up delay-500">
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                    <span className="text-blue-600 font-bold">5</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">Returns & Refunds</h3>
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      We offer a 30-day return policy for unopened products in original packaging. 
+                      For quality issues, returns are accepted within 7 days of delivery.
+                    </p>
+                    <div className="bg-red-50 rounded-lg p-4 border-l-4 border-red-400">
+                      <p className="text-red-800 font-medium text-sm">
+                        ⚠️ Note: Opened spice products cannot be returned due to hygiene reasons, except for quality defects.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Term 6 */}
+              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] animate-slide-up delay-700">
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                    <span className="text-purple-600 font-bold">6</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">Intellectual Property</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      All content on this website, including recipes, images, logos, and brand materials, 
+                      is the property of PRAYAN and is protected by copyright laws.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Section */}
+            <div className="mt-12 bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl p-8 text-white animate-fade-in">
+              <div className="text-center mb-6">
+                <h3 className="text-3xl font-bold mb-2">Need Help?</h3>
+                <p className="text-orange-100">Our legal team is here to assist you</p>
+              </div>
+              <div className="grid md:grid-cols-3 gap-6 text-center">
+                <div className="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                  <div className="text-2xl mb-2">📧</div>
+                  <p className="font-medium">Email</p>
+                  <p className="text-orange-100">legal@prayan.com</p>
+                </div>
+                <div className="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                  <div className="text-2xl mb-2">📞</div>
+                  <p className="font-medium">Phone</p>
+                  <p className="text-orange-100">+91 88666 58919</p>
+                </div>
+                <div className="bg-white/10 rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
+                  <div className="text-2xl mb-2">💬</div>
+                  <p className="font-medium">WhatsApp</p>
+                  <a href="https://wa.me/918866658919" className="text-yellow-300 hover:text-yellow-200 transition-colors">
+                    Chat Now
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="mt-8 text-center animate-fade-in">
+              <div className="bg-white rounded-lg p-6 shadow-lg">
+                <p className="text-gray-600 mb-2">
+                  <strong>Last Updated:</strong> January 2025
+                </p>
+                <p className="text-sm text-gray-500">
+                  PRAYAN Spices Pvt. Ltd. • Masala Gali, Chandni Chowk, Delhi - 110006, India
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
