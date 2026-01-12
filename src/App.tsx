@@ -25,8 +25,8 @@ import Loyalty from "./pages/Loyalty";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import Recipes from "./pages/Recipes";
 import RecipeDetail from "./pages/RecipeDetail";
-import RecipeTest from "./pages/RecipeTest";
-import RecipeDebug from "./pages/RecipeDebug";
+import SimpleRecipes from "./pages/SimpleRecipes";
+import SimpleRecipeDetail from "./pages/SimpleRecipeDetail";
 import NotFound from "./pages/NotFound";
 import MobileBottomNav from "./components/mobile/MobileBottomNav";
 import PWAInstallPrompt from "./components/mobile/PWAInstallPrompt";
@@ -63,8 +63,8 @@ const App = () => {
                               <Route path="/return-policy" element={<ReturnPolicy />} />
                               <Route path="/recipes" element={<Recipes />} />
                               <Route path="/recipe/:id" element={<RecipeDetail />} />
-                              <Route path="/recipe-debug" element={<RecipeDebug />} />
-                              <Route path="/recipe-test" element={<RecipeTest />} />
+                              <Route path="/simple-recipes" element={<SimpleRecipes />} />
+                              <Route path="/simple-recipe/:id" element={<SimpleRecipeDetail />} />
                               <Route path="/admin" element={<AdminDashboard />} />
                               <Route path="*" element={<NotFound />} />
                             </Routes>

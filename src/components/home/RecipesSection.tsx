@@ -77,7 +77,7 @@ const RecipesSection: React.FC = () => {
               Discover authentic Indian recipes with all the spices you need. Click any recipe to view ingredients and add spices to cart!
             </p>
           </div>
-          <Link to="/recipes">
+          <Link to="/simple-recipes">
             <Button variant="outline" size="lg" className="border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white">
               <span className="gap-2 flex items-center">
                 View All Recipes <ArrowRight size={18} />
@@ -140,7 +140,7 @@ const RecipesSection: React.FC = () => {
 
                 {/* Call to Action */}
                 <div className="mt-4 pt-3 border-t border-gray-100">
-                  <Link to={`/recipe/${recipe.id}`}>
+                  <Link to={`/simple-recipe/${recipe.id}`}>
                     <Button size="sm" className="w-full bg-orange-600 hover:bg-orange-700 text-xs">
                       View Recipe & Buy Spices
                     </Button>
@@ -161,7 +161,7 @@ const RecipesSection: React.FC = () => {
               Browse our collection of traditional recipes and add all required spices directly to your cart with one click. 
               Perfect for home cooking enthusiasts!
             </p>
-            <Link to="/recipes">
+            <Link to="/simple-recipes">
               <Button className="bg-orange-600 hover:bg-orange-700">
                 Explore All Recipes
               </Button>

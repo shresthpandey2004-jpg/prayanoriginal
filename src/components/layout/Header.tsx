@@ -19,7 +19,7 @@ const navigation = [
       { name: 'Combo Packs', href: '/shop?category=combo-packs' },
     ]
   },
-  { name: 'Recipes', href: '/recipes' },
+  { name: 'Recipes', href: '/simple-recipes' },
   { name: 'Our Story', href: '/about' },
   { name: 'Export Inquiry', href: '/export' },
   { name: 'Contact', href: '/contact' },
