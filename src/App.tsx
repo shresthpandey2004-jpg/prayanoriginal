@@ -27,6 +27,7 @@ import Recipes from "./pages/Recipes";
 import RecipeDetail from "./pages/RecipeDetail";
 import SimpleRecipes from "./pages/SimpleRecipes";
 import SimpleRecipeDetail from "./pages/SimpleRecipeDetail";
+import OurStory from "./pages/OurStory";
 import NotFound from "./pages/NotFound";
 import MobileBottomNav from "./components/mobile/MobileBottomNav";
 import PWAInstallPrompt from "./components/mobile/PWAInstallPrompt";
@@ -65,6 +66,7 @@ const App = () => {
                               <Route path="/recipe/:id" element={<RecipeDetail />} />
                               <Route path="/simple-recipes" element={<SimpleRecipes />} />
                               <Route path="/simple-recipe/:id" element={<SimpleRecipeDetail />} />
+                              <Route path="/about" element={<OurStory />} />
                               <Route path="/admin" element={<AdminDashboard />} />
                               <Route path="*" element={<NotFound />} />
                             </Routes>
