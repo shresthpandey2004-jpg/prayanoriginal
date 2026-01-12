@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Search, ShoppingBag, User, Heart, ChevronDown, LogOut, Gift } from 'lucide-react';
+import { Menu, X, Search, ShoppingBag, User, ChevronDown, LogOut, Gift } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
@@ -140,14 +140,6 @@ const Header: React.FC = () => {
               >
                 <Search size={20} />
               </button>
-
-              <Link
-                to="/wishlist"
-                className="hidden sm:flex p-2.5 rounded-full hover:bg-secondary transition-colors"
-                aria-label="Wishlist"
-              >
-                <Heart size={20} />
-              </Link>
 
               {/* User Account */}
               <div className="relative">
