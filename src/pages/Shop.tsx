@@ -30,6 +30,11 @@ const Shop: React.FC = () => {
   // Debug: Log to see if products are loaded
   console.log('Products loaded:', products.length);
   console.log('Filtered products:', filteredProducts.length);
+  
+  // Alert to make it obvious the page loaded
+  React.useEffect(() => {
+    console.log('🛒 SHOP PAGE MOUNTED!');
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -37,10 +42,12 @@ const Shop: React.FC = () => {
       <CartDrawer />
 
       {/* Debug Section - Remove after fixing */}
-      <div className="bg-red-100 p-4 text-center">
-        <h2 className="text-xl font-bold">DEBUG: Shop Page Loaded</h2>
-        <p>Total Products: {products.length}</p>
-        <p>Filtered Products: {filteredProducts.length}</p>
+      <div className="bg-red-500 text-white p-8 text-center text-xl font-bold">
+        🛒 SHOP PAGE IS LOADED! 🛒
+        <br />
+        Total Products: {products.length} | Filtered: {filteredProducts.length}
+        <br />
+        Current URL: {window.location.pathname}
       </div>
 
       {/* Hero */}
