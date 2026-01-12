@@ -68,16 +68,54 @@ const Footer: React.FC = () => {
           <div>
             <h5 className="font-display text-lg font-semibold mb-6">Quick Links</h5>
             <ul className="space-y-3">
-              {['Shop All', 'Our Story', 'Recipes', 'Blog', 'Export Inquiry', 'Bulk Orders'].map((item) => (
-                <li key={item}>
-                  <Link
-                    to={`/${item.toLowerCase().replace(' ', '-')}`}
-                    className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link
+                  to="/shop"
+                  className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
+                >
+                  Shop All
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/about"
+                  className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
+                >
+                  Our Story
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/simple-recipes"
+                  className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
+                >
+                  Recipes
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/blog"
+                  className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
+                >
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/export"
+                  className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
+                >
+                  Export Inquiry
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/bulk-orders"
+                  className="text-brown-foreground/80 hover:text-gold transition-colors text-sm"
+                >
+                  Bulk Orders
+                </Link>
+              </li>
             </ul>
           </div>
 
