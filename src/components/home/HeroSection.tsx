@@ -76,9 +76,11 @@ const HeroSection: React.FC = () => {
                   Shop Now <ArrowRight size={20} />
                 </Link>
               </Button>
-              <Button variant="glass" size="xl" className="gap-3">
-                <Play size={18} className="text-gold" />
-                Our Story
+              <Button variant="glass" size="xl" className="gap-3" asChild>
+                <Link to="/about">
+                  <Play size={18} className="text-gold" />
+                  Our Story
+                </Link>
               </Button>
             </div>
 
