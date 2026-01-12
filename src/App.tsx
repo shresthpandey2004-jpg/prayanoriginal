@@ -35,6 +35,8 @@ import Contact from "./pages/Contact";
 import ShippingPolicy from "./pages/ShippingPolicy";
 import FAQs from "./pages/FAQs";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Blog from "./pages/Blog";
+import BulkOrders from "./pages/BulkOrders";
 import NotFound from "./pages/NotFound";
 import MobileBottomNav from "./components/mobile/MobileBottomNav";
 import PWAInstallPrompt from "./components/mobile/PWAInstallPrompt";
@@ -312,6 +314,8 @@ const App = () => {
                               <Route path="/faqs" element={<FAQs />} />
                               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                               <Route path="/terms-conditions" element={<TermsConditions />} />
+                              <Route path="/blog" element={<Blog />} />
+                              <Route path="/bulk-orders" element={<BulkOrders />} />
                               <Route path="/admin" element={<AdminDashboard />} />
                               <Route path="*" element={<NotFound />} />
                             </Routes>
