@@ -149,14 +149,6 @@ const Header: React.FC = () => {
                 <Heart size={20} />
               </Link>
 
-              <Link
-                to="/wishlist"
-                className="hidden sm:flex p-2.5 rounded-full hover:bg-secondary transition-colors"
-                aria-label="Wishlist"
-              >
-                <Heart size={20} />
-              </Link>
-
               {/* User Account */}
               <div className="relative">
                 {isAuthenticated ? (
