@@ -140,12 +140,12 @@ const OrderConfirmation = () => {
         {/* Action Buttons */}
         <div className="space-y-3">
           <Button 
-            onClick={openWhatsApp}
-            className="w-full bg-green-500 hover:bg-green-600"
+            onClick={() => navigate('/my-orders')}
+            className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600"
             size="lg"
           >
-            <MessageCircle className="w-5 h-5 mr-2" />
-            Contact us on WhatsApp
+            <CheckCircle className="w-5 h-5 mr-2" />
+            Track Your Orders
           </Button>
           
           <div className="grid grid-cols-2 gap-3">
@@ -157,6 +157,16 @@ const OrderConfirmation = () => {
               Go Home
             </Button>
           </div>
+          
+          <Button 
+            onClick={openWhatsApp}
+            variant="outline"
+            className="w-full"
+            size="sm"
+          >
+            <MessageCircle className="w-4 h-4 mr-2" />
+            Need help? Contact us on WhatsApp
+          </Button>
         </div>
 
         {/* Contact Info */}

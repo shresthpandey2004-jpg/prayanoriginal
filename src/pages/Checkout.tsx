@@ -134,16 +134,17 @@ ${itemsList}
 
     try {
       const orderId = generateOrderId();
-      const whatsappMessage = generateWhatsAppMessage(orderId);
       
       // Store order using OrderContext
       const order = {
         id: orderId,
         items: [...items],
         customerDetails: { ...customerDetails },
-        totalPrice,
+        totalPrice: totalPrice + deliveryInfo.charge,
+        deliveryCharge: deliveryInfo.charge,
         timestamp: new Date().toISOString(),
-        status: 'pending' as const
+        status: 'confirmed' as const,
+        paymentStatus: customerDetails.paymentMethod === 'cod' ? 'pending' : 'completed'
       };
       
       addOrder(order);
@@ -151,13 +152,10 @@ ${itemsList}
       // Clear cart
       clearCart();
 
-      // Open WhatsApp with pre-filled message
-      const whatsappUrl = `https://wa.me/${BUSINESS_CONFIG.whatsapp.replace('+', '')}?text=${encodeURIComponent(whatsappMessage)}`;
-      window.open(whatsappUrl, '_blank');
-
+      // Show success message
       toast({
         title: "Order placed successfully! 🎉",
-        description: `Order ID: ${orderId}. WhatsApp opened for confirmation.`,
+        description: `Order ID: ${orderId}. You will receive confirmation shortly.`,
       });
 
       // Navigate to order confirmation

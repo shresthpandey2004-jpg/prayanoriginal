@@ -21,8 +21,10 @@ export interface Order {
     notes: string;
   };
   totalPrice: number;
+  deliveryCharge?: number;
   timestamp: string;
   status: 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  paymentStatus?: 'pending' | 'completed' | 'failed';
 }
 
 interface OrderContextType {
