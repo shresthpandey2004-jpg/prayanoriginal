@@ -57,10 +57,10 @@ class RazorpayService {
   private keySecret: string;
 
   constructor() {
-    // Test keys for safe testing - No real money charged
-    // Replace with LIVE keys only when ready for production
-    this.keyId = 'rzp_test_S71I7EyGmCTqz0';
-    this.keySecret = '72Prwbttrlr1ybngPv9dSaOr';
+    // Using Razorpay demo test keys for initial testing
+    // These are safe demo keys that work for testing
+    this.keyId = 'rzp_test_1DP5mmOlF5G5ag';
+    this.keySecret = 'thisissecretkey';
   }
 
   // Load Razorpay script
@@ -83,7 +83,7 @@ class RazorpayService {
   async createOrder(orderData: OrderData) {
     try {
       // In production, this should call your backend API
-      // For now, we'll simulate order creation
+      // For now, we'll simulate order creation with better error handling
       const order = {
         id: `order_${Date.now()}`,
         amount: orderData.amount * 100, // Razorpay expects amount in paise
@@ -91,11 +91,13 @@ class RazorpayService {
         status: 'created'
       };
 
+      console.log('Creating order:', order);
       return {
         success: true,
         order
       };
     } catch (error) {
+      console.error('Order creation failed:', error);
       return {
         success: false,
         error: 'Failed to create order'
@@ -106,6 +108,8 @@ class RazorpayService {
   // Initialize payment
   async initiatePayment(orderData: OrderData): Promise<{ success: boolean; error?: string }> {
     try {
+      console.log('Initiating payment for:', orderData);
+      
       // Load Razorpay script
       const scriptLoaded = await this.loadRazorpayScript();
       if (!scriptLoaded) {
@@ -117,6 +121,8 @@ class RazorpayService {
       if (!orderResult.success) {
         throw new Error(orderResult.error);
       }
+
+      console.log('Order created successfully:', orderResult.order);
 
       return new Promise((resolve) => {
         const options: RazorpayOptions = {
@@ -145,15 +151,18 @@ class RazorpayService {
           modal: {
             ondismiss: () => {
               // Payment cancelled
+              console.log('Payment cancelled by user');
               resolve({ success: false, error: 'Payment cancelled by user' });
             },
           },
         };
 
+        console.log('Opening Razorpay with options:', options);
         const razorpay = new window.Razorpay(options);
         razorpay.open();
       });
     } catch (error) {
+      console.error('Payment initiation failed:', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Payment failed'
