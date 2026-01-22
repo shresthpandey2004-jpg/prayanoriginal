@@ -3,6 +3,7 @@ import { useCart } from '@/context/CartContext';
 import { useOrders } from '@/context/OrderContext';
 import { BUSINESS_CONFIG } from '@/config/business';
 import { calculateDeliveryCharge, getEstimatedDeliveryDate } from '@/utils/delivery';
+import { razorpayService } from '@/services/razorpayService';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowLeft, Phone, MapPin, User, CreditCard } from 'lucide-react';
+import { ArrowLeft, Phone, MapPin, User, CreditCard, Wallet } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from '@/hooks/use-toast';
 
@@ -134,38 +135,90 @@ ${itemsList}
 
     try {
       const orderId = generateOrderId();
-      
-      // Store order using OrderContext (which now uses Firebase)
-      const order = {
-        id: orderId,
-        items: [...items],
-        customerDetails: { ...customerDetails },
-        totalPrice: totalPrice + deliveryInfo.charge,
-        deliveryCharge: deliveryInfo.charge,
-        timestamp: new Date().toISOString(),
-        status: 'confirmed' as const,
-        paymentStatus: customerDetails.paymentMethod === 'cod' ? 'pending' : 'completed'
-      };
-      
-      const success = await addOrder(order);
+      const totalAmount = totalPrice + deliveryInfo.charge;
 
-      // Clear cart regardless of Firebase success (order is saved locally as backup)
-      clearCart();
-
-      if (success) {
-        toast({
-          title: "Order placed successfully! 🎉",
-          description: `Order ID: ${orderId}. Your order has been confirmed.`,
+      // Handle payment based on method
+      if (customerDetails.paymentMethod === 'online') {
+        // Process online payment with Razorpay
+        const paymentResult = await razorpayService.initiatePayment({
+          orderId,
+          amount: totalAmount,
+          currency: 'INR',
+          customerDetails: {
+            name: customerDetails.name,
+            email: customerDetails.email,
+            phone: customerDetails.phone,
+            address: `${customerDetails.address}, ${customerDetails.city}, ${customerDetails.pincode}`
+          },
+          items: items.map(item => ({
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price
+          }))
         });
+
+        if (!paymentResult.success) {
+          toast({
+            title: "Payment Failed",
+            description: paymentResult.error || "Payment was cancelled or failed",
+            variant: "destructive"
+          });
+          setIsLoading(false);
+          return;
+        }
+
+        // Payment successful - create order
+        const order = {
+          id: orderId,
+          items: [...items],
+          customerDetails: { ...customerDetails },
+          totalPrice: totalAmount,
+          deliveryCharge: deliveryInfo.charge,
+          timestamp: new Date().toISOString(),
+          status: 'confirmed' as const,
+          paymentStatus: 'completed' as const
+        };
+        
+        const success = await addOrder(order);
+        clearCart();
+
+        toast({
+          title: "Payment Successful! 🎉",
+          description: `Order ID: ${orderId}. Payment completed successfully.`,
+        });
+
+        navigate(`/order-confirmation/${orderId}`);
+
       } else {
-        toast({
-          title: "Order saved locally 📱",
-          description: `Order ID: ${orderId}. We'll sync it when connection is restored.`,
-        });
-      }
+        // Handle COD order
+        const order = {
+          id: orderId,
+          items: [...items],
+          customerDetails: { ...customerDetails },
+          totalPrice: totalAmount,
+          deliveryCharge: deliveryInfo.charge,
+          timestamp: new Date().toISOString(),
+          status: 'confirmed' as const,
+          paymentStatus: 'pending' as const
+        };
+        
+        const success = await addOrder(order);
+        clearCart();
 
-      // Navigate to order confirmation
-      navigate(`/order-confirmation/${orderId}`);
+        if (success) {
+          toast({
+            title: "Order placed successfully! 🎉",
+            description: `Order ID: ${orderId}. Your order has been confirmed.`,
+          });
+        } else {
+          toast({
+            title: "Order saved locally 📱",
+            description: `Order ID: ${orderId}. We'll sync it when connection is restored.`,
+          });
+        }
+
+        navigate(`/order-confirmation/${orderId}`);
+      }
 
     } catch (error) {
       toast({
@@ -319,13 +372,25 @@ ${itemsList}
                   value={customerDetails.paymentMethod}
                   onValueChange={(value) => handleInputChange('paymentMethod', value as 'cod' | 'online')}
                 >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="cod" id="cod" />
-                    <Label htmlFor="cod">Cash on Delivery (COD)</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50">
                     <RadioGroupItem value="online" id="online" />
-                    <Label htmlFor="online">Online Payment (UPI/Card)</Label>
+                    <Label htmlFor="online" className="flex items-center gap-2 cursor-pointer flex-1">
+                      <Wallet className="w-4 h-4 text-blue-600" />
+                      <div>
+                        <p className="font-medium">Online Payment</p>
+                        <p className="text-sm text-gray-600">UPI, Cards, Net Banking via Razorpay</p>
+                      </div>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50">
+                    <RadioGroupItem value="cod" id="cod" />
+                    <Label htmlFor="cod" className="flex items-center gap-2 cursor-pointer flex-1">
+                      <CreditCard className="w-4 h-4 text-green-600" />
+                      <div>
+                        <p className="font-medium">Cash on Delivery (COD)</p>
+                        <p className="text-sm text-gray-600">Pay when your order arrives</p>
+                      </div>
+                    </Label>
                   </div>
                 </RadioGroup>
                 
@@ -399,7 +464,13 @@ ${itemsList}
                   className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600"
                   size="lg"
                 >
-                  {isLoading ? 'Placing Order...' : `Place Order - ₹${totalPrice + deliveryInfo.charge}`}
+                  {isLoading ? (
+                    customerDetails.paymentMethod === 'online' ? 'Processing Payment...' : 'Placing Order...'
+                  ) : (
+                    customerDetails.paymentMethod === 'online' 
+                      ? `Pay ₹${totalPrice + deliveryInfo.charge} - Razorpay`
+                      : `Place Order - ₹${totalPrice + deliveryInfo.charge}`
+                  )}
                 </Button>
 
                 <p className="text-xs text-gray-500 text-center">

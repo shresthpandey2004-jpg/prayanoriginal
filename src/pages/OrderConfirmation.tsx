@@ -90,11 +90,23 @@ const OrderConfirmation = () => {
               <p className="text-2xl font-bold text-green-600">₹{order.totalPrice}</p>
             </div>
 
-            <div>
-              <p className="text-sm text-gray-600">Payment Method</p>
-              <p className="font-medium">
-                {order.customerDetails.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Online Payment'}
-              </p>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm text-gray-600">Payment Method</p>
+                <p className="font-medium">
+                  {order.customerDetails.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Online Payment'}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">Payment Status</p>
+                <p className={`font-medium ${
+                  order.paymentStatus === 'completed' ? 'text-green-600' : 
+                  order.paymentStatus === 'pending' ? 'text-yellow-600' : 'text-red-600'
+                }`}>
+                  {order.paymentStatus === 'completed' ? '✅ Paid' : 
+                   order.paymentStatus === 'pending' ? '⏳ Pending' : '❌ Failed'}
+                </p>
+              </div>
             </div>
           </CardContent>
         </Card>
