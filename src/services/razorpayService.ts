@@ -57,9 +57,9 @@ class RazorpayService {
   private keySecret: string;
 
   constructor() {
-    // LIVE Razorpay keys - CAUTION: These will charge real money!
-    // For testing, switch to Test keys (rzp_test_xxx)
-    this.keyId = 'rzp_live_S71I7EyGmCTqz0';
+    // Test keys for safe testing - No real money charged
+    // Replace with LIVE keys only when ready for production
+    this.keyId = 'rzp_test_S71I7EyGmCTqz0';
     this.keySecret = '72Prwbttrlr1ybngPv9dSaOr';
   }
 
