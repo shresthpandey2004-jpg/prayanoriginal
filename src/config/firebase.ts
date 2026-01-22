@@ -3,14 +3,15 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 
-// Firebase configuration
+// Firebase configuration - REAL KEYS
 const firebaseConfig = {
-  apiKey: "AIzaSyBxYZ123456789-DEMO-KEY-REPLACE-WITH-REAL",
-  authDomain: "prayan-masale.firebaseapp.com",
-  projectId: "prayan-masale",
-  storageBucket: "prayan-masale.appspot.com",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:abcdef123456789012"
+  apiKey: "AIzaSyCVz6HO-I3Rd-Sh5r5_tgIr1qqSX9DNCw8",
+  authDomain: "prayanmasale.firebaseapp.com",
+  projectId: "prayanmasale",
+  storageBucket: "prayanmasale.firebasestorage.app",
+  messagingSenderId: "1004240730582",
+  appId: "1:1004240730582:web:1823850a1c2bed9425cc77",
+  measurementId: "G-Y8WFB72MS0"
 };
 
 // Initialize Firebase
