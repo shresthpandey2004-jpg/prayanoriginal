@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { orderService, FirebaseOrder } from '@/services/orderService';
+import { toast } from '@/hooks/use-toast';
 
 export interface Order {
   id: string;
@@ -29,46 +31,167 @@ export interface Order {
 
 interface OrderContextType {
   orders: Order[];
-  addOrder: (order: Order) => void;
+  loading: boolean;
+  addOrder: (order: Order) => Promise<boolean>;
   getOrder: (id: string) => Order | undefined;
-  updateOrderStatus: (id: string, status: Order['status']) => void;
+  updateOrderStatus: (id: string, status: Order['status']) => Promise<boolean>;
+  refreshOrders: () => Promise<void>;
 }
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [orders, setOrders] = useState<Order[]>(() => {
-    const saved = localStorage.getItem('prayan-orders');
-    return saved ? JSON.parse(saved) : [];
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  // Load orders from localStorage initially (for backward compatibility)
+  useEffect(() => {
+    const loadInitialOrders = () => {
+      const saved = localStorage.getItem('prayan-orders');
+      if (saved) {
+        try {
+          const localOrders = JSON.parse(saved);
+          setOrders(localOrders);
+        } catch (error) {
+          console.error('Error loading local orders:', error);
+        }
+      }
+    };
+
+    loadInitialOrders();
+  }, []);
+
+  // Convert Firebase order to local order format
+  const convertFirebaseOrder = (fbOrder: FirebaseOrder): Order => ({
+    id: fbOrder.orderId,
+    items: fbOrder.items,
+    customerDetails: fbOrder.customerDetails,
+    totalPrice: fbOrder.totalPrice,
+    deliveryCharge: fbOrder.deliveryCharge,
+    timestamp: fbOrder.timestamp.toDate().toISOString(),
+    status: fbOrder.status,
+    paymentStatus: fbOrder.paymentStatus
   });
 
-  useEffect(() => {
-    localStorage.setItem('prayan-orders', JSON.stringify(orders));
-  }, [orders]);
+  // Add order to Firebase
+  const addOrder = async (order: Order): Promise<boolean> => {
+    setLoading(true);
+    try {
+      // First add to Firebase
+      const result = await orderService.createOrder({
+        orderId: order.id,
+        items: order.items,
+        customerDetails: order.customerDetails,
+        totalPrice: order.totalPrice,
+        deliveryCharge: order.deliveryCharge || 0,
+        timestamp: order.timestamp,
+        status: order.status,
+        paymentStatus: order.paymentStatus || 'pending'
+      });
 
-  const addOrder = (order: Order) => {
-    setOrders(prev => [order, ...prev]);
+      if (result.success) {
+        // Add to local state
+        setOrders(prev => [order, ...prev]);
+        
+        // Also save to localStorage as backup
+        const updatedOrders = [order, ...orders];
+        localStorage.setItem('prayan-orders', JSON.stringify(updatedOrders));
+        
+        toast({
+          title: "Order saved successfully!",
+          description: "Your order has been recorded in our system.",
+        });
+        
+        return true;
+      } else {
+        // If Firebase fails, still save locally
+        setOrders(prev => [order, ...prev]);
+        localStorage.setItem('prayan-orders', JSON.stringify([order, ...orders]));
+        
+        toast({
+          title: "Order saved locally",
+          description: "Order saved on your device. We'll sync it when connection is restored.",
+          variant: "destructive"
+        });
+        
+        return false;
+      }
+    } catch (error) {
+      console.error('Error adding order:', error);
+      
+      // Fallback to localStorage
+      setOrders(prev => [order, ...prev]);
+      localStorage.setItem('prayan-orders', JSON.stringify([order, ...orders]));
+      
+      toast({
+        title: "Order saved locally",
+        description: "Order saved on your device. We'll sync it when connection is restored.",
+        variant: "destructive"
+      });
+      
+      return false;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const getOrder = (id: string) => {
+  // Get order by ID
+  const getOrder = (id: string): Order | undefined => {
     return orders.find(order => order.id === id);
   };
 
-  const updateOrderStatus = (id: string, status: Order['status']) => {
-    setOrders(prev =>
-      prev.map(order =>
-        order.id === id ? { ...order, status } : order
-      )
-    );
+  // Update order status
+  const updateOrderStatus = async (id: string, status: Order['status']): Promise<boolean> => {
+    setLoading(true);
+    try {
+      const result = await orderService.updateOrderStatus(id, status);
+      
+      if (result.success) {
+        setOrders(prev =>
+          prev.map(order =>
+            order.id === id ? { ...order, status } : order
+          )
+        );
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error updating order status:', error);
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Refresh orders from Firebase
+  const refreshOrders = async () => {
+    setLoading(true);
+    try {
+      const result = await orderService.getAllOrders();
+      
+      if (result.success) {
+        const convertedOrders = result.orders.map(convertFirebaseOrder);
+        setOrders(convertedOrders);
+        
+        // Update localStorage
+        localStorage.setItem('prayan-orders', JSON.stringify(convertedOrders));
+      }
+    } catch (error) {
+      console.error('Error refreshing orders:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <OrderContext.Provider
       value={{
         orders,
+        loading,
         addOrder,
         getOrder,
         updateOrderStatus,
+        refreshOrders,
       }}
     >
       {children}

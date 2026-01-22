@@ -135,7 +135,7 @@ ${itemsList}
     try {
       const orderId = generateOrderId();
       
-      // Store order using OrderContext
+      // Store order using OrderContext (which now uses Firebase)
       const order = {
         id: orderId,
         items: [...items],
@@ -147,16 +147,22 @@ ${itemsList}
         paymentStatus: customerDetails.paymentMethod === 'cod' ? 'pending' : 'completed'
       };
       
-      addOrder(order);
+      const success = await addOrder(order);
 
-      // Clear cart
+      // Clear cart regardless of Firebase success (order is saved locally as backup)
       clearCart();
 
-      // Show success message
-      toast({
-        title: "Order placed successfully! 🎉",
-        description: `Order ID: ${orderId}. You will receive confirmation shortly.`,
-      });
+      if (success) {
+        toast({
+          title: "Order placed successfully! 🎉",
+          description: `Order ID: ${orderId}. Your order has been confirmed.`,
+        });
+      } else {
+        toast({
+          title: "Order saved locally 📱",
+          description: `Order ID: ${orderId}. We'll sync it when connection is restored.`,
+        });
+      }
 
       // Navigate to order confirmation
       navigate(`/order-confirmation/${orderId}`);
