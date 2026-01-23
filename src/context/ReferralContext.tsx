@@ -105,6 +105,8 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
   }
 
   const processReferral = (referralCode: string, newUserId: string, newUserName: string, newUserEmail: string): boolean => {
+    console.log('Processing referral:', { referralCode, newUserId, newUserName, newUserEmail });
+    
     // Find the referrer by their referral code
     const allUsers = JSON.parse(localStorage.getItem('prayan-users') || '[]');
     let referrer = null;
@@ -112,19 +114,24 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
     // Search through all users to find who has this referral code
     for (const user of allUsers) {
       const userCode = localStorage.getItem(`prayan-referral-code-${user.id}`);
+      console.log(`Checking user ${user.id} with code: ${userCode}`);
       if (userCode === referralCode) {
         referrer = user;
+        console.log('Found referrer:', referrer);
         break;
       }
     }
 
     if (!referrer || referrer.id === newUserId) {
+      console.log('Invalid referral code or self-referral');
       return false; // Invalid referral code or self-referral
     }
 
     // Check if this user was already referred
-    const existingReferral = referrals.find(r => r.referredUserId === newUserId);
+    const currentReferrals = JSON.parse(localStorage.getItem('prayan-referrals') || '[]');
+    const existingReferral = currentReferrals.find((r: any) => r.referredUserId === newUserId);
     if (existingReferral) {
+      console.log('User already referred');
       return false; // User already referred
     }
 
@@ -141,7 +148,12 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
       createdAt: new Date().toISOString()
     };
 
-    setReferrals(prev => [...prev, newReferral]);
+    console.log('Creating new referral:', newReferral);
+
+    // Update both state and localStorage
+    const updatedReferrals = [...currentReferrals, newReferral];
+    setReferrals(updatedReferrals);
+    localStorage.setItem('prayan-referrals', JSON.stringify(updatedReferrals));
     
     // Also give the new user a discount coupon
     const coupons = JSON.parse(localStorage.getItem('prayan-coupons') || '[]');
@@ -150,7 +162,7 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
       code: `WELCOME${referralCode.slice(-4)}`,
       type: 'fixed',
       value: 50,
-      minOrderValue: 299,
+      minOrderValue: 199, // Updated to match new free shipping threshold
       maxUses: 1,
       usedCount: 0,
       validFrom: new Date().toISOString(),
@@ -161,6 +173,7 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
     coupons.push(newUserCoupon);
     localStorage.setItem('prayan-coupons', JSON.stringify(coupons));
     
+    console.log('Referral processed successfully');
     return true;
   };
 
@@ -177,28 +190,38 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
   };
 
   const getReferralStats = () => {
-    const userReferrals = referrals.filter(r => r.referrerId === user?.id);
+    // Always get fresh data from localStorage to ensure accuracy
+    const allReferrals = JSON.parse(localStorage.getItem('prayan-referrals') || '[]');
+    const userReferrals = allReferrals.filter((r: any) => r.referrerId === user?.id);
+    
+    console.log('Calculating stats for user:', user?.id);
+    console.log('All referrals:', allReferrals);
+    console.log('User referrals:', userReferrals);
     
     return {
       totalReferrals: userReferrals.length,
-      completedReferrals: userReferrals.filter(r => r.status === 'completed').length,
-      pendingReferrals: userReferrals.filter(r => r.status === 'pending').length,
+      completedReferrals: userReferrals.filter((r: any) => r.status === 'completed').length,
+      pendingReferrals: userReferrals.filter((r: any) => r.status === 'pending').length,
       totalEarnings: userReferrals
-        .filter(r => r.status === 'completed')
-        .reduce((sum, r) => sum + r.rewardAmount, 0)
+        .filter((r: any) => r.status === 'completed')
+        .reduce((sum: number, r: any) => sum + r.rewardAmount, 0)
     };
   };
 
   const stats = getReferralStats();
   const totalEarnings = stats.totalEarnings;
-  const pendingRewards = referrals
-    .filter(r => r.referrerId === user?.id && r.status === 'completed')
-    .reduce((sum, r) => sum + r.rewardAmount, 0);
+  
+  // Get fresh referrals for current user
+  const allReferrals = JSON.parse(localStorage.getItem('prayan-referrals') || '[]');
+  const userReferrals = allReferrals.filter((r: any) => r.referrerId === user?.id);
+  const pendingRewards = userReferrals
+    .filter((r: any) => r.status === 'completed')
+    .reduce((sum: number, r: any) => sum + r.rewardAmount, 0);
 
   return (
     <ReferralContext.Provider
       value={{
-        referrals: referrals.filter(r => r.referrerId === user?.id),
+        referrals: userReferrals,
         userReferralCode,
         totalEarnings,
         pendingRewards,
