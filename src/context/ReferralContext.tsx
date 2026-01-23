@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useAuth } from './AuthContext';
-import { getReferralStats, processReferralRegistration } from '@/utils/referralUtils';
+import { getReferralStats as getStatsFromUtils, processReferralRegistration } from '@/utils/referralUtils';
 
 export interface Referral {
   id: string;
@@ -131,7 +131,7 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
       };
     }
     
-    return getReferralStats(user.id);
+    return getStatsFromUtils(user.id);
   };
 
   const stats = getReferralStats();
