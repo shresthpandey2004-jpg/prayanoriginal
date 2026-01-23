@@ -22,7 +22,7 @@ import MyOrders from "./pages/MyOrders";
 import Auth from "./pages/Auth";
 import AccountSimple from "./pages/AccountSimple";
 import AdminDashboard from "./pages/AdminDashboard";
-import AdminOrders from "./pages/AdminOrders";
+import AdminOrdersPage from "./pages/AdminOrdersPage";
 import AdminLogin from "./pages/AdminLogin";
 import Referrals from "./pages/Referrals";
 import Loyalty from "./pages/Loyalty";
@@ -319,7 +319,7 @@ const App = () => {
                               <Route path="/blog" element={<Blog />} />
                               <Route path="/bulk-orders" element={<BulkOrders />} />
                               <Route path="/admin" element={<AdminDashboard />} />
-                              <Route path="/admin/orders" element={<AdminOrders />} />
+                              <Route path="/admin/orders" element={<AdminOrdersPage />} />
                               <Route path="/admin/login" element={<AdminLogin />} />
                               <Route path="/admin-login" element={<AdminLogin />} />
                               <Route path="*" element={<NotFound />} />

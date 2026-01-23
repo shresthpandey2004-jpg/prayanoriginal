@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Lock } from 'lucide-react';
@@ -7,7 +7,7 @@ interface AdminProtectionProps {
   children: React.ReactNode;
 }
 
-const AdminProtection: React.FC<AdminProtectionProps> = ({ children }) => {
+const AdminProtection = ({ children }: AdminProtectionProps) => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
