@@ -52,7 +52,7 @@ const Header: React.FC = () => {
       {/* Top Banner */}
       <div className="bg-accent text-accent-foreground text-center py-2 px-4 text-sm font-body">
         <p>
-          🎉 Free Shipping on orders above ₹499 | Use code <span className="font-semibold text-gold">PRAYAN10</span> for 10% off
+          🎉 Free Shipping on orders above ₹199 | Use code <span className="font-semibold text-gold">PRAYAN10</span> for 10% off
         </p>
       </div>
 
