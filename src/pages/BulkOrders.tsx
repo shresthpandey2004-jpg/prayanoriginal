@@ -444,8 +444,8 @@ Please provide bulk pricing and terms for the above requirements. Thank you!`;
             <div className="bg-white/10 rounded-lg p-6">
               <MapPin className="w-8 h-8 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Visit Us</h3>
-              <p className="opacity-90">Contact for Location</p>
-              <p className="text-sm opacity-75">Delhi - India</p>
+              <p className="opacity-90">Balaji Complex, Kawas</p>
+              <p className="text-sm opacity-75">Surat – 394510, Gujarat, India</p>
             </div>
           </div>
         </div>

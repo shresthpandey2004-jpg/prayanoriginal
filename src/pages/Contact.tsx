@@ -23,6 +23,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/layout/Header';
+import GoogleMap from '@/components/GoogleMap';
 
 const Contact = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -131,11 +132,11 @@ Please respond at your earliest convenience. Thank you!`;
     {
       icon: <MapPin className="w-8 h-8" />,
       title: "Visit Store",
-      primary: "Contact for Location",
+      primary: "Balaji Complex, Kawas",
       secondary: "Mon-Sat, 10 AM - 7 PM",
       description: "Experience spices in person",
       color: "from-orange-500 to-red-500",
-      action: () => window.open('https://wa.me/918866658919')
+      action: () => window.open('https://maps.google.com/maps?q=Balaji+Complex,+Kawas,+Surat,+Gujarat+394510,+India')
     }
   ];
 
@@ -598,9 +599,10 @@ Please respond at your earliest convenience. Thank you!`;
                       <div>
                         <h4 className="font-semibold text-gray-800 mb-1">Address</h4>
                         <p className="text-gray-600">
-                          Visit our store for fresh spices<br />
-                          and personalized consultation<br />
-                          Contact us for location details
+                          PRAYAN Royal Spice Emporium<br />
+                          Balaji Complex, Kawas<br />
+                          Surat – 394510, Gujarat<br />
+                          India
                         </p>
                       </div>
                     </div>
@@ -641,24 +643,14 @@ Please respond at your earliest convenience. Thank you!`;
               </Card>
             </motion.div>
 
-            {/* Map Placeholder */}
+            {/* Google Map Integration */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-gray-100 border-orange-200">
-                <CardContent className="p-0 h-full">
-                  <div className="h-full min-h-[400px] bg-gradient-to-br from-orange-200 to-red-200 rounded-lg flex items-center justify-center">
-                    <div className="text-center">
-                      <MapPin className="w-16 h-16 text-orange-600 mx-auto mb-4" />
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Store Location</h3>
-                      <p className="text-gray-600 mb-4">Contact us for store location details</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <GoogleMap />
             </motion.div>
           </div>
         </div>

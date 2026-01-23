@@ -349,19 +349,19 @@ const OurStory = () => {
             {[
               {
                 name: "Priya Sharma",
-                location: "Mumbai",
+                location: "Satisfied Customer",
                 rating: 5,
                 text: "Prayan spices have transformed my cooking! The aroma and taste are exactly like what my grandmother used to make. Pure quality!"
               },
               {
                 name: "Rajesh Kumar",
-                location: "Delhi",
+                location: "Loyal Customer",
                 rating: 5,
                 text: "Been using Prayan spices for 5 years now. The consistency in quality and the authentic taste keeps me coming back."
               },
               {
                 name: "Meera Patel",
-                location: "Ahmedabad",
+                location: "Professional Chef",
                 rating: 5,
                 text: "As a professional chef, I trust only Prayan for my restaurant. The spices are fresh, aromatic, and always premium quality."
               }

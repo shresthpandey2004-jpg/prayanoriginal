@@ -288,7 +288,7 @@ const PrivacyPolicy: React.FC = () => {
                     <div className="space-y-2">
                       <p className="text-gray-700"><strong>Email:</strong> privacy@prayan.com</p>
                       <p className="text-gray-700"><strong>Phone:</strong> +91 88666 58919</p>
-                      <p className="text-gray-700"><strong>Address:</strong> Contact us for store location details</p>
+                      <p className="text-gray-700"><strong>Address:</strong> PRAYAN Spices Pvt. Ltd., Balaji Complex, Kawas, Surat – 394510, Gujarat, India</p>
                     </div>
                   </div>
                 </div>

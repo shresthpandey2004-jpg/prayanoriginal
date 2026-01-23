@@ -262,7 +262,7 @@ const TermsConditions = () => {
                   <strong>Last Updated:</strong> January 2025
                 </p>
                 <p className="text-sm text-gray-500">
-                  PRAYAN Spices Pvt. Ltd. • India
+                  PRAYAN Spices Pvt. Ltd. • Balaji Complex, Kawas, Surat – 394510, Gujarat, India
                 </p>
               </div>
             </div>
