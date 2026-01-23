@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Search, ShoppingBag, User, ChevronDown, LogOut, Gift } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
+import { products } from '@/data/products';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -29,11 +30,14 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const { totalItems, setIsCartOpen } = useCart();
   const { user, isAuthenticated, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,6 +50,36 @@ const Header: React.FC = () => {
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
+
+  // Search functionality
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      const filtered = products.filter(product =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.tags?.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+      ).slice(0, 6); // Limit to 6 results
+      setSearchResults(filtered);
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchQuery]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      setIsSearchOpen(false);
+      navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery('');
+    }
+  };
+
+  const handleProductClick = (productId: string) => {
+    setIsSearchOpen(false);
+    setSearchQuery('');
+    navigate(`/product/${productId}`);
+  };
 
   return (
     <>
@@ -342,22 +376,98 @@ const Header: React.FC = () => {
             onClick={() => setIsSearchOpen(false)}
           />
           <div className="relative w-full max-w-2xl mx-4 animate-fade-in">
-            <div className="bg-background rounded-2xl shadow-xl p-4">
-              <div className="flex items-center gap-4">
-                <Search size={24} className="text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Search for spices, recipes..."
-                  className="flex-1 bg-transparent text-lg outline-none placeholder:text-muted-foreground"
-                  autoFocus
-                />
-                <button
-                  onClick={() => setIsSearchOpen(false)}
-                  className="p-2 hover:bg-secondary rounded-full"
-                >
-                  <X size={20} />
-                </button>
-              </div>
+            <div className="bg-background rounded-2xl shadow-xl overflow-hidden">
+              {/* Search Input */}
+              <form onSubmit={handleSearchSubmit} className="p-4">
+                <div className="flex items-center gap-4">
+                  <Search size={24} className="text-muted-foreground" />
+                  <input
+                    type="text"
+                    placeholder="Search for spices, recipes..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="flex-1 bg-transparent text-lg outline-none placeholder:text-muted-foreground"
+                    autoFocus
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsSearchOpen(false);
+                      setSearchQuery('');
+                    }}
+                    className="p-2 hover:bg-secondary rounded-full"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+              </form>
+
+              {/* Search Results */}
+              {searchQuery.trim() && (
+                <div className="border-t border-border max-h-96 overflow-y-auto">
+                  {searchResults.length > 0 ? (
+                    <div className="p-2">
+                      <div className="text-sm text-muted-foreground px-3 py-2 font-medium">
+                        Products ({searchResults.length})
+                      </div>
+                      {searchResults.map((product) => (
+                        <button
+                          key={product.id}
+                          onClick={() => handleProductClick(product.id)}
+                          className="w-full flex items-center gap-3 p-3 hover:bg-secondary rounded-lg transition-colors text-left"
+                        >
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-12 h-12 object-cover rounded-lg"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <div className="font-medium text-sm truncate">{product.name}</div>
+                            <div className="text-xs text-muted-foreground truncate">
+                              {product.category} • ₹{product.price}
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                      
+                      {/* View All Results */}
+                      <button
+                        onClick={() => handleSearchSubmit({ preventDefault: () => {} } as React.FormEvent)}
+                        className="w-full p-3 text-center text-sm text-primary hover:bg-secondary rounded-lg transition-colors border-t border-border mt-2"
+                      >
+                        View all results for "{searchQuery}"
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="p-6 text-center">
+                      <div className="text-muted-foreground">
+                        No products found for "{searchQuery}"
+                      </div>
+                      <div className="text-sm text-muted-foreground mt-1">
+                        Try searching for spices, masalas, or ingredients
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Quick Suggestions */}
+              {!searchQuery.trim() && (
+                <div className="border-t border-border p-4">
+                  <div className="text-sm text-muted-foreground mb-3 font-medium">Popular Searches</div>
+                  <div className="flex flex-wrap gap-2">
+                    {['Garam Masala', 'Turmeric', 'Red Chili', 'Cumin', 'Coriander', 'Black Pepper'].map((suggestion) => (
+                      <button
+                        key={suggestion}
+                        onClick={() => setSearchQuery(suggestion)}
+                        className="px-3 py-1.5 text-sm bg-secondary hover:bg-secondary/80 rounded-full transition-colors"
+                      >
+                        {suggestion}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

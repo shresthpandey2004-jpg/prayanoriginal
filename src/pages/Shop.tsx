@@ -32,13 +32,19 @@ const Shop: React.FC = () => {
     totalResults
   } = useSearch(products);
 
-  // Handle URL parameters for category filtering
+  // Handle URL parameters for category filtering and search
   React.useEffect(() => {
     const categoryParam = searchParams.get('category');
+    const searchParam = searchParams.get('search');
+    
     if (categoryParam) {
       updateFilter('category', categoryParam);
     }
-  }, [searchParams, updateFilter]);
+    
+    if (searchParam) {
+      setSearchTerm(searchParam);
+    }
+  }, [searchParams, updateFilter, setSearchTerm]);
 
   return (
     <div className="min-h-screen bg-background">
