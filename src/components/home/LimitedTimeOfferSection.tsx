@@ -22,26 +22,26 @@ const LimitedTimeOfferSection: React.FC = () => {
               <div className="flex items-center gap-2 mb-1">
                 <Award className="text-gold" size={18} />
                 <span className="text-sm font-semibold text-accent-foreground uppercase tracking-wider">
-                  Quality Promise
+                  Why Choose Us
                 </span>
               </div>
               <h3 className="font-display text-2xl md:text-3xl font-bold text-accent-foreground">
-                Premium Spices: <span className="text-gold">Fresh & Authentic</span>
+                Authentic Spices: <span className="text-gold">Taste the Difference</span>
               </h3>
             </div>
           </div>
 
-          {/* Quality Stats */}
+          {/* Quality Features */}
           <div className="flex items-center gap-3">
             {[
-              { value: '40+', label: 'Years' },
+              { value: 'Fresh', label: 'Ground' },
               { value: '100%', label: 'Pure' },
-              { value: '50K+', label: 'Happy' },
-              { value: '7', label: 'Spices' },
+              { value: 'Lab', label: 'Tested' },
+              { value: 'Best', label: 'Quality' },
             ].map((item, index) => (
               <React.Fragment key={item.label}>
                 <div className="bg-background rounded-xl p-3 min-w-[70px] text-center shadow-soft">
-                  <p className="font-display text-2xl md:text-3xl font-bold text-foreground">
+                  <p className="font-display text-lg md:text-xl font-bold text-foreground">
                     {item.value}
                   </p>
                   <p className="text-xs text-muted-foreground uppercase">{item.label}</p>
