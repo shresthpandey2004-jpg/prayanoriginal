@@ -719,7 +719,7 @@ Please respond at your earliest convenience. Thank you!`;
               },
               {
                 question: "Do you ship internationally?",
-                answer: "Yes, we export to 25+ countries. Contact our export team for international shipping rates."
+                answer: "Yes, we offer international shipping. Contact our export team for shipping rates and delivery options."
               },
               {
                 question: "Can I visit your facility?",

@@ -282,19 +282,19 @@ const OurStory = () => {
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Trusted by Families Across India
+              Why Choose PRAYAN
             </h2>
             <p className="text-xl opacity-90">
-              Numbers that reflect our commitment to quality and customer satisfaction
+              Real promises we deliver on every order
             </p>
           </motion.div>
           
           <div className="grid md:grid-cols-4 gap-8 text-center">
             {[
-              { number: "40+", label: "Years of Excellence", icon: <Clock className="w-8 h-8" /> },
-              { number: "50,000+", label: "Happy Customers", icon: <Users className="w-8 h-8" /> },
-              { number: "100+", label: "Premium Spices", icon: <Star className="w-8 h-8" /> },
-              { number: "25+", label: "Countries Served", icon: <MapPin className="w-8 h-8" /> }
+              { number: "Fresh", label: "Daily Grinding", icon: <Clock className="w-8 h-8" /> },
+              { number: "Pure", label: "No Additives", icon: <Users className="w-8 h-8" /> },
+              { number: "7", label: "Premium Spices", icon: <Star className="w-8 h-8" /> },
+              { number: "India", label: "Nationwide Delivery", icon: <MapPin className="w-8 h-8" /> }
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}

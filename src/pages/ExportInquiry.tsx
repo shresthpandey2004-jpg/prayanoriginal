@@ -117,8 +117,8 @@ Please provide detailed export quotation, FOB/CIF prices, minimum order quantiti
     {
       icon: <Globe className="w-8 h-8" />,
       title: "Global Reach",
-      description: "Exporting to 25+ countries across 5 continents",
-      stats: "25+ Countries"
+      description: "Quality spices available for international shipping",
+      stats: "Export Ready"
     },
     {
       icon: <Package className="w-8 h-8" />,
@@ -384,10 +384,10 @@ Please provide detailed export quotation, FOB/CIF prices, minimum order quantiti
           
           <div className="grid md:grid-cols-4 gap-8 text-center">
             {[
-              { number: "25+", label: "Countries Served", icon: <Globe className="w-8 h-8" /> },
-              { number: "500+", label: "Export Shipments", icon: <Package className="w-8 h-8" /> },
-              { number: "100+", label: "International Clients", icon: <Users className="w-8 h-8" /> },
-              { number: "40+", label: "Years Experience", icon: <Award className="w-8 h-8" /> }
+              { number: "Quality", label: "First Priority", icon: <Globe className="w-8 h-8" /> },
+              { number: "Fresh", label: "Export Packaging", icon: <Package className="w-8 h-8" /> },
+              { number: "Global", label: "Shipping Available", icon: <Users className="w-8 h-8" /> },
+              { number: "2026", label: "Launch Year", icon: <Award className="w-8 h-8" /> }
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
