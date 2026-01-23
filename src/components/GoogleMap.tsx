@@ -13,11 +13,11 @@ const GoogleMap: React.FC = () => {
   const longitude = 72.7614;
   
   const openInGoogleMaps = () => {
-    window.open(`https://maps.google.com/maps?q=${encodedAddress}`, '_blank');
+    window.open(`https://maps.google.com/maps?q=5PJ6%2BVGH`, '_blank');
   };
 
   const openDirections = () => {
-    window.open(`https://maps.google.com/maps/dir//${encodedAddress}`, '_blank');
+    window.open(`https://maps.google.com/maps/dir//5PJ6%2BVGH`, '_blank');
   };
 
   const handleMapError = () => {
@@ -30,14 +30,14 @@ const GoogleMap: React.FC = () => {
       <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg bg-gray-100">
         {!mapError ? (
           <iframe
-            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.5!2d${longitude}!3d${latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e8b0b0b0b0b0b%3A0x0!2s5PJ6%2BVGH%20Balaji%20complex%2C%20Ruchi%20Township%2C%20Kavas%2C%20Limla%2C%20Gujarat%20394510!5e0!3m2!1sen!2sin!4v1640000000000!5m2!1sen!2sin`}
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.123!2d72.7614!3d21.3321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s5PJ6%2BVGH!5e0!3m2!1sen!2sin!4v1640995200000!5m2!1sen!2sin"
             width="100%"
             height="100%"
             style={{ border: 0 }}
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title="PRAYAN Spices Location"
+            title="PRAYAN Spices Location - 5PJ6+VGH"
             onError={handleMapError}
           />
         ) : (
@@ -50,7 +50,7 @@ const GoogleMap: React.FC = () => {
                 Balaji Complex, Ruchi Township<br />
                 Kavas, Limla, Gujarat 394510
               </p>
-              <Button onClick={openInGoogleMaps} className="bg-orange-600 hover:bg-orange-700">
+              <Button onClick={() => window.open('https://maps.google.com/maps?q=5PJ6%2BVGH', '_blank')} className="bg-orange-600 hover:bg-orange-700">
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Open in Google Maps
               </Button>
@@ -67,9 +67,36 @@ const GoogleMap: React.FC = () => {
             </div>
             <p className="text-xs text-gray-600">Balaji Complex, Ruchi Township</p>
             <p className="text-xs text-gray-600">Kavas, Limla, Gujarat</p>
+            <p className="text-xs font-mono text-orange-600 mt-1">📍 5PJ6+VGH</p>
           </div>
         )}
       </div>
+
+      {/* Plus Code Highlight */}
+      <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+        <CardContent className="p-4">
+          <div className="text-center">
+            <h4 className="font-semibold text-gray-800 mb-2 flex items-center justify-center gap-2">
+              <MapPin className="w-5 h-5 text-blue-600" />
+              Exact Location
+            </h4>
+            <div className="bg-white rounded-lg p-3 border border-blue-200">
+              <p className="text-2xl font-mono font-bold text-blue-600 mb-1">5PJ6+VGH</p>
+              <p className="text-sm text-gray-600">Google Plus Code for precise navigation</p>
+              <Button 
+                size="sm" 
+                className="mt-2 bg-blue-600 hover:bg-blue-700"
+                onClick={() => {
+                  navigator.clipboard.writeText('5PJ6+VGH');
+                  alert('Plus Code copied to clipboard!');
+                }}
+              >
+                Copy Plus Code
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Action Buttons */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -103,6 +130,7 @@ const GoogleMap: React.FC = () => {
                 PRAYAN Royal Spice Emporium<br />
                 Balaji Complex, Ruchi Township<br />
                 Kavas, Limla, Gujarat 394510<br />
+                <span className="font-mono text-orange-600">📍 Plus Code: 5PJ6+VGH</span><br />
                 India
               </p>
             </div>
@@ -159,28 +187,28 @@ const GoogleMap: React.FC = () => {
             <Button 
               variant="outline" 
               size="sm"
-              onClick={() => window.open(`https://maps.google.com/maps?q=${encodedAddress}`, '_blank')}
+              onClick={() => window.open('https://maps.google.com/maps?q=5PJ6%2BVGH', '_blank')}
             >
               Google Maps
             </Button>
             <Button 
               variant="outline" 
               size="sm"
-              onClick={() => window.open(`https://www.bing.com/maps?q=${encodedAddress}`, '_blank')}
+              onClick={() => window.open('https://www.bing.com/maps?q=5PJ6%2BVGH', '_blank')}
             >
               Bing Maps
             </Button>
             <Button 
               variant="outline" 
               size="sm"
-              onClick={() => window.open(`https://maps.apple.com/?q=${encodedAddress}`, '_blank')}
+              onClick={() => window.open('https://maps.apple.com/?q=5PJ6%2BVGH', '_blank')}
             >
               Apple Maps
             </Button>
             <Button 
               variant="outline" 
               size="sm"
-              onClick={() => window.open(`https://waze.com/ul?q=${encodedAddress}`, '_blank')}
+              onClick={() => window.open('https://waze.com/ul?q=5PJ6%2BVGH', '_blank')}
             >
               Waze
             </Button>
