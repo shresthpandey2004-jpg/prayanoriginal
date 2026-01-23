@@ -5,12 +5,12 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const GoogleMap: React.FC = () => {
   const [mapError, setMapError] = useState(false);
-  const address = "Balaji Complex, Kawas, Surat – 394510, Gujarat, India";
+  const address = "5PJ6+VGH Balaji complex, Ruchi Township, Kavas, Limla, Gujarat 394510";
   const encodedAddress = encodeURIComponent(address);
   
-  // Coordinates for Kawas, Surat (approximate)
-  const latitude = 21.3099;
-  const longitude = 72.7757;
+  // Coordinates for the exact location (Plus Code: 5PJ6+VGH)
+  const latitude = 21.3321;
+  const longitude = 72.7614;
   
   const openInGoogleMaps = () => {
     window.open(`https://maps.google.com/maps?q=${encodedAddress}`, '_blank');
@@ -30,7 +30,7 @@ const GoogleMap: React.FC = () => {
       <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg bg-gray-100">
         {!mapError ? (
           <iframe
-            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.8!2d${longitude}!3d${latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjHCsDE4JzM2LjAiTiA3MsKwNDYnMzIuNSJF!5e0!3m2!1sen!2sin!4v1640000000000!5m2!1sen!2sin`}
+            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.5!2d${longitude}!3d${latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e8b0b0b0b0b0b%3A0x0!2s5PJ6%2BVGH%20Balaji%20complex%2C%20Ruchi%20Township%2C%20Kavas%2C%20Limla%2C%20Gujarat%20394510!5e0!3m2!1sen!2sin!4v1640000000000!5m2!1sen!2sin`}
             width="100%"
             height="100%"
             style={{ border: 0 }}
@@ -47,8 +47,8 @@ const GoogleMap: React.FC = () => {
               <MapPin className="w-12 h-12 text-orange-600 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-800 mb-2">PRAYAN Spices Location</h3>
               <p className="text-gray-600 mb-4">
-                Balaji Complex, Kawas<br />
-                Surat – 394510, Gujarat, India
+                Balaji Complex, Ruchi Township<br />
+                Kavas, Limla, Gujarat 394510
               </p>
               <Button onClick={openInGoogleMaps} className="bg-orange-600 hover:bg-orange-700">
                 <ExternalLink className="w-4 h-4 mr-2" />
@@ -65,8 +65,8 @@ const GoogleMap: React.FC = () => {
               <MapPin className="w-4 h-4 text-orange-600" />
               <span className="font-semibold text-gray-800">PRAYAN Spices</span>
             </div>
-            <p className="text-xs text-gray-600">Balaji Complex, Kawas</p>
-            <p className="text-xs text-gray-600">Surat, Gujarat</p>
+            <p className="text-xs text-gray-600">Balaji Complex, Ruchi Township</p>
+            <p className="text-xs text-gray-600">Kavas, Limla, Gujarat</p>
           </div>
         )}
       </div>
@@ -101,8 +101,8 @@ const GoogleMap: React.FC = () => {
               </h4>
               <p className="text-sm text-gray-700">
                 PRAYAN Royal Spice Emporium<br />
-                Balaji Complex, Kawas<br />
-                Surat – 394510, Gujarat<br />
+                Balaji Complex, Ruchi Township<br />
+                Kavas, Limla, Gujarat 394510<br />
                 India
               </p>
             </div>
@@ -142,10 +142,11 @@ const GoogleMap: React.FC = () => {
         <CardContent className="p-4">
           <h4 className="font-semibold text-gray-800 mb-3">Nearby Landmarks</h4>
           <div className="space-y-2 text-sm text-gray-600">
-            <p>• Near Kawas GIDC Industrial Area</p>
-            <p>• 5 minutes from Kawas Railway Station</p>
+            <p>• Near Kavas GIDC Industrial Area</p>
+            <p>• 5 minutes from Kavas Railway Station</p>
             <p>• Close to Surat-Mumbai Highway</p>
-            <p>• Opposite to Balaji Temple</p>
+            <p>• In Ruchi Township, Limla</p>
+            <p>• Plus Code: 5PJ6+VGH</p>
           </div>
         </CardContent>
       </Card>

@@ -9,12 +9,13 @@ export const BUSINESS_CONFIG = {
   
   // Business Address
   address: {
-    street: "Shop No. 15, Spice Market Complex",
-    area: "Khari Baoli",
-    city: "Delhi",
-    state: "Delhi",
-    pincode: "110006",
-    country: "India"
+    street: "Balaji Complex, Ruchi Township",
+    area: "Kavas, Limla",
+    city: "Surat",
+    state: "Gujarat",
+    pincode: "394510",
+    country: "India",
+    plusCode: "5PJ6+VGH"
   },
   
   // Business Hours
@@ -34,17 +35,20 @@ export const BUSINESS_CONFIG = {
     standardDeliveryCharge: 50,
     expressDeliveryCharge: 100,
     deliveryAreas: [
-      { pincode: "110001", area: "Delhi Cantt", charge: 30 },
-      { pincode: "110002", area: "Delhi GPO", charge: 30 },
-      { pincode: "110003", area: "New Delhi", charge: 40 },
-      { pincode: "110004", area: "Rashtrapati Bhawan", charge: 40 },
-      { pincode: "110005", area: "Karol Bagh", charge: 50 },
-      { pincode: "110006", area: "Khari Baoli", charge: 30 },
-      { pincode: "110007", area: "Daryaganj", charge: 40 },
-      { pincode: "110008", area: "New Delhi GPO", charge: 40 },
-      { pincode: "110009", area: "Connaught Place", charge: 50 },
-      { pincode: "110010", area: "Gole Market", charge: 50 },
-      // Add more pincodes as needed
+      { pincode: "394510", area: "Kavas, Limla", charge: 0 }, // Local area - free delivery
+      { pincode: "394511", area: "Kavas GIDC", charge: 30 },
+      { pincode: "394512", area: "Kavas Industrial", charge: 30 },
+      { pincode: "395001", area: "Surat City", charge: 50 },
+      { pincode: "395002", area: "Surat Railway Station", charge: 50 },
+      { pincode: "395003", area: "Surat Textile Market", charge: 60 },
+      { pincode: "395004", area: "Surat Diamond Market", charge: 60 },
+      { pincode: "395005", area: "Surat Hazira", charge: 70 },
+      { pincode: "395006", area: "Surat Udhna", charge: 60 },
+      { pincode: "395007", area: "Surat Katargam", charge: 70 },
+      { pincode: "395008", area: "Surat Varachha", charge: 80 },
+      { pincode: "395009", area: "Surat Adajan", charge: 70 },
+      { pincode: "395010", area: "Surat Vesu", charge: 80 },
+      // Add more Gujarat pincodes as needed
     ]
   },
   
@@ -59,7 +63,7 @@ export const BUSINESS_CONFIG = {
   // Business Info
   info: {
     name: "Prayan Royal Spice Emporium",
-    tagline: "Pure Taste, Pure Emotions",
+    tagline: "Swad Ki Nayi Yatra",
     description: "Premium quality Indian spices sourced directly from farmers across India",
     gst: "07XXXXX1234X1ZX", // Replace with actual GST number
     fssai: "12345678901234" // Replace with actual FSSAI number
