@@ -206,9 +206,16 @@ const AdminOrders = () => {
               <Button onClick={testFirebaseConnection} variant="outline">
                 Test Firebase
               </Button>
-              <Button onClick={loadOrders} disabled={loading}>
+              <Button 
+                onClick={() => {
+                  console.log('Force refreshing from Firebase...');
+                  loadOrders();
+                }} 
+                disabled={loading}
+                variant="secondary"
+              >
                 <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-                Refresh
+                Force Refresh
               </Button>
               <Button onClick={handleLogout} variant="destructive">
                 <LogOut className="w-4 h-4 mr-2" />
