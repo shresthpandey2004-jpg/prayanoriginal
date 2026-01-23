@@ -132,6 +132,8 @@ const Loyalty = () => {
       });
     }
   };
+
+  if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center">
         <Card className="w-full max-w-md">
@@ -152,8 +154,6 @@ const Loyalty = () => {
       </div>
     );
   }
-
-  if (!isAuthenticated) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 py-8">

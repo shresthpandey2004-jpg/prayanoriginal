@@ -195,6 +195,8 @@ export const LoyaltyProvider: React.FC<{ children: ReactNode }> = ({ children })
       setIsLoading(false);
     }
   };
+
+  const awardBonus = (points: number, reason: string): void => {
     if (!user?.id) return;
     
     setIsLoading(true);

@@ -303,6 +303,37 @@ export const canRedeemPoints = (userId: string, points: number): boolean => {
   return stats.totalPoints >= points && points >= 100; // Minimum 100 points to redeem
 };
 
+export const redeemLoyaltyPoints = (
+  userId: string,
+  points: number,
+  rewardId: string,
+  orderId?: string
+): boolean => {
+  if (!canRedeemPoints(userId, points)) {
+    console.log('❌ Cannot redeem points: insufficient balance');
+    return false;
+  }
+
+  const reward = LOYALTY_REWARDS.find(r => r.id === rewardId);
+  if (!reward) {
+    console.log('❌ Reward not found');
+    return false;
+  }
+
+  // Add redemption transaction
+  addLoyaltyTransaction(
+    userId,
+    'redeemed',
+    points,
+    `Redeemed ${reward.name}`,
+    orderId,
+    { rewardType: reward.type }
+  );
+
+  console.log('✅ Points redeemed successfully');
+  return true;
+};
+
 export const redeemCustomPoints = (
   userId: string,
   points: number,
