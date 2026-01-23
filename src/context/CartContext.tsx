@@ -10,6 +10,13 @@ export interface CartItem {
   weight: string;
 }
 
+interface DiscountCode {
+  code: string;
+  discount: number;
+  type: 'percentage' | 'fixed';
+  minAmount?: number;
+}
+
 interface CartContextType {
   items: CartItem[];
   addToCart: (item: Omit<CartItem, 'quantity'>) => void;
@@ -20,7 +27,36 @@ interface CartContextType {
   totalPrice: number;
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
+  discountCode: string;
+  discountAmount: number;
+  applyDiscountCode: (code: string) => boolean;
+  removeDiscountCode: () => void;
+  finalPrice: number;
+  isFreeShipping: boolean;
 }
+
+const DISCOUNT_CODES: DiscountCode[] = [
+  {
+    code: 'PRAYAN10',
+    discount: 10,
+    type: 'percentage',
+    minAmount: 0
+  },
+  {
+    code: 'WELCOME20',
+    discount: 20,
+    type: 'percentage',
+    minAmount: 500
+  },
+  {
+    code: 'SAVE50',
+    discount: 50,
+    type: 'fixed',
+    minAmount: 300
+  }
+];
+
+const FREE_SHIPPING_THRESHOLD = 499;
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -30,10 +66,64 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return saved ? JSON.parse(saved) : [];
   });
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [discountCode, setDiscountCode] = useState<string>(() => {
+    return localStorage.getItem('prayan-discount-code') || '';
+  });
+  const [discountAmount, setDiscountAmount] = useState<number>(0);
 
   useEffect(() => {
     localStorage.setItem('prayan-cart', JSON.stringify(items));
   }, [items]);
+
+  useEffect(() => {
+    localStorage.setItem('prayan-discount-code', discountCode);
+    calculateDiscount();
+  }, [discountCode, items]);
+
+  const calculateDiscount = () => {
+    if (!discountCode) {
+      setDiscountAmount(0);
+      return;
+    }
+
+    const code = DISCOUNT_CODES.find(c => c.code.toLowerCase() === discountCode.toLowerCase());
+    if (!code) {
+      setDiscountAmount(0);
+      return;
+    }
+
+    const subtotal = totalPrice;
+    if (code.minAmount && subtotal < code.minAmount) {
+      setDiscountAmount(0);
+      return;
+    }
+
+    if (code.type === 'percentage') {
+      setDiscountAmount(Math.round((subtotal * code.discount) / 100));
+    } else {
+      setDiscountAmount(code.discount);
+    }
+  };
+
+  const applyDiscountCode = (code: string): boolean => {
+    const validCode = DISCOUNT_CODES.find(c => c.code.toLowerCase() === code.toLowerCase());
+    if (!validCode) {
+      return false;
+    }
+
+    const subtotal = totalPrice;
+    if (validCode.minAmount && subtotal < validCode.minAmount) {
+      return false;
+    }
+
+    setDiscountCode(code.toUpperCase());
+    return true;
+  };
+
+  const removeDiscountCode = () => {
+    setDiscountCode('');
+    setDiscountAmount(0);
+  };
 
   const addToCart = (item: Omit<CartItem, 'quantity'>) => {
     setItems(prev => {
@@ -64,10 +154,14 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const clearCart = () => {
     setItems([]);
+    setDiscountCode('');
+    setDiscountAmount(0);
   };
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const finalPrice = Math.max(0, totalPrice - discountAmount);
+  const isFreeShipping = totalPrice >= FREE_SHIPPING_THRESHOLD;
 
   return (
     <CartContext.Provider
@@ -81,6 +175,12 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         totalPrice,
         isCartOpen,
         setIsCartOpen,
+        discountCode,
+        discountAmount,
+        applyDiscountCode,
+        removeDiscountCode,
+        finalPrice,
+        isFreeShipping,
       }}
     >
       {children}

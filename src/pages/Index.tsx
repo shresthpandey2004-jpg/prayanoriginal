@@ -3,6 +3,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/cart/CartDrawer';
 import WhatsAppChatWidget from '@/components/common/WhatsAppChatWidget';
+import PromoBanner from '@/components/PromoBanner';
 import HeroSection from '@/components/home/HeroSection';
 import NewLaunchSection from '@/components/home/NewLaunchSection';
 import BestSellersSection from '@/components/home/BestSellersSection';
@@ -16,6 +17,7 @@ const Index: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <PromoBanner />
       <CartDrawer />
       
       <main>

@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/cart/CartDrawer';
 import WhatsAppButton from '@/components/common/WhatsAppButton';
+import PromoBanner from '@/components/PromoBanner';
 import { products } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
@@ -29,6 +30,7 @@ const ShopAll: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-yellow-50">
       <Header />
+      <PromoBanner />
       <CartDrawer />
 
       {/* Hero Section */}

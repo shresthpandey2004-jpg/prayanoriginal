@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/cart/CartDrawer';
 import WhatsAppButton from '@/components/common/WhatsAppButton';
+import PromoBanner from '@/components/PromoBanner';
 import ProductCard from '@/components/product/ProductCard';
 import { products, categories } from '@/data/products';
 import { useSearch } from '@/hooks/useSearch';
@@ -43,6 +44,7 @@ const Shop: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <PromoBanner />
       <CartDrawer />
 
       {/* Hero */}

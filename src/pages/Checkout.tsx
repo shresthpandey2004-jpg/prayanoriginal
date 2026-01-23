@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowLeft, Phone, MapPin, User, CreditCard, Wallet } from 'lucide-react';
+import { ArrowLeft, Phone, MapPin, User, CreditCard, Wallet, Tag, Gift, Percent } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from '@/hooks/use-toast';
 
@@ -27,11 +27,23 @@ interface CustomerDetails {
 }
 
 const Checkout = () => {
-  const { items, totalPrice, clearCart } = useCart();
+  const { 
+    items, 
+    totalPrice, 
+    finalPrice, 
+    discountCode, 
+    discountAmount, 
+    applyDiscountCode, 
+    removeDiscountCode, 
+    isFreeShipping, 
+    clearCart 
+  } = useCart();
   const { addOrder } = useOrders();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [deliveryInfo, setDeliveryInfo] = useState({ charge: 0, isFree: false, area: '', estimatedDays: '' });
+  const [promoCode, setPromoCode] = useState('');
+  const [promoError, setPromoError] = useState('');
   
   const [customerDetails, setCustomerDetails] = useState<CustomerDetails>({
     name: '',
@@ -49,12 +61,45 @@ const Checkout = () => {
   // Calculate delivery charges when pincode changes
   useEffect(() => {
     if (customerDetails.pincode && /^\d{6}$/.test(customerDetails.pincode)) {
-      const delivery = calculateDeliveryCharge(customerDetails.pincode, totalPrice);
-      setDeliveryInfo(delivery);
+      const delivery = calculateDeliveryCharge(customerDetails.pincode, finalPrice);
+      // Override delivery charge if free shipping is unlocked
+      if (isFreeShipping) {
+        setDeliveryInfo({ ...delivery, charge: 0, isFree: true });
+      } else {
+        setDeliveryInfo(delivery);
+      }
     } else {
       setDeliveryInfo({ charge: 0, isFree: false, area: '', estimatedDays: '' });
     }
-  }, [customerDetails.pincode, totalPrice]);
+  }, [customerDetails.pincode, finalPrice, isFreeShipping]);
+
+  const handleApplyPromoCode = () => {
+    if (!promoCode.trim()) {
+      setPromoError('Please enter a promo code');
+      return;
+    }
+
+    const success = applyDiscountCode(promoCode.trim());
+    if (success) {
+      setPromoError('');
+      setPromoCode('');
+      toast({
+        title: "Promo code applied! 🎉",
+        description: `You saved ₹${discountAmount} with code ${promoCode.toUpperCase()}`,
+      });
+    } else {
+      setPromoError('Invalid promo code or minimum amount not met');
+    }
+  };
+
+  const handleRemovePromoCode = () => {
+    removeDiscountCode();
+    setPromoError('');
+    toast({
+      title: "Promo code removed",
+      description: "You can apply a different code if you have one",
+    });
+  };
 
   const validateForm = () => {
     const newErrors: Partial<CustomerDetails> = {};
@@ -80,6 +125,8 @@ const Checkout = () => {
       `• ${item.name} (${item.weight}) - ₹${item.price} x ${item.quantity} = ₹${item.price * item.quantity}`
     ).join('\n');
 
+    const finalAmount = finalPrice + deliveryInfo.charge;
+
     return `🌶️ *नया ऑर्डर - प्रयाण मसाले*
 
 📋 *Order ID:* ${orderId}
@@ -96,7 +143,12 @@ ${customerDetails.city}, ${customerDetails.pincode}
 🛒 *Order Items:*
 ${itemsList}
 
-💰 *Total Amount:* ₹${totalPrice}
+💰 *Pricing Details:*
+Subtotal: ₹${totalPrice}${discountAmount > 0 ? `
+Discount (${discountCode}): -₹${discountAmount}` : ''}
+Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${deliveryInfo.charge}`}
+*Final Amount: ₹${finalAmount}*
+
 💳 *Payment Method:* ${customerDetails.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Online Payment'}
 
 📝 *Special Notes:* ${customerDetails.notes || 'None'}
@@ -135,7 +187,7 @@ ${itemsList}
 
     try {
       const orderId = generateOrderId();
-      const totalAmount = totalPrice + deliveryInfo.charge;
+      const totalAmount = finalPrice + deliveryInfo.charge;
 
       // Handle payment based on method
       if (customerDetails.paymentMethod === 'online') {
@@ -431,14 +483,37 @@ ${itemsList}
                     <span>Subtotal</span>
                     <span>₹{totalPrice}</span>
                   </div>
+                  
+                  {/* Discount Section */}
+                  {discountAmount > 0 && (
+                    <div className="flex justify-between text-green-600">
+                      <span className="flex items-center gap-1">
+                        <Percent className="w-4 h-4" />
+                        Discount ({discountCode})
+                      </span>
+                      <span>-₹{discountAmount}</span>
+                    </div>
+                  )}
+                  
                   <div className="flex justify-between">
                     <span>Delivery Charges</span>
-                    {deliveryInfo.isFree ? (
-                      <span className="text-green-600">FREE</span>
+                    {deliveryInfo.isFree || isFreeShipping ? (
+                      <span className="text-green-600 flex items-center gap-1">
+                        <Gift className="w-4 h-4" />
+                        FREE
+                      </span>
                     ) : (
                       <span>₹{deliveryInfo.charge}</span>
                     )}
                   </div>
+                  
+                  {isFreeShipping && (
+                    <div className="flex justify-between text-sm text-green-600">
+                      <span>🎉 Free shipping unlocked!</span>
+                      <span>You saved ₹{deliveryInfo.charge || 50}</span>
+                    </div>
+                  )}
+                  
                   {deliveryInfo.area && (
                     <div className="flex justify-between text-sm text-gray-600">
                       <span>Delivery Area</span>
@@ -451,10 +526,63 @@ ${itemsList}
                       <span>{getEstimatedDeliveryDate(customerDetails.pincode)}</span>
                     </div>
                   )}
+                  
                   <Separator />
+                  
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total</span>
-                    <span>₹{totalPrice + deliveryInfo.charge}</span>
+                    <span>₹{finalPrice + deliveryInfo.charge}</span>
+                  </div>
+                  
+                  {/* Promo Code Section */}
+                  <div className="pt-4 border-t border-gray-200">
+                    {!discountCode ? (
+                      <div className="space-y-3">
+                        <Label className="text-sm font-medium flex items-center gap-2">
+                          <Tag className="w-4 h-4" />
+                          Have a promo code?
+                        </Label>
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder="Enter code (e.g., PRAYAN10)"
+                            value={promoCode}
+                            onChange={(e) => {
+                              setPromoCode(e.target.value.toUpperCase());
+                              setPromoError('');
+                            }}
+                            className="flex-1"
+                          />
+                          <Button 
+                            variant="outline" 
+                            onClick={handleApplyPromoCode}
+                            disabled={!promoCode.trim()}
+                          >
+                            Apply
+                          </Button>
+                        </div>
+                        {promoError && (
+                          <p className="text-red-500 text-sm">{promoError}</p>
+                        )}
+                        <div className="text-xs text-gray-500">
+                          💡 Try: PRAYAN10 for 10% off
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-between bg-green-50 p-3 rounded-lg">
+                        <div className="flex items-center gap-2 text-green-700">
+                          <Gift className="w-4 h-4" />
+                          <span className="font-medium">{discountCode} applied!</span>
+                        </div>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={handleRemovePromoCode}
+                          className="text-green-700 hover:text-green-800"
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -468,8 +596,8 @@ ${itemsList}
                     customerDetails.paymentMethod === 'online' ? 'Processing Payment...' : 'Placing Order...'
                   ) : (
                     customerDetails.paymentMethod === 'online' 
-                      ? `Pay ₹${totalPrice + deliveryInfo.charge} - Razorpay`
-                      : `Place Order - ₹${totalPrice + deliveryInfo.charge}`
+                      ? `Pay ₹${finalPrice + deliveryInfo.charge} - Razorpay`
+                      : `Place Order - ₹${finalPrice + deliveryInfo.charge}`
                   )}
                 </Button>
 
