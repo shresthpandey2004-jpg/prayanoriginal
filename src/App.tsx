@@ -37,11 +37,13 @@ import Contact from "./pages/Contact";
 import ShippingPolicy from "./pages/ShippingPolicy";
 import FAQs from "./pages/FAQs";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
 import Blog from "./pages/Blog";
 import BulkOrders from "./pages/BulkOrders";
 import NotFound from "./pages/NotFound";
 import TestReferral from "./pages/TestReferral";
 import TestLoyalty from "./pages/TestLoyalty";
+import TestAuth from "./pages/TestAuth";
 import MobileBottomNav from "./components/mobile/MobileBottomNav";
 import PWAInstallPrompt from "./components/mobile/PWAInstallPrompt";
 
@@ -326,6 +328,7 @@ const App = () => {
                               <Route path="/admin-login" element={<AdminLogin />} />
                               <Route path="/test-referral" element={<TestReferral />} />
                               <Route path="/test-loyalty" element={<TestLoyalty />} />
+                              <Route path="/test-auth" element={<TestAuth />} />
                               <Route path="*" element={<NotFound />} />
                             </Routes>
                             

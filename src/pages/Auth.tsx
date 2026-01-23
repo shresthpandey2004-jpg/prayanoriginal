@@ -9,6 +9,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowLeft, Eye, EyeOff, User, Mail, Phone, Lock, Gift } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { processReferralRegistration } from '@/utils/referralUtils';
+import { validateEmailFormat, validatePhoneFormat, normalizePhone } from '@/utils/authUtils';
+
+  const from = location.state?.from?.pathname || '/';
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -26,8 +29,35 @@ const Auth = () => {
     referralCode: ''
   });
   const [errors, setErrors] = useState<any>({});
+  const [realTimeValidation, setRealTimeValidation] = useState<any>({});
 
-  const from = location.state?.from?.pathname || '/';
+  // Real-time validation for email and phone
+  const checkEmailAvailability = (email: string) => {
+    if (!email || !validateEmailFormat(email)) return;
+    
+    const users = JSON.parse(localStorage.getItem('prayan-users') || '[]');
+    const existingUser = users.find((u: any) => 
+      u.email.toLowerCase() === email.toLowerCase()
+    );
+    
+    setRealTimeValidation(prev => ({
+      ...prev,
+      email: existingUser ? 'This email is already registered' : 'Email is available'
+    }));
+  };
+
+  const checkPhoneAvailability = (phone: string) => {
+    const normalizedPhone = normalizePhone(phone);
+    if (!normalizedPhone || !validatePhoneFormat(normalizedPhone)) return;
+    
+    const users = JSON.parse(localStorage.getItem('prayan-users') || '[]');
+    const existingUser = users.find((u: any) => u.phone === normalizedPhone);
+    
+    setRealTimeValidation(prev => ({
+      ...prev,
+      phone: existingUser ? 'This phone number is already registered' : 'Phone number is available'
+    }));
+  };
 
   // Check for referral code in URL parameters
   useEffect(() => {
@@ -48,22 +78,47 @@ const Auth = () => {
 
   const validateRegister = () => {
     const newErrors: any = {};
-    if (!registerData.name.trim()) newErrors.name = 'Name is required';
-    if (!registerData.email) newErrors.email = 'Email is required';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(registerData.email)) {
-      newErrors.email = 'Invalid email format';
+    
+    // Name validation
+    if (!registerData.name.trim()) {
+      newErrors.name = 'Name is required';
+    } else if (registerData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
     }
-    if (!registerData.phone) newErrors.phone = 'Phone number is required';
-    if (!/^[6-9]\d{9}$/.test(registerData.phone)) {
-      newErrors.phone = 'Invalid phone number';
+    
+    // Email validation
+    if (!registerData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!validateEmailFormat(registerData.email)) {
+      newErrors.email = 'Please enter a valid email address';
     }
-    if (!registerData.password) newErrors.password = 'Password is required';
-    if (registerData.password.length < 6) {
+    
+    // Phone validation
+    if (!registerData.phone) {
+      newErrors.phone = 'Phone number is required';
+    } else {
+      const normalizedPhone = normalizePhone(registerData.phone);
+      if (!validatePhoneFormat(normalizedPhone)) {
+        newErrors.phone = 'Please enter a valid 10-digit Indian mobile number (starting with 6-9)';
+      }
+    }
+    
+    // Password validation
+    if (!registerData.password) {
+      newErrors.password = 'Password is required';
+    } else if (registerData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
+    } else if (!/(?=.*[a-z])(?=.*[A-Z])|(?=.*\d)/.test(registerData.password)) {
+      newErrors.password = 'Password should contain at least one uppercase letter or number';
     }
-    if (registerData.password !== registerData.confirmPassword) {
+    
+    // Confirm password validation
+    if (!registerData.confirmPassword) {
+      newErrors.confirmPassword = 'Please confirm your password';
+    } else if (registerData.password !== registerData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
     }
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -92,7 +147,7 @@ const Auth = () => {
     e.preventDefault();
     if (!validateRegister()) return;
 
-    const success = await register({
+    const result = await register({
       name: registerData.name,
       email: registerData.email,
       phone: registerData.phone,
@@ -100,7 +155,7 @@ const Auth = () => {
       referralCode: registerData.referralCode.trim()
     });
 
-    if (success) {
+    if (result.success) {
       // Process referral code if provided
       if (registerData.referralCode.trim()) {
         console.log('🎯 Starting referral processing...');
@@ -137,9 +192,10 @@ const Auth = () => {
       
       navigate(from, { replace: true });
     } else {
+      // Show specific error message
       toast({
         title: "Registration failed",
-        description: "Email already exists. Please try logging in instead.",
+        description: result.error || "Something went wrong. Please try again.",
         variant: "destructive"
       });
     }
@@ -256,11 +312,25 @@ const Auth = () => {
                         type="email"
                         placeholder="your.email@example.com"
                         value={registerData.email}
-                        onChange={(e) => setRegisterData(prev => ({ ...prev, email: e.target.value }))}
+                        onChange={(e) => {
+                          setRegisterData(prev => ({ ...prev, email: e.target.value }));
+                          // Clear previous validation
+                          setRealTimeValidation(prev => ({ ...prev, email: null }));
+                        }}
+                        onBlur={(e) => checkEmailAvailability(e.target.value)}
                         className={`pl-10 ${errors.email ? 'border-red-500' : ''}`}
                       />
                     </div>
                     {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                    {realTimeValidation.email && (
+                      <p className={`text-sm mt-1 ${
+                        realTimeValidation.email.includes('available') 
+                          ? 'text-green-600' 
+                          : 'text-red-500'
+                      }`}>
+                        {realTimeValidation.email}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -269,13 +339,31 @@ const Auth = () => {
                       <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                       <Input
                         id="register-phone"
-                        placeholder="10-digit mobile number"
+                        placeholder="10-digit mobile number (e.g., 9876543210)"
                         value={registerData.phone}
-                        onChange={(e) => setRegisterData(prev => ({ ...prev, phone: e.target.value }))}
+                        onChange={(e) => {
+                          // Allow only numbers and limit to 10 digits
+                          const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                          setRegisterData(prev => ({ ...prev, phone: value }));
+                          // Clear previous validation
+                          setRealTimeValidation(prev => ({ ...prev, phone: null }));
+                        }}
+                        onBlur={(e) => checkPhoneAvailability(e.target.value)}
                         className={`pl-10 ${errors.phone ? 'border-red-500' : ''}`}
+                        maxLength={10}
                       />
                     </div>
                     {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+                    {realTimeValidation.phone && (
+                      <p className={`text-sm mt-1 ${
+                        realTimeValidation.phone.includes('available') 
+                          ? 'text-green-600' 
+                          : 'text-red-500'
+                      }`}>
+                        {realTimeValidation.phone}
+                      </p>
+                    )}
+                    <p className="text-xs text-gray-500 mt-1">Enter 10-digit mobile number starting with 6, 7, 8, or 9</p>
                   </div>
 
                   <div>
