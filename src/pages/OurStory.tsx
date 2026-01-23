@@ -19,27 +19,27 @@ const OurStory = () => {
 
   const milestones = [
     {
-      year: "1985",
+      year: "2024",
       title: "The Beginning",
-      description: "Started as a small family business in the heart of India, grinding spices by hand with traditional stone mills.",
+      description: "Started PRAYAN as a premium spice brand, focusing on quality and authentic flavors for modern kitchens.",
       icon: <Sparkles className="w-6 h-6" />
     },
     {
-      year: "1995",
-      title: "First Export",
-      description: "Expanded internationally, bringing authentic Indian flavors to kitchens around the world.",
+      year: "Today",
+      title: "Quality Focus",
+      description: "Committed to sourcing the finest spices and delivering fresh, pure products to our customers.",
+      icon: <Award className="w-6 h-6" />
+    },
+    {
+      year: "Future",
+      title: "Growth Vision",
+      description: "Expanding our reach to bring authentic Indian spices to more households across the country.",
       icon: <MapPin className="w-6 h-6" />
     },
     {
-      year: "2010",
-      title: "Organic Certification",
-      description: "Became certified organic, ensuring pure and natural spices for health-conscious customers.",
-      icon: <Leaf className="w-6 h-6" />
-    },
-    {
-      year: "2020",
-      title: "Digital Revolution",
-      description: "Launched online platform, making premium spices accessible to every Indian household.",
+      year: "Always",
+      title: "Customer First",
+      description: "Building trust through transparency, quality products, and excellent customer service.",
       icon: <Star className="w-6 h-6" />
     }
   ];
@@ -57,8 +57,8 @@ const OurStory = () => {
     },
     {
       icon: <Users className="w-8 h-8" />,
-      title: "Family Legacy",
-      description: "Four generations of spice expertise, passing down traditional knowledge and authentic recipes."
+      title: "Customer Trust",
+      description: "Building lasting relationships with our customers through honest business practices and quality products."
     },
     {
       icon: <Leaf className="w-8 h-8" />,
@@ -97,8 +97,8 @@ const OurStory = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.8 }}
           >
-            A journey of <span className="font-semibold text-orange-600">four generations</span>, 
-            bringing authentic Indian flavors to your kitchen with love, tradition, and premium quality.
+            A journey of <span className="font-semibold text-orange-600">passion and quality</span>, 
+            bringing authentic Indian flavors to your kitchen with dedication, freshness, and premium standards.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -175,7 +175,7 @@ const OurStory = () => {
             </p>
             <div className="mt-8 text-center">
               <span className="inline-block px-4 py-2 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
-                🌟 Established 1985 • Family Legacy • Premium Quality 🌟
+                🌟 Fresh & Authentic • Quality Promise • Premium Spices 🌟
               </span>
             </div>
           </motion.div>

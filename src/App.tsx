@@ -88,7 +88,7 @@ const TermsConditions = () => {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-gray-800">PRAYAN Spices Pvt. Ltd.</h2>
-                  <p className="text-orange-600 font-medium">Established 1985 • Trusted by Millions</p>
+                  <p className="text-orange-600 font-medium">Premium Quality • Authentic Spices</p>
                 </div>
               </div>
               <p className="text-gray-600 leading-relaxed">
