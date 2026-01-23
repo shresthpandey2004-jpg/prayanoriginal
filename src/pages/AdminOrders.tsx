@@ -43,19 +43,27 @@ const AdminOrders = () => {
     navigate('/admin/login');
   };
 
-  // Test Firebase connection
+  // Test Firebase connection with detailed error logging
   const testFirebaseConnection = async () => {
     try {
       console.log('Testing Firebase connection...');
+      console.log('Firebase config:', {
+        projectId: 'prayanmasale',
+        apiKey: 'AIzaSyCVz6HO-I3Rd-Sh5r5_tgIr1qqSX9DNCw8'
+      });
+      
       const result = await orderService.getAllOrders();
       console.log('Firebase test result:', result);
       
       if (result.success) {
+        console.log('✅ Firebase Connected Successfully');
+        console.log(`📊 Found ${result.orders.length} orders in database`);
         toast({
           title: "Firebase Connected ✅",
           description: `Found ${result.orders.length} orders in database`,
         });
       } else {
+        console.error('❌ Firebase Error:', result.error);
         toast({
           title: "Firebase Error ❌",
           description: result.error,
@@ -63,10 +71,12 @@ const AdminOrders = () => {
         });
       }
     } catch (error) {
-      console.error('Firebase test failed:', error);
+      console.error('❌ Firebase test failed:', error);
+      console.error('Error details:', error.message);
+      console.error('Error code:', error.code);
       toast({
         title: "Firebase Connection Failed ❌",
-        description: "Check console for details",
+        description: `Error: ${error.message}`,
         variant: "destructive"
       });
     }

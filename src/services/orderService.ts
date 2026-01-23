@@ -71,20 +71,30 @@ class OrderService {
     }
   }
 
-  // Get all orders
+  // Get all orders with detailed error logging
   async getAllOrders() {
     try {
+      console.log('🔍 Fetching orders from Firebase...');
+      console.log('📍 Collection path: orders');
+      
       const q = query(this.ordersCollection, orderBy('createdAt', 'desc'));
+      console.log('📋 Query created successfully');
+      
       const querySnapshot = await getDocs(q);
+      console.log('📊 Query executed, processing results...');
       
       const orders: FirebaseOrder[] = [];
       querySnapshot.forEach((doc) => {
+        console.log('📄 Processing document:', doc.id);
         orders.push({ id: doc.id, ...doc.data() } as FirebaseOrder);
       });
       
+      console.log(`✅ Successfully fetched ${orders.length} orders`);
       return { success: true, orders };
     } catch (error) {
-      console.error('Error fetching orders:', error);
+      console.error('❌ Error fetching orders:', error);
+      console.error('❌ Error code:', error.code);
+      console.error('❌ Error message:', error.message);
       return { success: false, error: error.message, orders: [] };
     }
   }
