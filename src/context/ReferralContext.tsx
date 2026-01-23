@@ -42,7 +42,7 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [userReferralCode, setUserReferralCode] = useState(() => {
     if (user) {
       const saved = localStorage.getItem(`prayan-referral-code-${user.id}`);
-      return saved || generateReferralCode();
+      return saved || '';
     }
     return '';
   });
@@ -52,18 +52,30 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
   }, [referrals]);
 
   useEffect(() => {
-    if (user && !userReferralCode) {
-      const code = generateReferralCode();
-      setUserReferralCode(code);
-      localStorage.setItem(`prayan-referral-code-${user.id}`, code);
+    if (user) {
+      const existingCode = localStorage.getItem(`prayan-referral-code-${user.id}`);
+      if (existingCode) {
+        // User already has a code, use it
+        console.log(`Using existing referral code for user ${user.id}: ${existingCode}`);
+        setUserReferralCode(existingCode);
+      } else {
+        // User doesn't have a code, generate new one
+        const newCode = generateReferralCode();
+        console.log(`Generated new referral code for user ${user.id}: ${newCode}`);
+        setUserReferralCode(newCode);
+        localStorage.setItem(`prayan-referral-code-${user.id}`, newCode);
+      }
+    } else {
+      // No user logged in, clear the code
+      setUserReferralCode('');
     }
-  }, [user]);
+  }, [user?.id]); // Only depend on user.id, not the entire user object
 
   function generateReferralCode(): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let result = 'PRAYAN';
     
-    // Add timestamp-based uniqueness
+    // Add timestamp-based uniqueness (use current timestamp)
     const timestamp = Date.now().toString().slice(-4);
     result += timestamp;
     
@@ -78,12 +90,15 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
       localStorage.getItem(`prayan-referral-code-${u.id}`)
     ).filter(Boolean);
     
-    // If code already exists, generate a new one
-    while (existingCodes.includes(result)) {
-      result = 'PRAYAN' + Date.now().toString().slice(-4);
+    // If code already exists, generate a new one with different timestamp
+    let attempts = 0;
+    while (existingCodes.includes(result) && attempts < 10) {
+      const newTimestamp = (Date.now() + attempts).toString().slice(-4);
+      result = 'PRAYAN' + newTimestamp;
       for (let i = 0; i < 2; i++) {
         result += characters.charAt(Math.floor(Math.random() * characters.length));
       }
+      attempts++;
     }
     
     return result;
