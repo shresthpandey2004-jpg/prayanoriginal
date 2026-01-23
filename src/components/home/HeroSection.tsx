@@ -123,19 +123,6 @@ const HeroSection: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 to-transparent" />
               </div>
 
-              {/* Floating Badge */}
-              <div className="absolute -bottom-6 -left-6 bg-card rounded-2xl p-4 shadow-medium border border-border animate-float-delayed">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-gold flex items-center justify-center">
-                    <span className="text-2xl">🏆</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground">Best Quality</p>
-                    <p className="text-xs text-muted-foreground">Award 2024</p>
-                  </div>
-                </div>
-              </div>
-
               {/* Price Tag */}
               <div className="absolute -top-4 -right-4 bg-accent text-accent-foreground rounded-2xl px-6 py-3 shadow-medium animate-float-slow">
                 <p className="text-xs opacity-80">Starting from</p>
