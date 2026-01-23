@@ -621,7 +621,7 @@ Please provide detailed export quotation, FOB/CIF prices, minimum order quantiti
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {[
               {
                 icon: <Phone className="w-8 h-8" />,
@@ -634,12 +634,6 @@ Please provide detailed export quotation, FOB/CIF prices, minimum order quantiti
                 title: "Export Email",
                 info: "export@prayan.com",
                 description: "Quick Response Guaranteed"
-              },
-              {
-                icon: <MapPin className="w-8 h-8" />,
-                title: "Export Office",
-                info: "Mumbai, India",
-                description: "International Trade Hub"
               }
             ].map((contact, index) => (
               <motion.div
