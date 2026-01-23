@@ -78,12 +78,17 @@ ${formData.message}
 ---
 Please respond at your earliest convenience. Thank you!`;
 
-    // WhatsApp number (replace with your business WhatsApp number)
+    // WhatsApp numbers (both primary and secondary)
     const whatsappNumber = '918866658919';
+    const whatsappNumber2 = '919974849812';
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl2 = `https://wa.me/${whatsappNumber2}?text=${encodeURIComponent(message)}`;
     
-    // Open WhatsApp
+    // Open both WhatsApp numbers
     window.open(whatsappUrl, '_blank');
+    setTimeout(() => {
+      window.open(whatsappUrl2, '_blank');
+    }, 1000);
     
     // Reset form
     setFormData({
@@ -106,7 +111,7 @@ Please respond at your earliest convenience. Thank you!`;
       icon: <Phone className="w-8 h-8" />,
       title: "Call Us",
       primary: "+91 88666 58919",
-      secondary: "Mon-Sat, 9 AM - 8 PM",
+      secondary: "+91 99748 49812",
       description: "Speak directly with our spice experts",
       color: "from-green-500 to-emerald-500",
       action: () => window.open('tel:+918866658919')
@@ -115,7 +120,7 @@ Please respond at your earliest convenience. Thank you!`;
       icon: <MessageCircle className="w-8 h-8" />,
       title: "WhatsApp",
       primary: "+91 88666 58919",
-      secondary: "24/7 Quick Response",
+      secondary: "+91 99748 49812",
       description: "Instant support via WhatsApp",
       color: "from-green-600 to-green-500",
       action: () => window.open('https://wa.me/918866658919')

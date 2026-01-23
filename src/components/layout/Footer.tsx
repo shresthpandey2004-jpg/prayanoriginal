@@ -42,6 +42,12 @@ Thank you!`;
                 const whatsappUrl = `https://wa.me/918866658919?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
                 
+                // Also send to second number as backup
+                setTimeout(() => {
+                  const whatsappUrl2 = `https://wa.me/919974849812?text=${encodeURIComponent(message)}`;
+                  window.open(whatsappUrl2, '_blank');
+                }, 1000);
+                
                 // Reset form
                 (e.target as HTMLFormElement).reset();
                 alert('Newsletter subscription sent! We\'ll add you to our mailing list.');
@@ -224,9 +230,14 @@ Thank you!`;
               </li>
               <li className="flex items-center gap-3 text-sm">
                 <Phone size={18} className="text-gold shrink-0" />
-                <a href="tel:+918866658919" className="text-brown-foreground/80 hover:text-gold transition-colors">
-                  +91 88666 58919
-                </a>
+                <div className="flex flex-col gap-1">
+                  <a href="tel:+918866658919" className="text-brown-foreground/80 hover:text-gold transition-colors">
+                    +91 88666 58919
+                  </a>
+                  <a href="tel:+919974849812" className="text-brown-foreground/80 hover:text-gold transition-colors">
+                    +91 99748 49812
+                  </a>
+                </div>
               </li>
               <li className="flex items-center gap-3 text-sm">
                 <Mail size={18} className="text-gold shrink-0" />

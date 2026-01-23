@@ -92,12 +92,17 @@ Surat – 394510, Gujarat, India
 ---
 Please provide detailed export quotation, FOB/CIF prices, minimum order quantities, and shipping terms. Thank you!`;
 
-    // WhatsApp number (replace with your business WhatsApp number)
+    // WhatsApp numbers (both primary and secondary)
     const whatsappNumber = '918866658919';
+    const whatsappNumber2 = '919974849812';
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl2 = `https://wa.me/${whatsappNumber2}?text=${encodeURIComponent(message)}`;
     
-    // Open WhatsApp
+    // Open both WhatsApp numbers
     window.open(whatsappUrl, '_blank');
+    setTimeout(() => {
+      window.open(whatsappUrl2, '_blank');
+    }, 1000);
     
     // Reset form
     setFormData({
@@ -631,7 +636,7 @@ Please provide detailed export quotation, FOB/CIF prices, minimum order quantiti
               {
                 icon: <Phone className="w-8 h-8" />,
                 title: "Export Hotline",
-                info: "+91 88666 58919",
+                info: "+91 88666 58919 / +91 99748 49812",
                 description: "24/7 Export Support"
               },
               {
