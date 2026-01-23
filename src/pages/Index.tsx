@@ -4,7 +4,13 @@ import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/cart/CartDrawer';
 import WhatsAppChatWidget from '@/components/common/WhatsAppChatWidget';
 import HeroSection from '@/components/home/HeroSection';
+import NewLaunchSection from '@/components/home/NewLaunchSection';
 import BestSellersSection from '@/components/home/BestSellersSection';
+import WhyChooseUsSection from '@/components/home/WhyChooseUsSection';
+import EmotionalStorySection from '@/components/home/EmotionalStorySection';
+import RecipesSection from '@/components/home/RecipesSection';
+import LimitedTimeOfferSection from '@/components/home/LimitedTimeOfferSection';
+import TestimonialsSection from '@/components/home/TestimonialsSection';
 
 const Index: React.FC = () => {
   return (
@@ -14,11 +20,18 @@ const Index: React.FC = () => {
       
       <main>
         <HeroSection />
+        <LimitedTimeOfferSection />
+        <NewLaunchSection />
         <BestSellersSection />
+        <WhyChooseUsSection />
+        <EmotionalStorySection />
+        <RecipesSection />
+        <TestimonialsSection />
       </main>
 
       <Footer />
       
+      {/* Only WhatsApp Chat Widget - no duplicate */}
       <WhatsAppChatWidget />
     </div>
   );
