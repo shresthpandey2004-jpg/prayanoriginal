@@ -70,7 +70,7 @@ export const simpleRecipes: SimpleRecipe[] = [
     name: "Chicken Biryani",
     nameHindi: "चिकन बिरयानी",
     description: "Royal Hyderabadi-style aromatic basmati rice layered with tender spiced chicken, cooked to perfection with saffron and dum technique",
-    image: "https://images.unsplash.com/photo-1563379091339-03246963d96c?w=500",
+    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500",
     cookingTime: "90 mins",
     servings: "6 people",
     difficulty: "Hard",
