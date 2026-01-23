@@ -5,7 +5,7 @@ const reviews = [
   {
     id: 1,
     name: 'Priya Sharma',
-    location: 'Mumbai',
+    location: 'Satisfied Customer',
     rating: 5,
     image: 'https://randomuser.me/api/portraits/women/44.jpg',
     review: 'The aroma of PRAYAN spices reminds me of my grandmother\'s kitchen. Absolutely authentic and pure. My biryani has never tasted better!',
@@ -13,7 +13,7 @@ const reviews = [
   {
     id: 2,
     name: 'Rajesh Kumar',
-    location: 'Delhi',
+    location: 'Loyal Customer',
     rating: 5,
     image: 'https://randomuser.me/api/portraits/men/32.jpg',
     review: 'Been using PRAYAN for 5 years now. The quality is unmatched. My family can instantly tell when I use any other brand.',
@@ -21,7 +21,7 @@ const reviews = [
   {
     id: 3,
     name: 'Anita Patel',
-    location: 'Ahmedabad',
+    location: 'Happy Customer',
     rating: 5,
     image: 'https://randomuser.me/api/portraits/women/67.jpg',
     review: 'The Garam Masala is exceptional! You can actually smell the cardamom and cinnamon. Worth every rupee.',
@@ -29,7 +29,7 @@ const reviews = [
   {
     id: 4,
     name: 'Suresh Nair',
-    location: 'Kerala',
+    location: 'Professional Chef',
     rating: 5,
     image: 'https://randomuser.me/api/portraits/men/75.jpg',
     review: 'As a chef, I\'m very particular about my spices. PRAYAN meets all my professional standards. Highly recommended!',
@@ -97,7 +97,7 @@ const TestimonialsSection: React.FC = () => {
           <p className="text-2xl font-display font-bold text-foreground">
             4.9 out of 5
           </p>
-          <p className="text-muted-foreground">Based on 50,000+ reviews</p>
+          <p className="text-muted-foreground">Based on customer reviews</p>
         </div>
       </div>
     </section>

@@ -213,9 +213,9 @@ Thank you!`;
               <li className="flex items-start gap-3 text-sm">
                 <MapPin size={18} className="text-gold mt-0.5 shrink-0" />
                 <span className="text-brown-foreground/80">
-                  PRAYAN Spices Pvt. Ltd.<br />
-                  Masala Gali, Chandni Chowk<br />
-                  Delhi - 110006, India
+                  Contact us for store<br />
+                  location details<br />
+                  India
                 </span>
               </li>
               <li className="flex items-center gap-3 text-sm">

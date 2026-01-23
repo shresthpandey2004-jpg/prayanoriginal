@@ -262,7 +262,7 @@ const TermsConditions = () => {
                   <strong>Last Updated:</strong> January 2025
                 </p>
                 <p className="text-sm text-gray-500">
-                  PRAYAN Spices Pvt. Ltd. • Masala Gali, Chandni Chowk, Delhi - 110006, India
+                  PRAYAN Spices Pvt. Ltd. • India
                 </p>
               </div>
             </div>

@@ -131,7 +131,7 @@ Please respond at your earliest convenience. Thank you!`;
     {
       icon: <MapPin className="w-8 h-8" />,
       title: "Visit Store",
-      primary: "Mumbai, Maharashtra",
+      primary: "Contact for Location",
       secondary: "Mon-Sat, 10 AM - 7 PM",
       description: "Experience spices in person",
       color: "from-orange-500 to-red-500",
@@ -175,12 +175,12 @@ Please respond at your earliest convenience. Thank you!`;
     {
       icon: <Headphones className="w-6 h-6" />,
       title: "Expert Support",
-      description: "Spice experts with 40+ years experience"
+      description: "Dedicated spice experts ready to help"
     },
     {
       icon: <Shield className="w-6 h-6" />,
       title: "Trusted Service",
-      description: "50,000+ satisfied customers trust us"
+      description: "Growing community of satisfied customers"
     },
     {
       icon: <Star className="w-6 h-6" />,
@@ -598,10 +598,9 @@ Please respond at your earliest convenience. Thank you!`;
                       <div>
                         <h4 className="font-semibold text-gray-800 mb-1">Address</h4>
                         <p className="text-gray-600">
-                          Prayan Royal Spice Emporium<br />
-                          123 Spice Market Street<br />
-                          Mumbai, Maharashtra 400001<br />
-                          India
+                          Visit our store for fresh spices<br />
+                          and personalized consultation<br />
+                          Contact us for location details
                         </p>
                       </div>
                     </div>

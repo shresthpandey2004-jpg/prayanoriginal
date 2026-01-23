@@ -209,7 +209,7 @@ Please provide detailed export quotation, FOB/CIF prices, minimum order quantiti
             transition={{ duration: 1, delay: 0.8 }}
           >
             Partner with India's <span className="font-semibold text-blue-600">premium spice exporter</span>. 
-            Bringing authentic Indian flavors to global markets with <span className="font-semibold">40+ years</span> of expertise.
+            Bringing authentic Indian flavors to global markets with <span className="font-semibold">quality</span> and expertise.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
