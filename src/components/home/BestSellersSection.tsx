@@ -14,10 +14,6 @@ const BestSellersSection: React.FC = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12">
           <div>
-            <div className="inline-flex items-center gap-2 text-gold mb-3">
-              <TrendingUp size={20} />
-              <span className="text-sm font-medium uppercase tracking-wider">Customer Favorites</span>
-            </div>
             <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">
               Most Loved <span className="text-gradient-gold">Products</span>
             </h2>

@@ -66,10 +66,6 @@ const RecipesSection: React.FC = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12">
           <div>
-            <div className="inline-flex items-center gap-2 text-orange-600 mb-3">
-              <ChefHat size={20} />
-              <span className="text-sm font-medium uppercase tracking-wider">Cooking Inspiration</span>
-            </div>
             <h2 className="font-display text-4xl md:text-5xl font-bold text-gray-800">
               Traditional <span className="text-orange-600">Recipes</span>
             </h2>

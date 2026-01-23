@@ -52,9 +52,6 @@ const WhyChooseUsSection: React.FC = () => {
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <p className="text-gold font-medium tracking-widest uppercase mb-3">
-            The PRAYAN Promise
-          </p>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
             Why Choose <span className="text-gradient-gold">PRAYAN</span>?
           </h2>

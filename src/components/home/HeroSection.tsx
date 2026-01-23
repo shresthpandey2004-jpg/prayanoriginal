@@ -42,11 +42,6 @@ const HeroSection: React.FC = () => {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            {/* Tagline */}
-            <p className="text-gold font-medium tracking-widest uppercase mb-4 animate-fade-in">
-              Swad Ki Nayi Yatra
-            </p>
-
             {/* Main Heading */}
             <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight mb-6">
               Experience the
