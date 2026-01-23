@@ -42,14 +42,6 @@ const HeroSection: React.FC = () => {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-secondary/80 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-gold/20">
-              <Sparkles size={16} className="text-gold" />
-              <span className="text-sm font-medium text-foreground">
-                Premium Quality • Authentic Spices
-              </span>
-            </div>
-
             {/* Tagline */}
             <p className="text-gold font-medium tracking-widest uppercase mb-4 animate-fade-in">
               Swad Ki Nayi Yatra
