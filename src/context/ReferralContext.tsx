@@ -53,21 +53,23 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
   }, [referrals]);
 
   useEffect(() => {
-    if (user) {
+    if (user?.id) {
       const existingCode = localStorage.getItem(`prayan-referral-code-${user.id}`);
       if (existingCode) {
         // User already has a code, use it
-        console.log(`Using existing referral code for user ${user.id}: ${existingCode}`);
+        console.log(`✅ Using existing referral code for user ${user.id}: ${existingCode}`);
         setUserReferralCode(existingCode);
       } else {
-        // User doesn't have a code, generate new one
+        // User doesn't have a code, generate new one ONLY if they don't have one
+        console.log(`⚠️ No existing code found for user ${user.id}, generating new one...`);
         const newCode = generateReferralCode();
-        console.log(`Generated new referral code for user ${user.id}: ${newCode}`);
+        console.log(`✅ Generated new referral code for user ${user.id}: ${newCode}`);
         setUserReferralCode(newCode);
         localStorage.setItem(`prayan-referral-code-${user.id}`, newCode);
       }
     } else {
       // No user logged in, clear the code
+      console.log('🚪 No user logged in, clearing referral code');
       setUserReferralCode('');
     }
   }, [user?.id]); // Only depend on user.id, not the entire user object
@@ -91,17 +93,23 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
       localStorage.getItem(`prayan-referral-code-${u.id}`)
     ).filter(Boolean);
     
+    console.log('🔍 Existing codes:', existingCodes);
+    console.log('🎲 Generated code:', result);
+    
     // If code already exists, generate a new one with different timestamp
     let attempts = 0;
     while (existingCodes.includes(result) && attempts < 10) {
-      const newTimestamp = (Date.now() + attempts).toString().slice(-4);
+      console.log(`⚠️ Code ${result} already exists, generating new one...`);
+      const newTimestamp = (Date.now() + attempts * 1000).toString().slice(-4);
       result = 'PRAYAN' + newTimestamp;
       for (let i = 0; i < 2; i++) {
         result += characters.charAt(Math.floor(Math.random() * characters.length));
       }
       attempts++;
+      console.log(`🎲 New attempt ${attempts}: ${result}`);
     }
     
+    console.log(`✅ Final unique code: ${result}`);
     return result;
   }
 
@@ -123,6 +131,7 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const getReferralStats = () => {
     if (!user?.id) {
+      console.log('⚠️ No user ID available for stats');
       return {
         totalReferrals: 0,
         completedReferrals: 0,
@@ -131,8 +140,21 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
       };
     }
     
+    console.log('📊 Getting stats for user:', user.id);
     return getStatsFromUtils(user.id);
   };
+
+  // Refresh referrals when user changes
+  useEffect(() => {
+    if (user?.id) {
+      const allReferrals = JSON.parse(localStorage.getItem('prayan-referrals') || '[]');
+      const userReferrals = allReferrals.filter((r: any) => r.referrerId === user.id);
+      setReferrals(userReferrals);
+      console.log('🔄 Refreshed referrals for user:', user.id, userReferrals);
+    } else {
+      setReferrals([]);
+    }
+  }, [user?.id]);
 
   const stats = getReferralStats();
   const totalEarnings = stats.totalEarnings;

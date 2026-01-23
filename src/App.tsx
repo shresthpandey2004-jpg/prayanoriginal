@@ -40,6 +40,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Blog from "./pages/Blog";
 import BulkOrders from "./pages/BulkOrders";
 import NotFound from "./pages/NotFound";
+import TestReferral from "./pages/TestReferral";
+import TestLoyalty from "./pages/TestLoyalty";
 import MobileBottomNav from "./components/mobile/MobileBottomNav";
 import PWAInstallPrompt from "./components/mobile/PWAInstallPrompt";
 
@@ -322,6 +324,8 @@ const App = () => {
                               <Route path="/admin/orders" element={<AdminOrdersPage />} />
                               <Route path="/admin/login" element={<AdminLogin />} />
                               <Route path="/admin-login" element={<AdminLogin />} />
+                              <Route path="/test-referral" element={<TestReferral />} />
+                              <Route path="/test-loyalty" element={<TestLoyalty />} />
                               <Route path="*" element={<NotFound />} />
                             </Routes>
                             

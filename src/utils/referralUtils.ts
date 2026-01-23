@@ -20,17 +20,22 @@ export const processReferralRegistration = (
 ): boolean => {
   console.log('🔄 Processing referral registration:', { referralCode, newUserId, newUserName, newUserEmail });
   
+  if (!referralCode || !referralCode.trim()) {
+    console.log('❌ No referral code provided');
+    return false;
+  }
+  
   // Find the referrer by their referral code
   const allUsers = JSON.parse(localStorage.getItem('prayan-users') || '[]');
   let referrer = null;
   
-  console.log('👥 All users:', allUsers);
+  console.log('👥 All users count:', allUsers.length);
   
   // Search through all users to find who has this referral code
   for (const user of allUsers) {
     const userCode = localStorage.getItem(`prayan-referral-code-${user.id}`);
     console.log(`🔍 Checking user ${user.id} (${user.name}) with code: ${userCode}`);
-    if (userCode === referralCode) {
+    if (userCode === referralCode.trim()) {
       referrer = user;
       console.log('✅ Found referrer:', referrer);
       break;
@@ -51,7 +56,7 @@ export const processReferralRegistration = (
   const currentReferrals = JSON.parse(localStorage.getItem('prayan-referrals') || '[]');
   const existingReferral = currentReferrals.find((r: any) => r.referredUserId === newUserId);
   if (existingReferral) {
-    console.log('❌ User already referred');
+    console.log('❌ User already referred:', existingReferral);
     return false;
   }
 
@@ -62,7 +67,7 @@ export const processReferralRegistration = (
     referredUserId: newUserId,
     referredUserName: newUserName,
     referredUserEmail: newUserEmail,
-    referralCode: referralCode,
+    referralCode: referralCode.trim(),
     status: 'pending',
     rewardAmount: 50, // ₹50 reward for successful referral
     createdAt: new Date().toISOString()
@@ -94,15 +99,21 @@ export const processReferralRegistration = (
   
   console.log('🎉 Referral processed successfully!');
   console.log('💾 Updated referrals in localStorage:', updatedReferrals);
+  console.log('🎫 Created welcome coupon:', newUserCoupon);
   
   return true;
 };
 
 export const getReferralStats = (userId: string) => {
+  console.log('📊 Getting referral stats for user:', userId);
+  
   const allReferrals = JSON.parse(localStorage.getItem('prayan-referrals') || '[]');
   const userReferrals = allReferrals.filter((r: any) => r.referrerId === userId);
   
-  return {
+  console.log('📈 All referrals:', allReferrals);
+  console.log('👤 User referrals:', userReferrals);
+  
+  const stats = {
     totalReferrals: userReferrals.length,
     completedReferrals: userReferrals.filter((r: any) => r.status === 'completed').length,
     pendingReferrals: userReferrals.filter((r: any) => r.status === 'pending').length,
@@ -110,4 +121,7 @@ export const getReferralStats = (userId: string) => {
       .filter((r: any) => r.status === 'completed')
       .reduce((sum: number, r: any) => sum + r.rewardAmount, 0)
   };
+  
+  console.log('📊 Calculated stats:', stats);
+  return stats;
 };

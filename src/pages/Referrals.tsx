@@ -20,7 +20,7 @@ import { toast } from '@/hooks/use-toast';
 
 const Referrals = () => {
   const { user, isAuthenticated } = useAuth();
-  const { userReferralCode, getReferralStats } = useReferrals();
+  const { userReferralCode, getReferralStats, referrals } = useReferrals();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
 
@@ -200,6 +200,62 @@ ${user?.name}`;
                     <p className="text-sm text-orange-600">Pending</p>
                   </div>
                 </div>
+                
+                {/* Debug Info */}
+                <div className="mt-4 p-3 bg-gray-50 rounded-lg text-xs">
+                  <p><strong>Your Referral Code:</strong> {userReferralCode}</p>
+                  <p><strong>User ID:</strong> {user?.id}</p>
+                  <p><strong>Total Referrals in System:</strong> {JSON.parse(localStorage.getItem('prayan-referrals') || '[]').length}</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Referral History */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Gift className="w-5 h-5 text-purple-500" />
+                  Referral History
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {referrals.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500">
+                    <Users className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                    <p>No referrals yet</p>
+                    <p className="text-sm">Share your code to start earning!</p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {referrals.map((referral) => (
+                      <div key={referral.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                          <p className="font-medium">{referral.referredUserName}</p>
+                          <p className="text-sm text-gray-600">{referral.referredUserEmail}</p>
+                          <p className="text-xs text-gray-500">
+                            {new Date(referral.createdAt).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <div className={`px-2 py-1 rounded text-xs font-medium ${
+                            referral.status === 'completed' 
+                              ? 'bg-green-100 text-green-800' 
+                              : referral.status === 'pending'
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : 'bg-blue-100 text-blue-800'
+                          }`}>
+                            {referral.status.toUpperCase()}
+                          </div>
+                          {referral.status === 'completed' && (
+                            <p className="text-sm font-medium text-green-600 mt-1">
+                              +₹{referral.rewardAmount}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>

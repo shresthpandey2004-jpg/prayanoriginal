@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useOrders } from '@/context/OrderContext';
+import { useLoyalty } from '@/context/LoyaltyContext';
+import { useAuth } from '@/context/AuthContext';
 import { BUSINESS_CONFIG } from '@/config/business';
 import { calculateDeliveryCharge, getEstimatedDeliveryDate } from '@/utils/delivery';
 import { razorpayService } from '@/services/razorpayService';
@@ -11,7 +13,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowLeft, Phone, MapPin, User, CreditCard, Wallet, Tag, Gift, Percent } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { ArrowLeft, Phone, MapPin, User, CreditCard, Wallet, Tag, Gift, Percent, Coins, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from '@/hooks/use-toast';
 
@@ -39,11 +42,21 @@ const Checkout = () => {
     clearCart 
   } = useCart();
   const { addOrder } = useOrders();
+  const { user } = useAuth();
+  const { 
+    userPoints, 
+    userTier, 
+    canRedeem, 
+    getPointsValue,
+    redeemCustomPoints
+  } = useLoyalty();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [deliveryInfo, setDeliveryInfo] = useState({ charge: 0, isFree: false, area: '', estimatedDays: '' });
   const [promoCode, setPromoCode] = useState('');
   const [promoError, setPromoError] = useState('');
+  const [loyaltyPointsToUse, setLoyaltyPointsToUse] = useState(0);
+  const [useLoyaltyPoints, setUseLoyaltyPoints] = useState(false);
   
   const [customerDetails, setCustomerDetails] = useState<CustomerDetails>({
     name: '',
@@ -187,7 +200,31 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
 
     try {
       const orderId = generateOrderId();
-      const totalAmount = finalPrice + deliveryInfo.charge;
+      const loyaltyDiscount = useLoyaltyPoints ? getPointsValue(loyaltyPointsToUse) : 0;
+      const totalAmount = finalPrice + deliveryInfo.charge - loyaltyDiscount;
+
+      // Validate loyalty points usage
+      if (useLoyaltyPoints && loyaltyPointsToUse > 0) {
+        if (!canRedeem(loyaltyPointsToUse)) {
+          toast({
+            title: "Insufficient loyalty points",
+            description: "You don't have enough points for this redemption.",
+            variant: "destructive"
+          });
+          setIsLoading(false);
+          return;
+        }
+        
+        if (loyaltyPointsToUse < 100) {
+          toast({
+            title: "Minimum points required",
+            description: "You need at least 100 points to redeem.",
+            variant: "destructive"
+          });
+          setIsLoading(false);
+          return;
+        }
+      }
 
       // Handle payment based on method
       if (customerDetails.paymentMethod === 'online') {
@@ -232,6 +269,18 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
         };
         
         const success = await addOrder(order);
+        
+        // Redeem loyalty points if used
+        if (useLoyaltyPoints && loyaltyPointsToUse > 0 && user?.id) {
+          const redeemSuccess = redeemCustomPoints(loyaltyPointsToUse, loyaltyDiscount, orderId);
+          if (redeemSuccess) {
+            toast({
+              title: `${loyaltyPointsToUse} loyalty points redeemed! 💎`,
+              description: `You saved ₹${loyaltyDiscount} with your loyalty points.`,
+            });
+          }
+        }
+        
         clearCart();
 
         toast({
@@ -255,6 +304,18 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
         };
         
         const success = await addOrder(order);
+        
+        // Redeem loyalty points if used
+        if (useLoyaltyPoints && loyaltyPointsToUse > 0 && user?.id) {
+          const redeemSuccess = redeemCustomPoints(loyaltyPointsToUse, loyaltyDiscount, orderId);
+          if (redeemSuccess) {
+            toast({
+              title: `${loyaltyPointsToUse} loyalty points redeemed! 💎`,
+              description: `You saved ₹${loyaltyDiscount} with your loyalty points.`,
+            });
+          }
+        }
+        
         clearCart();
 
         if (success) {
@@ -495,6 +556,92 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                     </div>
                   )}
                   
+                  {/* Loyalty Points Section */}
+                  {user && userPoints > 0 && (
+                    <div className="border rounded-lg p-3 bg-gradient-to-r from-purple-50 to-pink-50">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <Coins className="w-4 h-4 text-purple-600" />
+                          <span className="font-medium text-purple-800">Use Loyalty Points</span>
+                        </div>
+                        <div className="text-sm text-purple-600">
+                          {userPoints} points available (₹{getPointsValue(userPoints)})
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2 mb-2">
+                        <Checkbox
+                          id="use-loyalty-points"
+                          checked={useLoyaltyPoints}
+                          onCheckedChange={(checked) => {
+                            setUseLoyaltyPoints(checked as boolean);
+                            if (!checked) {
+                              setLoyaltyPointsToUse(0);
+                            } else {
+                              // Auto-set to maximum usable points
+                              const maxUsablePoints = Math.min(userPoints, Math.floor(finalPrice * 10)); // Max 100% of order value
+                              const roundedPoints = Math.floor(maxUsablePoints / 100) * 100; // Round to nearest 100
+                              setLoyaltyPointsToUse(Math.max(100, roundedPoints)); // Minimum 100 points
+                            }
+                          }}
+                        />
+                        <Label htmlFor="use-loyalty-points" className="text-sm">
+                          Apply loyalty points discount
+                        </Label>
+                      </div>
+                      
+                      {useLoyaltyPoints && (
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Input
+                              type="number"
+                              min="100"
+                              max={Math.min(userPoints, Math.floor(finalPrice * 10))}
+                              step="100"
+                              value={loyaltyPointsToUse}
+                              onChange={(e) => {
+                                const points = parseInt(e.target.value) || 0;
+                                const maxPoints = Math.min(userPoints, Math.floor(finalPrice * 10));
+                                setLoyaltyPointsToUse(Math.min(points, maxPoints));
+                              }}
+                              className="flex-1 text-sm"
+                              placeholder="Points to use"
+                            />
+                            <Button
+                              type="button"
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                const maxPoints = Math.min(userPoints, Math.floor(finalPrice * 10));
+                                const roundedPoints = Math.floor(maxPoints / 100) * 100;
+                                setLoyaltyPointsToUse(Math.max(100, roundedPoints));
+                              }}
+                            >
+                              Max
+                            </Button>
+                          </div>
+                          
+                          {loyaltyPointsToUse > 0 && (
+                            <div className="flex justify-between text-sm">
+                              <span className="text-purple-600">
+                                Loyalty Discount ({loyaltyPointsToUse} points)
+                              </span>
+                              <span className="text-purple-600 font-medium">
+                                -₹{getPointsValue(loyaltyPointsToUse)}
+                              </span>
+                            </div>
+                          )}
+                          
+                          <div className="text-xs text-gray-600">
+                            • Minimum 100 points required
+                            • 1 point = ₹0.10 discount
+                            • Maximum {Math.floor(finalPrice * 10)} points can be used
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
                   <div className="flex justify-between">
                     <span>Delivery Charges</span>
                     {deliveryInfo.isFree || isFreeShipping ? (
@@ -531,7 +678,7 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                   
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total</span>
-                    <span>₹{finalPrice + deliveryInfo.charge}</span>
+                    <span>₹{finalPrice + deliveryInfo.charge - (useLoyaltyPoints ? getPointsValue(loyaltyPointsToUse) : 0)}</span>
                   </div>
                   
                   {/* Promo Code Section */}

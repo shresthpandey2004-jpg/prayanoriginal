@@ -142,24 +142,28 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         ).filter(Boolean);
         
         // If code already exists, generate a new one
-        while (existingCodes.includes(result)) {
-          result = 'PRAYAN' + Date.now().toString().slice(-4);
+        let attempts = 0;
+        while (existingCodes.includes(result) && attempts < 10) {
+          result = 'PRAYAN' + (Date.now() + attempts * 1000).toString().slice(-4);
           for (let i = 0; i < 2; i++) {
             result += characters.charAt(Math.floor(Math.random() * characters.length));
           }
+          attempts++;
         }
         
         return result;
       };
       
-      // Generate and save referral code
+      // Generate and save referral code for new user
       const referralCode = generateUniqueReferralCode();
       localStorage.setItem(`prayan-referral-code-${newUser.id}`, referralCode);
+      console.log(`🎉 Generated referral code for new user ${newUser.id}: ${referralCode}`);
       
-      // Save user with password to users array
+      // Save user with password to users array FIRST
       const userWithPassword = { ...newUser, password: userData.password };
       users.push(userWithPassword);
       localStorage.setItem('prayan-users', JSON.stringify(users));
+      console.log('💾 Saved new user to localStorage');
       
       // Set current user (without password)
       setUser(newUser);
@@ -168,6 +172,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setIsLoading(false);
       return true;
     } catch (error) {
+      console.error('❌ Registration error:', error);
       setIsLoading(false);
       return false;
     }

@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { orderService, FirebaseOrder } from '@/services/orderService';
 import { toast } from '@/hooks/use-toast';
+import { useAuth } from './AuthContext';
+import { awardOrderPoints } from '@/utils/loyaltyUtils';
+import { completeReferralOnOrder } from '@/utils/orderUtils';
 
 export interface TrackingInfo {
   courierPartner: string;
@@ -86,6 +89,7 @@ const getDeliveryEstimate = (pincode: string): number => {
 };
 
 export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { user } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -257,6 +261,28 @@ Thank you for choosing Prayan Masale! 🙏`;
         // Send welcome notification
         await sendNotification(enhancedOrder.id, 'whatsapp', `Your order has been placed successfully! Estimated delivery: ${new Date(estimatedDelivery).toLocaleDateString('en-IN')}`);
         
+        // Award loyalty points for the order
+        if (user?.id) {
+          console.log('💎 Awarding loyalty points for order:', enhancedOrder.id);
+          const pointsEarned = awardOrderPoints(user.id, enhancedOrder.id, enhancedOrder.totalPrice);
+          
+          if (pointsEarned > 0) {
+            toast({
+              title: `Earned ${pointsEarned} loyalty points! 💎`,
+              description: `You earned ${pointsEarned} points from this order. Keep shopping to unlock more rewards!`,
+            });
+          }
+          
+          // Complete referral if this user was referred
+          const referralCompleted = completeReferralOnOrder(user.id, enhancedOrder.totalPrice);
+          if (referralCompleted) {
+            toast({
+              title: "Referral completed! 🎉",
+              description: "Your referrer has earned rewards for referring you!",
+            });
+          }
+        }
+        
         toast({
           title: "Order placed successfully! 🎉",
           description: "Your order has been saved and you'll receive updates via WhatsApp.",
@@ -269,6 +295,28 @@ Thank you for choosing Prayan Masale! 🙏`;
         // If Firebase fails, still save locally as fallback
         setOrders(prev => [enhancedOrder, ...prev]);
         localStorage.setItem('prayan-orders', JSON.stringify([enhancedOrder, ...orders]));
+        
+        // Award loyalty points even for offline orders
+        if (user?.id) {
+          console.log('💎 Awarding loyalty points for offline order:', enhancedOrder.id);
+          const pointsEarned = awardOrderPoints(user.id, enhancedOrder.id, enhancedOrder.totalPrice);
+          
+          if (pointsEarned > 0) {
+            toast({
+              title: `Earned ${pointsEarned} loyalty points! 💎`,
+              description: `You earned ${pointsEarned} points from this order.`,
+            });
+          }
+          
+          // Complete referral if this user was referred
+          const referralCompleted = completeReferralOnOrder(user.id, enhancedOrder.totalPrice);
+          if (referralCompleted) {
+            toast({
+              title: "Referral completed! 🎉",
+              description: "Your referrer has earned rewards for referring you!",
+            });
+          }
+        }
         
         toast({
           title: "Order saved locally",
@@ -296,6 +344,28 @@ Thank you for choosing Prayan Masale! 🙏`;
       
       setOrders(prev => [enhancedOrder, ...prev]);
       localStorage.setItem('prayan-orders', JSON.stringify([enhancedOrder, ...orders]));
+      
+      // Award loyalty points for fallback orders too
+      if (user?.id) {
+        console.log('💎 Awarding loyalty points for fallback order:', enhancedOrder.id);
+        const pointsEarned = awardOrderPoints(user.id, enhancedOrder.id, enhancedOrder.totalPrice);
+        
+        if (pointsEarned > 0) {
+          toast({
+            title: `Earned ${pointsEarned} loyalty points! 💎`,
+            description: `You earned ${pointsEarned} points from this order.`,
+          });
+        }
+        
+        // Complete referral if this user was referred
+        const referralCompleted = completeReferralOnOrder(user.id, enhancedOrder.totalPrice);
+        if (referralCompleted) {
+          toast({
+            title: "Referral completed! 🎉",
+            description: "Your referrer has earned rewards for referring you!",
+          });
+        }
+      }
       
       toast({
         title: "Order saved locally",

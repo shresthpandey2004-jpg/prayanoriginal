@@ -1,168 +1,282 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useAuth } from './AuthContext';
-
-export interface LoyaltyTransaction {
-  id: string;
-  userId: string;
-  type: 'earned' | 'redeemed';
-  points: number;
-  orderId?: string;
-  description: string;
-  timestamp: string;
-}
-
-export interface LoyaltyTier {
-  name: string;
-  minPoints: number;
-  benefits: string[];
-  discountPercentage: number;
-  color: string;
-}
+import {
+  LoyaltyTransaction,
+  LoyaltyTier,
+  LoyaltyReward,
+  LOYALTY_TIERS,
+  LOYALTY_REWARDS,
+  getUserLoyaltyStats,
+  canRedeemPoints,
+  redeemLoyaltyPoints,
+  redeemCustomPoints,
+  awardOrderPoints,
+  awardBonusPoints,
+  expireOldPoints,
+  getAvailableRewards,
+  generateLoyaltyCoupon,
+  calculatePointsValue,
+  addLoyaltyTransaction
+} from '@/utils/loyaltyUtils';
 
 interface LoyaltyContextType {
+  // Current user data
   userPoints: number;
   userTier: LoyaltyTier;
   transactions: LoyaltyTransaction[];
-  earnPoints: (orderId: string, orderAmount: number) => void;
-  redeemPoints: (points: number, orderId: string) => boolean;
-  getPointsValue: (points: number) => number;
+  lifetimeEarned: number;
+  totalRedeemed: number;
+  pointsValue: number;
+  
+  // Tier progression
+  nextTier: LoyaltyTier | null;
+  progress: {
+    current: number;
+    required: number;
+    percentage: number;
+  };
+  
+  // Available rewards
+  availableRewards: LoyaltyReward[];
+  
+  // Actions
+  earnPointsFromOrder: (orderId: string, orderAmount: number) => number;
+  redeemPoints: (rewardId: string, orderId?: string) => boolean;
+  redeemCustomPoints: (points: number, discountValue: number, orderId?: string) => boolean;
+  awardBonus: (points: number, reason: string) => void;
+  refreshLoyaltyData: () => void;
+  
+  // Utilities
   canRedeem: (points: number) => boolean;
-  getNextTier: () => LoyaltyTier | null;
-  getProgressToNextTier: () => { current: number; required: number; percentage: number };
+  getPointsValue: (points: number) => number;
+  createLoyaltyCoupon: (rewardId: string) => any;
+  
+  // Real-time updates
+  isLoading: boolean;
 }
-
-const LOYALTY_TIERS: LoyaltyTier[] = [
-  {
-    name: 'Bronze',
-    minPoints: 0,
-    benefits: ['1% cashback on orders', 'Birthday discount'],
-    discountPercentage: 1,
-    color: 'bg-amber-600'
-  },
-  {
-    name: 'Silver',
-    minPoints: 500,
-    benefits: ['2% cashback on orders', 'Free shipping on ₹299+', 'Early access to sales'],
-    discountPercentage: 2,
-    color: 'bg-gray-400'
-  },
-  {
-    name: 'Gold',
-    minPoints: 1500,
-    benefits: ['3% cashback on orders', 'Free shipping always', 'Exclusive products', 'Priority support'],
-    discountPercentage: 3,
-    color: 'bg-yellow-500'
-  },
-  {
-    name: 'Platinum',
-    minPoints: 3000,
-    benefits: ['5% cashback on orders', 'Free express shipping', 'Personal spice consultant', 'VIP events'],
-    discountPercentage: 5,
-    color: 'bg-purple-600'
-  }
-];
-
-const POINTS_PER_RUPEE = 1; // 1 point per ₹10 spent
-const RUPEES_PER_POINT = 0.1; // 1 point = ₹0.10
 
 const LoyaltyContext = createContext<LoyaltyContextType | undefined>(undefined);
 
 export const LoyaltyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { user } = useAuth();
-  const [transactions, setTransactions] = useState<LoyaltyTransaction[]>(() => {
-    const saved = localStorage.getItem('prayan-loyalty-transactions');
-    return saved ? JSON.parse(saved) : [];
+  const [isLoading, setIsLoading] = useState(false);
+  const [loyaltyData, setLoyaltyData] = useState(() => {
+    if (user?.id) {
+      return getUserLoyaltyStats(user.id);
+    }
+    return {
+      totalPoints: 0,
+      currentTier: LOYALTY_TIERS[0],
+      lifetimeEarned: 0,
+      totalRedeemed: 0,
+      transactions: [],
+      progress: { current: 0, required: 0, percentage: 0 },
+      nextTier: null,
+      pointsValue: 0
+    };
   });
 
+  // Real-time data refresh when user changes or localStorage updates
   useEffect(() => {
-    localStorage.setItem('prayan-loyalty-transactions', JSON.stringify(transactions));
-  }, [transactions]);
-
-  // Calculate user points
-  const userTransactions = transactions.filter(t => t.userId === user?.id);
-  const userPoints = userTransactions.reduce((total, transaction) => {
-    return transaction.type === 'earned' ? total + transaction.points : total - transaction.points;
-  }, 0);
-
-  // Determine user tier
-  const userTier = LOYALTY_TIERS
-    .slice()
-    .reverse()
-    .find(tier => userPoints >= tier.minPoints) || LOYALTY_TIERS[0];
-
-  const earnPoints = (orderId: string, orderAmount: number) => {
-    if (!user) return;
-
-    const pointsEarned = Math.floor(orderAmount / 10) * POINTS_PER_RUPEE;
-    
-    const transaction: LoyaltyTransaction = {
-      id: Date.now().toString(),
-      userId: user.id,
-      type: 'earned',
-      points: pointsEarned,
-      orderId,
-      description: `Earned ${pointsEarned} points from order #${orderId.slice(-6)}`,
-      timestamp: new Date().toISOString()
-    };
-
-    setTransactions(prev => [...prev, transaction]);
-  };
-
-  const redeemPoints = (points: number, orderId: string): boolean => {
-    if (!user || !canRedeem(points)) return false;
-
-    const transaction: LoyaltyTransaction = {
-      id: Date.now().toString(),
-      userId: user.id,
-      type: 'redeemed',
-      points,
-      orderId,
-      description: `Redeemed ${points} points for ₹${getPointsValue(points)} discount`,
-      timestamp: new Date().toISOString()
-    };
-
-    setTransactions(prev => [...prev, transaction]);
-    return true;
-  };
-
-  const getPointsValue = (points: number): number => {
-    return Math.floor(points * RUPEES_PER_POINT);
-  };
-
-  const canRedeem = (points: number): boolean => {
-    return userPoints >= points && points >= 100; // Minimum 100 points to redeem
-  };
-
-  const getNextTier = (): LoyaltyTier | null => {
-    const currentTierIndex = LOYALTY_TIERS.findIndex(tier => tier.name === userTier.name);
-    return currentTierIndex < LOYALTY_TIERS.length - 1 ? LOYALTY_TIERS[currentTierIndex + 1] : null;
-  };
-
-  const getProgressToNextTier = () => {
-    const nextTier = getNextTier();
-    if (!nextTier) {
-      return { current: userPoints, required: userTier.minPoints, percentage: 100 };
+    if (user?.id) {
+      console.log('🔄 Refreshing loyalty data for user:', user.id);
+      
+      // Expire old points first
+      expireOldPoints(user.id);
+      
+      // Get fresh data
+      const freshData = getUserLoyaltyStats(user.id);
+      setLoyaltyData(freshData);
+      
+      console.log('💎 Loyalty data refreshed:', freshData);
+    } else {
+      // Reset data when no user
+      setLoyaltyData({
+        totalPoints: 0,
+        currentTier: LOYALTY_TIERS[0],
+        lifetimeEarned: 0,
+        totalRedeemed: 0,
+        transactions: [],
+        progress: { current: 0, required: 0, percentage: 0 },
+        nextTier: null,
+        pointsValue: 0
+      });
     }
+  }, [user?.id]);
 
-    const current = userPoints - userTier.minPoints;
-    const required = nextTier.minPoints - userTier.minPoints;
-    const percentage = Math.min((current / required) * 100, 100);
+  // Listen for localStorage changes (real-time updates)
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'prayan-loyalty-transactions' && user?.id) {
+        console.log('🔄 Loyalty transactions updated, refreshing data...');
+        const freshData = getUserLoyaltyStats(user.id);
+        setLoyaltyData(freshData);
+      }
+    };
 
-    return { current: userPoints, required: nextTier.minPoints, percentage };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, [user?.id]);
+
+  // Auto-refresh every 30 seconds to check for expired points
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const interval = setInterval(() => {
+      const expiredCount = expireOldPoints(user.id);
+      if (expiredCount > 0) {
+        const freshData = getUserLoyaltyStats(user.id);
+        setLoyaltyData(freshData);
+      }
+    }, 30000); // Check every 30 seconds
+
+    return () => clearInterval(interval);
+  }, [user?.id]);
+
+  const earnPointsFromOrder = (orderId: string, orderAmount: number): number => {
+    if (!user?.id) return 0;
+    
+    setIsLoading(true);
+    try {
+      const pointsEarned = awardOrderPoints(user.id, orderId, orderAmount);
+      
+      // Refresh data immediately
+      const freshData = getUserLoyaltyStats(user.id);
+      setLoyaltyData(freshData);
+      
+      console.log(`✅ Earned ${pointsEarned} points from order ${orderId}`);
+      return pointsEarned;
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  const redeemPoints = (rewardId: string, orderId?: string): boolean => {
+    if (!user?.id) return false;
+    
+    const reward = LOYALTY_REWARDS.find(r => r.id === rewardId);
+    if (!reward) return false;
+    
+    setIsLoading(true);
+    try {
+      const success = redeemLoyaltyPoints(user.id, reward.pointsCost, rewardId, orderId);
+      
+      if (success) {
+        // Refresh data immediately
+        const freshData = getUserLoyaltyStats(user.id);
+        setLoyaltyData(freshData);
+        
+        console.log(`✅ Redeemed ${reward.pointsCost} points for ${reward.name}`);
+      }
+      
+      return success;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const redeemCustomPointsFunc = (points: number, discountValue: number, orderId?: string): boolean => {
+    if (!user?.id) return false;
+    
+    setIsLoading(true);
+    try {
+      const success = redeemCustomPoints(user.id, points, discountValue, orderId);
+      
+      if (success) {
+        // Refresh data immediately
+        const freshData = getUserLoyaltyStats(user.id);
+        setLoyaltyData(freshData);
+        
+        console.log(`✅ Redeemed ${points} points for ₹${discountValue} discount`);
+      }
+      
+      return success;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+    if (!user?.id) return;
+    
+    setIsLoading(true);
+    try {
+      awardBonusPoints(user.id, points, reason);
+      
+      // Refresh data immediately
+      const freshData = getUserLoyaltyStats(user.id);
+      setLoyaltyData(freshData);
+      
+      console.log(`✅ Awarded ${points} bonus points: ${reason}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const refreshLoyaltyData = (): void => {
+    if (!user?.id) return;
+    
+    setIsLoading(true);
+    try {
+      // Expire old points first
+      expireOldPoints(user.id);
+      
+      // Get fresh data
+      const freshData = getUserLoyaltyStats(user.id);
+      setLoyaltyData(freshData);
+      
+      console.log('🔄 Loyalty data manually refreshed');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const canRedeemPointsCheck = (points: number): boolean => {
+    return user?.id ? canRedeemPoints(user.id, points) : false;
+  };
+
+  const createLoyaltyCoupon = (rewardId: string): any => {
+    if (!user?.id) return null;
+    
+    const reward = LOYALTY_REWARDS.find(r => r.id === rewardId);
+    if (!reward) return null;
+    
+    return generateLoyaltyCoupon(reward, user.id);
+  };
+
+  // Get available rewards based on current points
+  const availableRewards = getAvailableRewards(loyaltyData.totalPoints);
 
   return (
     <LoyaltyContext.Provider
       value={{
-        userPoints,
-        userTier,
-        transactions: userTransactions,
-        earnPoints,
+        // Current user data
+        userPoints: loyaltyData.totalPoints,
+        userTier: loyaltyData.currentTier,
+        transactions: loyaltyData.transactions,
+        lifetimeEarned: loyaltyData.lifetimeEarned,
+        totalRedeemed: loyaltyData.totalRedeemed,
+        pointsValue: loyaltyData.pointsValue,
+        
+        // Tier progression
+        nextTier: loyaltyData.nextTier,
+        progress: loyaltyData.progress,
+        
+        // Available rewards
+        availableRewards,
+        
+        // Actions
+        earnPointsFromOrder,
         redeemPoints,
-        getPointsValue,
-        canRedeem,
-        getNextTier,
-        getProgressToNextTier,
+        redeemCustomPoints: redeemCustomPointsFunc,
+        awardBonus,
+        refreshLoyaltyData,
+        
+        // Utilities
+        canRedeem: canRedeemPointsCheck,
+        getPointsValue: calculatePointsValue,
+        createLoyaltyCoupon,
+        
+        // Real-time updates
+        isLoading,
       }}
     >
       {children}
