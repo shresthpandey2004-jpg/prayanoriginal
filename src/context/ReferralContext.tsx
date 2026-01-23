@@ -62,19 +62,46 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
   function generateReferralCode(): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let result = 'PRAYAN';
-    for (let i = 0; i < 4; i++) {
+    
+    // Add timestamp-based uniqueness
+    const timestamp = Date.now().toString().slice(-4);
+    result += timestamp;
+    
+    // Add random characters
+    for (let i = 0; i < 2; i++) {
       result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
+    
+    // Ensure uniqueness by checking existing codes
+    const allUsers = JSON.parse(localStorage.getItem('prayan-users') || '[]');
+    const existingCodes = allUsers.map((u: any) => 
+      localStorage.getItem(`prayan-referral-code-${u.id}`)
+    ).filter(Boolean);
+    
+    // If code already exists, generate a new one
+    while (existingCodes.includes(result)) {
+      result = 'PRAYAN' + Date.now().toString().slice(-4);
+      for (let i = 0; i < 2; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+    }
+    
     return result;
   }
 
   const processReferral = (referralCode: string, newUserId: string, newUserName: string, newUserEmail: string): boolean => {
     // Find the referrer by their referral code
     const allUsers = JSON.parse(localStorage.getItem('prayan-users') || '[]');
-    const referrer = allUsers.find((u: any) => {
-      const userCode = localStorage.getItem(`prayan-referral-code-${u.id}`);
-      return userCode === referralCode;
-    });
+    let referrer = null;
+    
+    // Search through all users to find who has this referral code
+    for (const user of allUsers) {
+      const userCode = localStorage.getItem(`prayan-referral-code-${user.id}`);
+      if (userCode === referralCode) {
+        referrer = user;
+        break;
+      }
+    }
 
     if (!referrer || referrer.id === newUserId) {
       return false; // Invalid referral code or self-referral
@@ -88,18 +115,37 @@ export const ReferralProvider: React.FC<{ children: ReactNode }> = ({ children }
 
     // Create new referral
     const newReferral: Referral = {
-      id: Date.now().toString(),
+      id: `ref_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       referrerId: referrer.id,
       referredUserId: newUserId,
       referredUserName: newUserName,
       referredUserEmail: newUserEmail,
       referralCode: referralCode,
       status: 'pending',
-      rewardAmount: 100, // ₹100 reward for successful referral
+      rewardAmount: 50, // ₹50 reward for successful referral
       createdAt: new Date().toISOString()
     };
 
     setReferrals(prev => [...prev, newReferral]);
+    
+    // Also give the new user a discount coupon
+    const coupons = JSON.parse(localStorage.getItem('prayan-coupons') || '[]');
+    const newUserCoupon = {
+      id: `welcome_${newUserId}`,
+      code: `WELCOME${referralCode.slice(-4)}`,
+      type: 'fixed',
+      value: 50,
+      minOrderValue: 299,
+      maxUses: 1,
+      usedCount: 0,
+      validFrom: new Date().toISOString(),
+      validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days
+      description: 'Welcome discount for new user',
+      userId: newUserId
+    };
+    coupons.push(newUserCoupon);
+    localStorage.setItem('prayan-coupons', JSON.stringify(coupons));
+    
     return true;
   };
 

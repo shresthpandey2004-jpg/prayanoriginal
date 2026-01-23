@@ -97,7 +97,8 @@ const Auth = () => {
       name: registerData.name,
       email: registerData.email,
       phone: registerData.phone,
-      password: registerData.password
+      password: registerData.password,
+      referralCode: registerData.referralCode.trim()
     });
 
     if (success) {
@@ -115,18 +116,18 @@ const Auth = () => {
 
         if (referralProcessed) {
           toast({
-            title: "Account created & Referral applied!",
-            description: "Welcome to Prayan Masale! You'll get 10% off on your first order.",
+            title: "Account created & Referral applied! 🎉",
+            description: "Welcome to Prayan Masale! You'll get ₹50 off on your first order.",
           });
         } else {
           toast({
-            title: "Account created!",
+            title: "Account created! ⚠️",
             description: "Welcome to Prayan Masale! Invalid referral code, but your account is ready.",
           });
         }
       } else {
         toast({
-          title: "Account created!",
+          title: "Account created! 🎉",
           description: "Welcome to Prayan Masale! You are now logged in.",
         });
       }
@@ -325,7 +326,7 @@ const Auth = () => {
                         className="pl-10"
                       />
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">Get 10% off on your first order with a referral code!</p>
+                    <p className="text-xs text-gray-500 mt-1">Get ₹50 off on your first order with a referral code!</p>
                   </div>
 
                   <Button 

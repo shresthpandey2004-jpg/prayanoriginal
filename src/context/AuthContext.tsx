@@ -34,6 +34,7 @@ interface RegisterData {
   email: string;
   phone: string;
   password: string;
+  referralCode?: string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -120,6 +121,40 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         createdAt: new Date().toISOString(),
         lastLogin: new Date().toISOString()
       };
+      
+      // Generate unique referral code for new user
+      const generateUniqueReferralCode = (): string => {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let result = 'PRAYAN';
+        
+        // Add timestamp-based uniqueness
+        const timestamp = Date.now().toString().slice(-4);
+        result += timestamp;
+        
+        // Add random characters
+        for (let i = 0; i < 2; i++) {
+          result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        
+        // Ensure uniqueness by checking existing codes
+        const existingCodes = users.map((u: any) => 
+          localStorage.getItem(`prayan-referral-code-${u.id}`)
+        ).filter(Boolean);
+        
+        // If code already exists, generate a new one
+        while (existingCodes.includes(result)) {
+          result = 'PRAYAN' + Date.now().toString().slice(-4);
+          for (let i = 0; i < 2; i++) {
+            result += characters.charAt(Math.floor(Math.random() * characters.length));
+          }
+        }
+        
+        return result;
+      };
+      
+      // Generate and save referral code
+      const referralCode = generateUniqueReferralCode();
+      localStorage.setItem(`prayan-referral-code-${newUser.id}`, referralCode);
       
       // Save user with password to users array
       const userWithPassword = { ...newUser, password: userData.password };
