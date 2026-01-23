@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Header from '@/components/layout/Header';
+import CartDrawer from '@/components/cart/CartDrawer';
 import { recipes, getRecipeCategories } from '@/data/recipes';
 
 const Recipes = () => {
@@ -34,6 +35,7 @@ const Recipes = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
       <Header />
+      <CartDrawer />
       
       <div className="container mx-auto px-4 py-8">
         {/* Header Section */}

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import CartDrawer from '@/components/cart/CartDrawer';
 import { Link } from 'react-router-dom';
 
 const OurStory = () => {
@@ -70,6 +71,7 @@ const OurStory = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-yellow-50">
       <Header />
+      <CartDrawer />
       
       {/* Hero Section with Parallax */}
       <motion.section 

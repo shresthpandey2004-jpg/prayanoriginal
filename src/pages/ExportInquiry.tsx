@@ -25,6 +25,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/layout/Header';
+import CartDrawer from '@/components/cart/CartDrawer';
 
 const ExportInquiry = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -181,6 +182,7 @@ Please provide detailed export quotation, FOB/CIF prices, minimum order quantiti
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <Header />
+      <CartDrawer />
       
       {/* Hero Section */}
       <motion.section 

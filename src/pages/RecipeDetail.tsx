@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/layout/Header';
+import CartDrawer from '@/components/cart/CartDrawer';
 import { useCart } from '@/context/CartContext';
 import { getRecipeById, recipes } from '@/data/recipes';
 import { products } from '@/data/products';
@@ -167,6 +168,7 @@ const RecipeDetail = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
       <Header />
+      <CartDrawer />
       
       <div className="container mx-auto px-4 py-8">
         {/* Back Button */}

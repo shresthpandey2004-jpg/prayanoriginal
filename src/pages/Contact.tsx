@@ -23,6 +23,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/layout/Header';
+import CartDrawer from '@/components/cart/CartDrawer';
 import GoogleMap from '@/components/GoogleMap';
 
 const Contact = () => {
@@ -198,6 +199,7 @@ Please respond at your earliest convenience. Thank you!`;
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-yellow-50">
       <Header />
+      <CartDrawer />
       
       {/* Hero Section */}
       <motion.section 
