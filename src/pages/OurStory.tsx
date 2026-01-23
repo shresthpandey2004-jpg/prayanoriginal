@@ -19,7 +19,7 @@ const OurStory = () => {
 
   const milestones = [
     {
-      year: "2024",
+      year: "2026",
       title: "The Beginning",
       description: "Started PRAYAN as a premium spice brand, focusing on quality and authentic flavors for modern kitchens.",
       icon: <Sparkles className="w-6 h-6" />
