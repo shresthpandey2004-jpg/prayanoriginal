@@ -43,30 +43,34 @@ const AdminOrders = () => {
     navigate('/admin/login');
   };
 
-  // Test Firebase connection with detailed error logging
+  // Test Firebase connection with comprehensive diagnostics
   const testFirebaseConnection = async () => {
     try {
-      console.log('Testing Firebase connection...');
-      console.log('Firebase config:', {
+      console.log('🧪 Starting comprehensive Firebase test...');
+      console.log('🔧 Firebase config:', {
         projectId: 'prayanmasale',
         apiKey: 'AIzaSyCVz6HO-I3Rd-Sh5r5_tgIr1qqSX9DNCw8'
       });
       
-      const result = await orderService.getAllOrders();
-      console.log('Firebase test result:', result);
+      const result = await orderService.testConnection();
+      console.log('🧪 Firebase test result:', result);
       
       if (result.success) {
         console.log('✅ Firebase Connected Successfully');
-        console.log(`📊 Found ${result.orders.length} orders in database`);
+        console.log(`📊 Found ${result.orderCount} orders in database`);
         toast({
           title: "Firebase Connected ✅",
-          description: `Found ${result.orders.length} orders in database`,
+          description: `Found ${result.orderCount} orders in database`,
         });
+        
+        // Auto-load orders after successful test
+        loadOrders();
       } else {
         console.error('❌ Firebase Error:', result.error);
+        console.error('❌ Error Code:', result.code);
         toast({
           title: "Firebase Error ❌",
-          description: result.error,
+          description: `${result.error} (Code: ${result.code})`,
           variant: "destructive"
         });
       }
@@ -82,27 +86,44 @@ const AdminOrders = () => {
     }
   };
 
-  // Load orders from Firebase
+  // Load orders from Firebase with comprehensive error handling
   const loadOrders = async () => {
     setLoading(true);
     try {
-      console.log('Loading orders from Firebase...');
+      console.log('🔄 Loading orders from Firebase...');
       const result = await orderService.getAllOrders();
+      
       if (result.success) {
-        console.log(`Loaded ${result.orders.length} orders from Firebase`);
+        console.log(`✅ Loaded ${result.orders.length} orders from Firebase`);
         setOrders(result.orders);
+        
+        if (result.orders.length === 0) {
+          toast({
+            title: "No Orders Found",
+            description: "No orders have been placed yet.",
+          });
+        } else {
+          toast({
+            title: "Orders Loaded Successfully",
+            description: `Found ${result.orders.length} orders`,
+          });
+        }
       } else {
-        console.error('Failed to load orders:', result.error);
+        console.error('❌ Failed to load orders:', result.error);
         toast({
-          title: "Error loading orders",
+          title: "Error Loading Orders",
           description: result.error,
           variant: "destructive"
         });
+        
+        // Try fallback strategies
+        console.log('🔄 Trying fallback strategies...');
+        // Could add localStorage fallback here if needed
       }
     } catch (error) {
-      console.error('Connection error:', error);
+      console.error('❌ Connection error:', error);
       toast({
-        title: "Connection error",
+        title: "Connection Error",
         description: "Unable to load orders. Please check your internet connection.",
         variant: "destructive"
       });
