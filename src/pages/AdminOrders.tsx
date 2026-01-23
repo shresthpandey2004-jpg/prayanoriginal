@@ -43,6 +43,35 @@ const AdminOrders = () => {
     navigate('/admin/login');
   };
 
+  // Test Firebase connection
+  const testFirebaseConnection = async () => {
+    try {
+      console.log('Testing Firebase connection...');
+      const result = await orderService.getAllOrders();
+      console.log('Firebase test result:', result);
+      
+      if (result.success) {
+        toast({
+          title: "Firebase Connected ✅",
+          description: `Found ${result.orders.length} orders in database`,
+        });
+      } else {
+        toast({
+          title: "Firebase Error ❌",
+          description: result.error,
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Firebase test failed:', error);
+      toast({
+        title: "Firebase Connection Failed ❌",
+        description: "Check console for details",
+        variant: "destructive"
+      });
+    }
+  };
+
   // Load orders from Firebase
   const loadOrders = async () => {
     setLoading(true);
@@ -74,6 +103,14 @@ const AdminOrders = () => {
 
   useEffect(() => {
     loadOrders();
+    
+    // Auto-refresh every 30 seconds to catch new orders
+    const interval = setInterval(() => {
+      console.log('Auto-refreshing orders...');
+      loadOrders();
+    }, 30000);
+
+    return () => clearInterval(interval);
   }, []);
 
   // Update order status
@@ -166,6 +203,9 @@ const AdminOrders = () => {
               </div>
             </div>
             <div className="flex gap-3">
+              <Button onClick={testFirebaseConnection} variant="outline">
+                Test Firebase
+              </Button>
               <Button onClick={loadOrders} disabled={loading}>
                 <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
                 Refresh

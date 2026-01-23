@@ -45,9 +45,11 @@ export interface FirebaseOrder {
 class OrderService {
   private ordersCollection = collection(db, 'orders');
 
-  // Create new order
+  // Create new order with better error handling
   async createOrder(orderData: Omit<FirebaseOrder, 'id' | 'createdAt' | 'updatedAt' | 'timestamp'> & { timestamp: string }) {
     try {
+      console.log('Creating order in Firebase:', orderData);
+      
       const now = Timestamp.now();
       const order: Omit<FirebaseOrder, 'id'> = {
         ...orderData,
@@ -56,10 +58,15 @@ class OrderService {
         updatedAt: now
       };
 
+      console.log('Processed order data:', order);
+      
       const docRef = await addDoc(this.ordersCollection, order);
+      console.log('Order created with ID:', docRef.id);
+      
       return { success: true, id: docRef.id };
     } catch (error) {
       console.error('Error creating order:', error);
+      console.error('Error details:', error.message);
       return { success: false, error: error.message };
     }
   }
