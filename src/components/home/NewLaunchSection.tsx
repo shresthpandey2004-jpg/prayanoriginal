@@ -16,10 +16,6 @@ const NewLaunchSection: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-accent/20 rounded-full px-4 py-2 mb-4">
-            <Sparkles className="text-gold animate-pulse" size={18} />
-            <span className="text-sm font-medium text-accent">Just Arrived</span>
-          </div>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
             New <span className="text-gradient-gold">Launches</span>
           </h2>
