@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
-import { useReferrals } from '@/context/ReferralContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,12 +8,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowLeft, Eye, EyeOff, User, Mail, Phone, Lock, Gift } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { processReferralRegistration } from '@/utils/referralUtils';
 
 const Auth = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { login, register, isLoading } = useAuth();
-  const { processReferral } = useReferrals();
   
   const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
@@ -104,10 +103,14 @@ const Auth = () => {
     if (success) {
       // Process referral code if provided
       if (registerData.referralCode.trim()) {
+        console.log('🎯 Starting referral processing...');
         const users = JSON.parse(localStorage.getItem('prayan-users') || '[]');
         const newUser = users[users.length - 1]; // Get the newly registered user
         
-        const referralProcessed = processReferral(
+        console.log('👤 New user:', newUser);
+        console.log('🔗 Referral code:', registerData.referralCode.trim());
+        
+        const referralProcessed = processReferralRegistration(
           registerData.referralCode.trim(),
           newUser.id,
           registerData.name,
