@@ -104,14 +104,29 @@ const AdminOrdersPage = () => {
   };
 
   useEffect(() => {
-    loadOrders();
+    console.log('🚀 Setting up real-time order sync...');
     
-    // Auto-refresh every 30 seconds
-    const interval = setInterval(() => {
-      loadOrders();
-    }, 30000);
+    // Set up real-time listener instead of manual loading
+    const unsubscribe = orderService.subscribeToOrders((updatedOrders) => {
+      console.log('📱 Real-time orders update received:', updatedOrders.length);
+      setOrders(updatedOrders);
+      setLoading(false);
+      
+      if (updatedOrders.length === 0) {
+        toast({
+          title: "No Orders Found",
+          description: "No orders have been placed yet.",
+        });
+      } else {
+        console.log('✅ Orders synced across all devices!');
+      }
+    });
 
-    return () => clearInterval(interval);
+    // Cleanup listener on component unmount
+    return () => {
+      console.log('🧹 Cleaning up real-time listener...');
+      unsubscribe();
+    };
   }, []);
 
   // Update order status with notification
@@ -294,7 +309,7 @@ Track your order: ${window.location.origin}/my-orders`;
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               <span className="text-sm text-green-700 font-medium">
-                Real-time order management active • Auto-refresh every 30 seconds • Last updated: {new Date().toLocaleTimeString('en-IN')}
+                🔥 Real-time Firebase sync ACTIVE • Orders sync instantly across all devices • Last updated: {new Date().toLocaleTimeString('en-IN')}
               </span>
             </div>
           </div>
@@ -539,7 +554,7 @@ Track your order: ${window.location.origin}/my-orders`;
                       </div>
                       
                       <div className="text-sm text-gray-500">
-                        Auto-notifications: ON • Real-time sync: ACTIVE
+                        🔥 Real-time sync: ACTIVE • Instant updates across all devices
                       </div>
                     </div>
                   </CardContent>

@@ -11,7 +11,10 @@ import {
   Timestamp,
   connectFirestoreEmulator,
   enableNetwork,
-  disableNetwork
+  disableNetwork,
+  onSnapshot,
+  QuerySnapshot,
+  DocumentData
 } from 'firebase/firestore';
 import { db } from '@/config/firebase';
 
@@ -49,6 +52,99 @@ class OrderService {
   private ordersCollection = collection(db, 'orders');
   private retryCount = 3;
   private retryDelay = 1000;
+  private listeners: Array<() => void> = [];
+
+  // Real-time listener for orders - THIS FIXES THE SYNC ISSUE!
+  subscribeToOrders(callback: (orders: FirebaseOrder[]) => void): () => void {
+    console.log('🔄 Setting up real-time Firebase listener...');
+    
+    try {
+      // Try with orderBy first
+      const q = query(this.ordersCollection, orderBy('createdAt', 'desc'));
+      
+      const unsubscribe = onSnapshot(q, 
+        (snapshot: QuerySnapshot<DocumentData>) => {
+          console.log('🔥 Real-time update received from Firebase!');
+          const orders: FirebaseOrder[] = [];
+          
+          snapshot.forEach((doc) => {
+            orders.push({ id: doc.id, ...doc.data() } as FirebaseOrder);
+          });
+          
+          console.log(`📊 Real-time sync: ${orders.length} orders loaded`);
+          callback(orders);
+        },
+        (error) => {
+          console.error('❌ Real-time listener error:', error);
+          
+          // Fallback to simple query without orderBy
+          console.log('🔄 Trying fallback real-time listener...');
+          const fallbackQuery = query(this.ordersCollection);
+          
+          const fallbackUnsubscribe = onSnapshot(fallbackQuery,
+            (snapshot: QuerySnapshot<DocumentData>) => {
+              console.log('🔥 Fallback real-time update received!');
+              const orders: FirebaseOrder[] = [];
+              
+              snapshot.forEach((doc) => {
+                orders.push({ id: doc.id, ...doc.data() } as FirebaseOrder);
+              });
+              
+              // Sort manually
+              orders.sort((a, b) => {
+                const aTime = a.createdAt?.toMillis() || 0;
+                const bTime = b.createdAt?.toMillis() || 0;
+                return bTime - aTime;
+              });
+              
+              console.log(`📊 Fallback real-time sync: ${orders.length} orders loaded`);
+              callback(orders);
+            },
+            (fallbackError) => {
+              console.error('❌ Fallback listener also failed:', fallbackError);
+              // Use manual refresh as last resort
+              this.getAllOrders().then(result => {
+                if (result.success) {
+                  callback(result.orders);
+                }
+              });
+            }
+          );
+          
+          return fallbackUnsubscribe;
+        }
+      );
+      
+      this.listeners.push(unsubscribe);
+      return unsubscribe;
+      
+    } catch (error) {
+      console.error('❌ Failed to set up real-time listener:', error);
+      
+      // Fallback to polling every 5 seconds
+      console.log('🔄 Setting up polling fallback...');
+      const interval = setInterval(async () => {
+        const result = await this.getAllOrders();
+        if (result.success) {
+          callback(result.orders);
+        }
+      }, 5000);
+      
+      const cleanup = () => {
+        clearInterval(interval);
+      };
+      
+      this.listeners.push(cleanup);
+      return cleanup;
+    }
+  }
+
+  // Clean up all listeners
+  unsubscribeAll() {
+    console.log('🧹 Cleaning up Firebase listeners...');
+    this.listeners.forEach(unsubscribe => unsubscribe());
+    this.listeners = [];
+  }
 
   // Retry mechanism for network issues
   private async retryOperation<T>(operation: () => Promise<T>, retries = this.retryCount): Promise<T> {

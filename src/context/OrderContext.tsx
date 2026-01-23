@@ -106,14 +106,41 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     loadInitialOrders();
   }, []);
 
-  // Real-time order status listener
+  // Real-time order status listener - THIS FIXES THE SYNC ISSUE!
   useEffect(() => {
-    const interval = setInterval(async () => {
-      // Check for order status updates every 30 seconds
-      await refreshOrders();
-    }, 30000);
+    console.log('🔄 Setting up real-time order sync for customers...');
+    
+    // Set up real-time listener for order updates
+    const unsubscribe = orderService.subscribeToOrders((updatedOrders) => {
+      console.log('📱 Customer real-time orders update received:', updatedOrders.length);
+      
+      const convertedOrders = updatedOrders.map(convertFirebaseOrder);
+      
+      // Check for status changes and notify
+      const currentOrders = orders;
+      convertedOrders.forEach(newOrder => {
+        const existingOrder = currentOrders.find(o => o.id === newOrder.id);
+        if (existingOrder && existingOrder.status !== newOrder.status) {
+          toast({
+            title: "Order Status Updated! 📦",
+            description: `Order ${newOrder.id} is now ${newOrder.status.replace('_', ' ')}`,
+          });
+        }
+      });
+      
+      setOrders(convertedOrders);
+      
+      // Update localStorage
+      localStorage.setItem('prayan-orders', JSON.stringify(convertedOrders));
+      
+      console.log('✅ Customer orders synced in real-time!');
+    });
 
-    return () => clearInterval(interval);
+    // Cleanup listener on unmount
+    return () => {
+      console.log('🧹 Cleaning up customer real-time listener...');
+      unsubscribe();
+    };
   }, []);
 
   // Convert Firebase order to local order format
