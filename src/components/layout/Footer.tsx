@@ -16,13 +16,45 @@ const Footer: React.FC = () => {
             <p className="text-brown-foreground/80 mb-6">
               Subscribe for exclusive recipes, festive offers, and the story behind our spices.
             </p>
-            <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <form 
+              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const email = (e.target as HTMLFormElement).email.value;
+                if (!email) {
+                  alert('Please enter your email address');
+                  return;
+                }
+                
+                // Create WhatsApp message for newsletter signup
+                const message = `📧 *NEWSLETTER SUBSCRIPTION - PRAYAN MASALE*
+
+Email: ${email}
+
+Please add me to your newsletter for:
+• Exclusive recipes
+• Festive offers  
+• Spice stories and tips
+• New product updates
+
+Thank you!`;
+
+                const whatsappUrl = `https://wa.me/918866658919?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+                
+                // Reset form
+                (e.target as HTMLFormElement).reset();
+                alert('Newsletter subscription sent! We\'ll add you to our mailing list.');
+              }}
+            >
               <input
+                name="email"
                 type="email"
                 placeholder="Enter your email"
                 className="flex-1 px-4 py-3 rounded-lg bg-brown-foreground/10 border border-brown-foreground/20 text-brown-foreground placeholder:text-brown-foreground/50 focus:outline-none focus:border-gold"
+                required
               />
-              <Button variant="gold" className="gap-2">
+              <Button type="submit" variant="gold" className="gap-2">
                 Subscribe <Send size={16} />
               </Button>
             </form>

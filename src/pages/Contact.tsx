@@ -49,27 +49,41 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validate required fields
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      toast({
+        title: "Please fill all required fields",
+        description: "Name, email, subject, and message are mandatory",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     // Create WhatsApp message
-    const message = `📞 CONTACT INQUIRY 📞
+    const message = `📞 *CONTACT INQUIRY - PRAYAN MASALE*
 
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Subject: ${formData.subject}
-Category: ${formData.category}
+👤 *Customer Details:*
+• Name: ${formData.name}
+• Email: ${formData.email}
+• Phone: ${formData.phone || 'Not provided'}
 
-Message: ${formData.message}
+📋 *Inquiry Details:*
+• Subject: ${formData.subject}
+• Category: ${formData.category || 'General Inquiry'}
 
-Please respond at your earliest convenience.`;
+💬 *Message:*
+${formData.message}
 
-    const whatsappUrl = `https://wa.me/918866658919?text=${encodeURIComponent(message)}`;
+---
+Please respond at your earliest convenience. Thank you!`;
+
+    // WhatsApp number (replace with your business WhatsApp number)
+    const whatsappNumber = '918866658919';
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp
     window.open(whatsappUrl, '_blank');
     
-    toast({
-      title: "Message Sent! 🚀",
-      description: "We'll get back to you within 2 hours during business hours.",
-    });
-
     // Reset form
     setFormData({
       name: '',
@@ -78,6 +92,11 @@ Please respond at your earliest convenience.`;
       subject: '',
       category: '',
       message: ''
+    });
+    
+    toast({
+      title: "Message Sent! 🚀",
+      description: "We'll get back to you within 2 hours during business hours.",
     });
   };
 

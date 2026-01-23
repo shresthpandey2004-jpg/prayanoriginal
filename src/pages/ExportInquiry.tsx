@@ -54,24 +54,58 @@ const ExportInquiry = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validate required fields
+    if (!formData.companyName || !formData.contactPerson || !formData.email || !formData.phone || !formData.country || !formData.businessType || !formData.products || !formData.quantity) {
+      toast({
+        title: "Please fill all required fields",
+        description: "All fields marked with * are mandatory",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     // Create WhatsApp message
-    const message = `🌍 EXPORT INQUIRY 🌍
+    const message = `🌍 *EXPORT INQUIRY - PRAYAN MASALE*
 
-Company: ${formData.companyName}
-Contact Person: ${formData.contactPerson}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Country: ${formData.country}
-Business Type: ${formData.businessType}
-Products Interested: ${formData.products}
-Expected Quantity: ${formData.quantity}
+🏢 *Company Details:*
+• Company Name: ${formData.companyName}
+• Contact Person: ${formData.contactPerson}
+• Business Type: ${formData.businessType}
+• Country: ${formData.country}
 
-Message: ${formData.message}
+📞 *Contact Information:*
+• Phone: ${formData.phone}
+• Email: ${formData.email}
 
-Please provide detailed export quotation and terms.`;
+📦 *Export Requirements:*
+• Products Interested: ${formData.products}
+• Expected Quantity: ${formData.quantity}
 
-    const whatsappUrl = `https://wa.me/918866658919?text=${encodeURIComponent(message)}`;
+💬 *Additional Message:*
+${formData.message || 'None'}
+
+---
+Please provide detailed export quotation, FOB/CIF prices, minimum order quantities, and shipping terms. Thank you!`;
+
+    // WhatsApp number (replace with your business WhatsApp number)
+    const whatsappNumber = '918866658919';
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp
     window.open(whatsappUrl, '_blank');
+    
+    // Reset form
+    setFormData({
+      companyName: '',
+      contactPerson: '',
+      email: '',
+      phone: '',
+      country: '',
+      businessType: '',
+      products: '',
+      quantity: '',
+      message: ''
+    });
     
     toast({
       title: "Export Inquiry Sent! 🚀",

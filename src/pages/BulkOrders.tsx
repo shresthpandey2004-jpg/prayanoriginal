@@ -27,9 +27,57 @@ const BulkOrders = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Bulk order inquiry:', formData);
-    // You can add API call here
+    
+    // Validate required fields
+    if (!formData.businessName || !formData.contactPerson || !formData.email || !formData.phone || !formData.businessType) {
+      alert('Please fill all required fields');
+      return;
+    }
+    
+    // Create WhatsApp message
+    const message = `🏢 *BULK ORDER INQUIRY - PRAYAN MASALE*
+
+📋 *Business Details:*
+• Business Name: ${formData.businessName}
+• Contact Person: ${formData.contactPerson}
+• Business Type: ${businessTypes.find(type => type.value === formData.businessType)?.label || formData.businessType}
+
+📞 *Contact Information:*
+• Phone: ${formData.phone}
+• Email: ${formData.email}
+
+📦 *Order Requirements:*
+• Products Interested: ${formData.products || 'Not specified'}
+• Expected Monthly Quantity: ${formData.quantity || 'Not specified'}
+
+💬 *Additional Requirements:*
+${formData.message || 'None'}
+
+---
+Please provide bulk pricing and terms for the above requirements. Thank you!`;
+
+    // WhatsApp number (replace with your business WhatsApp number)
+    const whatsappNumber = '918866658919';
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+    
+    // Reset form
+    setFormData({
+      businessName: '',
+      contactPerson: '',
+      email: '',
+      phone: '',
+      businessType: '',
+      products: '',
+      quantity: '',
+      frequency: '',
+      message: ''
+    });
+    
+    // Show success message
+    alert('Bulk order inquiry sent to WhatsApp! We will respond within 24 hours.');
   };
 
   const benefits = [
