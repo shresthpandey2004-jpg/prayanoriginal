@@ -84,6 +84,11 @@ const ExportInquiry = () => {
 💬 *Additional Message:*
 ${formData.message || 'None'}
 
+🏭 *Our Export Office:*
+PRAYAN Royal Spice Emporium
+Balaji Complex, Kawas
+Surat – 394510, Gujarat, India
+
 ---
 Please provide detailed export quotation, FOB/CIF prices, minimum order quantities, and shipping terms. Thank you!`;
 
@@ -621,7 +626,7 @@ Please provide detailed export quotation, FOB/CIF prices, minimum order quantiti
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
               {
                 icon: <Phone className="w-8 h-8" />,
@@ -634,6 +639,12 @@ Please provide detailed export quotation, FOB/CIF prices, minimum order quantiti
                 title: "Export Email",
                 info: "export@prayan.com",
                 description: "Quick Response Guaranteed"
+              },
+              {
+                icon: <MapPin className="w-8 h-8" />,
+                title: "Export Office",
+                info: "Balaji Complex, Kawas, Surat – 394510, Gujarat, India",
+                description: "Visit Our Export Facility"
               }
             ].map((contact, index) => (
               <motion.div
@@ -654,7 +665,7 @@ Please provide detailed export quotation, FOB/CIF prices, minimum order quantiti
                       {contact.icon}
                     </motion.div>
                     <h3 className="text-xl font-semibold text-gray-800 mb-2">{contact.title}</h3>
-                    <p className="text-lg font-medium text-blue-600 mb-2">{contact.info}</p>
+                    <p className="text-lg font-medium text-blue-600 mb-2 break-words">{contact.info}</p>
                     <p className="text-gray-600">{contact.description}</p>
                   </CardContent>
                 </Card>
