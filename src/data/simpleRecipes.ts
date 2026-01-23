@@ -69,25 +69,33 @@ export const simpleRecipes: SimpleRecipe[] = [
     id: "biryani",
     name: "Chicken Biryani",
     nameHindi: "चिकन बिरयानी",
-    description: "Aromatic basmati rice layered with spiced chicken",
+    description: "Royal Hyderabadi-style aromatic basmati rice layered with tender spiced chicken, cooked to perfection with saffron and dum technique",
     image: "https://images.unsplash.com/photo-1563379091339-03246963d96c?w=500",
     cookingTime: "90 mins",
     servings: "6 people",
     difficulty: "Hard",
     category: "Non-Vegetarian",
-    spicesNeeded: ["Biryani Masala", "Garam Masala", "Red Chili Powder", "Turmeric Powder"],
+    spicesNeeded: ["Biryani Masala", "Garam Masala", "Red Chili Powder", "Turmeric Powder", "Bay Leaves", "Green Cardamom", "Cinnamon"],
     instructions: [
-      "Soak basmati rice for 30 minutes",
-      "Marinate chicken with yogurt and spices",
-      "Cook rice with whole spices until 70% done",
-      "Cook marinated chicken separately",
-      "Layer rice and chicken alternately",
-      "Cook on dum for 45 minutes"
+      "Soak 500g aged basmati rice in water for 30 minutes, then drain",
+      "Marinate 1kg chicken pieces with 1 cup yogurt, 1 tsp red chili powder, 1/2 tsp turmeric, 1 tsp garam masala, and salt for 2 hours",
+      "Heat ghee in heavy-bottomed pot, fry sliced onions until golden brown and crispy, remove and set aside",
+      "In same ghee, cook marinated chicken on medium heat for 15-20 minutes until 80% done",
+      "Boil water with whole spices (bay leaves, cardamom, cinnamon, cloves), add soaked rice and cook until 70% done",
+      "Layer the partially cooked rice over chicken, sprinkle fried onions, mint leaves, and saffron soaked in warm milk",
+      "Cover with aluminum foil, then place tight-fitting lid. Cook on high heat for 3-4 minutes, then reduce to lowest heat",
+      "Place the pot on a tawa/griddle and cook on dum for 45 minutes",
+      "Turn off heat and let it rest for 10 minutes before opening",
+      "Gently mix and serve hot with raita, boiled eggs, and shorba"
     ],
     tips: [
-      "Use aged basmati rice",
-      "Don't skip the dum cooking",
-      "Soak saffron in warm milk"
+      "Use aged basmati rice (at least 1 year old) for best results",
+      "Never skip the dum cooking process - it's the secret to perfect biryani",
+      "Soak saffron in warm milk for rich color and aroma",
+      "Fry onions until deep golden for authentic taste",
+      "Use a heavy-bottomed pot to prevent burning",
+      "Don't open the lid during dum cooking",
+      "Let biryani rest for 10 minutes after cooking for flavors to settle"
     ]
   },
   {
