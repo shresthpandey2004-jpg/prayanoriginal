@@ -78,11 +78,11 @@ const Header: React.FC = () => {
 
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3">
-              <div className="relative">
+              <div className="relative p-1 rounded-full bg-gradient-to-br from-orange-100 to-yellow-100 shadow-sm">
                 <img 
                   src="/prayan-new-logo.png" 
                   alt="PRAYAN Logo" 
-                  className="w-12 h-12 object-contain"
+                  className="w-10 h-10 object-contain rounded-full"
                 />
               </div>
               <div className="hidden sm:block">
@@ -250,17 +250,19 @@ const Header: React.FC = () => {
           <div className="absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-background shadow-xl animate-slide-in-right">
             <div className="p-6">
               <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-3">
-                  <img 
-                    src="/prayan-new-logo.png" 
-                    alt="PRAYAN Logo" 
-                    className="w-10 h-10 object-contain"
-                  />
-                  <div>
-                    <div className="font-display text-xl font-bold text-foreground">PRAYAN</div>
-                    <div className="text-xs text-muted-foreground">Swad Ki Nayi Yatra</div>
+                  <div className="flex items-center gap-3">
+                    <div className="relative p-1 rounded-full bg-gradient-to-br from-orange-100 to-yellow-100 shadow-sm">
+                      <img 
+                        src="/prayan-new-logo.png" 
+                        alt="PRAYAN Logo" 
+                        className="w-8 h-8 object-contain rounded-full"
+                      />
+                    </div>
+                    <div>
+                      <div className="font-display text-xl font-bold text-foreground">PRAYAN</div>
+                      <div className="text-xs text-muted-foreground">Swad Ki Nayi Yatra</div>
+                    </div>
                   </div>
-                </div>
                 <button onClick={() => setIsMobileMenuOpen(false)}>
                   <X size={24} />
                 </button>

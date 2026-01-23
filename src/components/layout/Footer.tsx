@@ -68,11 +68,13 @@ Thank you!`;
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <img 
-                src="/prayan-new-logo.png" 
-                alt="PRAYAN Logo" 
-                className="w-12 h-12 object-contain"
-              />
+              <div className="relative p-1 rounded-full bg-gradient-to-br from-orange-100 to-yellow-100 shadow-sm">
+                <img 
+                  src="/prayan-new-logo.png" 
+                  alt="PRAYAN Logo" 
+                  className="w-10 h-10 object-contain rounded-full"
+                />
+              </div>
               <div>
                 <h4 className="font-display text-2xl font-bold">PRAYAN</h4>
                 <p className="text-xs text-brown-foreground/70">Swad Ki Nayi Yatra</p>
