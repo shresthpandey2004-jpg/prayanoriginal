@@ -77,7 +77,9 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const addOrder = async (order: Order): Promise<boolean> => {
     setLoading(true);
     try {
-      // First add to Firebase
+      console.log('Adding order to Firebase:', order);
+      
+      // Add to Firebase FIRST (this is the main database)
       const result = await orderService.createOrder({
         orderId: order.id,
         items: order.items,
@@ -90,21 +92,25 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       });
 
       if (result.success) {
-        // Add to local state
+        console.log('Order saved to Firebase successfully');
+        
+        // Add to local state for immediate UI update
         setOrders(prev => [order, ...prev]);
         
-        // Also save to localStorage as backup
+        // Also save to localStorage as backup only
         const updatedOrders = [order, ...orders];
         localStorage.setItem('prayan-orders', JSON.stringify(updatedOrders));
         
         toast({
-          title: "Order saved successfully!",
-          description: "Your order has been recorded in our system.",
+          title: "Order placed successfully! 🎉",
+          description: "Your order has been saved to our database.",
         });
         
         return true;
       } else {
-        // If Firebase fails, still save locally
+        console.error('Firebase save failed:', result.error);
+        
+        // If Firebase fails, still save locally as fallback
         setOrders(prev => [order, ...prev]);
         localStorage.setItem('prayan-orders', JSON.stringify([order, ...orders]));
         

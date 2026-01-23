@@ -47,10 +47,13 @@ const AdminOrders = () => {
   const loadOrders = async () => {
     setLoading(true);
     try {
+      console.log('Loading orders from Firebase...');
       const result = await orderService.getAllOrders();
       if (result.success) {
+        console.log(`Loaded ${result.orders.length} orders from Firebase`);
         setOrders(result.orders);
       } else {
+        console.error('Failed to load orders:', result.error);
         toast({
           title: "Error loading orders",
           description: result.error,
@@ -58,6 +61,7 @@ const AdminOrders = () => {
         });
       }
     } catch (error) {
+      console.error('Connection error:', error);
       toast({
         title: "Connection error",
         description: "Unable to load orders. Please check your internet connection.",
