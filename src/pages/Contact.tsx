@@ -135,7 +135,7 @@ Please respond at your earliest convenience. Thank you!`;
       secondary: "Mon-Sat, 10 AM - 7 PM",
       description: "Experience spices in person",
       color: "from-orange-500 to-red-500",
-      action: () => window.open('https://maps.google.com')
+      action: () => window.open('https://wa.me/918866658919')
     }
   ];
 
@@ -637,15 +637,6 @@ Please respond at your earliest convenience. Thank you!`;
                     </div>
                   </div>
 
-                  <div className="mt-8 pt-6 border-t border-orange-200">
-                    <Button 
-                      className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700"
-                      onClick={() => window.open('https://maps.google.com')}
-                    >
-                      <MapPin className="w-5 h-5 mr-2" />
-                      Get Directions
-                    </Button>
-                  </div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -662,15 +653,8 @@ Please respond at your earliest convenience. Thank you!`;
                   <div className="h-full min-h-[400px] bg-gradient-to-br from-orange-200 to-red-200 rounded-lg flex items-center justify-center">
                     <div className="text-center">
                       <MapPin className="w-16 h-16 text-orange-600 mx-auto mb-4" />
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Interactive Map</h3>
-                      <p className="text-gray-600 mb-4">Find us easily with GPS navigation</p>
-                      <Button 
-                        variant="outline" 
-                        className="border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white"
-                        onClick={() => window.open('https://maps.google.com')}
-                      >
-                        Open in Maps
-                      </Button>
+                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Store Location</h3>
+                      <p className="text-gray-600 mb-4">Contact us for store location details</p>
                     </div>
                   </div>
                 </CardContent>
