@@ -30,7 +30,7 @@ export const BUSINESS_CONFIG = {
   
   // Delivery Settings
   delivery: {
-    freeDeliveryAbove: 499,
+    freeDeliveryAbove: 199,
     standardDeliveryCharge: 50,
     expressDeliveryCharge: 100,
     deliveryAreas: [

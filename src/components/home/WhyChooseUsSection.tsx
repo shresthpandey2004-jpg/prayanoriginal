@@ -33,7 +33,7 @@ const features = [
   {
     icon: Truck,
     title: 'Free Delivery',
-    description: 'Complimentary shipping on all orders above ₹499 across India.',
+    description: 'Complimentary shipping on all orders above ₹199 across India.',
     color: 'text-cinnamon',
     bgColor: 'bg-cinnamon/10',
   },

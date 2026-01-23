@@ -56,7 +56,7 @@ const DISCOUNT_CODES: DiscountCode[] = [
   }
 ];
 
-const FREE_SHIPPING_THRESHOLD = 499;
+const FREE_SHIPPING_THRESHOLD = 199;
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
