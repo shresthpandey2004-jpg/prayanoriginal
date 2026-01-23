@@ -46,13 +46,13 @@ const HeroSection: React.FC = () => {
             <div className="inline-flex items-center gap-2 bg-secondary/80 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-gold/20">
               <Sparkles size={16} className="text-gold" />
               <span className="text-sm font-medium text-foreground">
-                Since 1952 • Trusted by Millions
+                Premium Quality • Authentic Spices
               </span>
             </div>
 
             {/* Tagline */}
             <p className="text-gold font-medium tracking-widest uppercase mb-4 animate-fade-in">
-              Pure Taste, Pure Emotions
+              Swad Ki Nayi Yatra
             </p>
 
             {/* Main Heading */}
@@ -87,18 +87,18 @@ const HeroSection: React.FC = () => {
             {/* Trust Indicators */}
             <div className="flex flex-wrap items-center gap-8">
               <div className="text-center">
-                <p className="font-display text-3xl font-bold text-gold">70+</p>
-                <p className="text-sm text-muted-foreground">Years Legacy</p>
-              </div>
-              <div className="w-px h-12 bg-border" />
-              <div className="text-center">
-                <p className="font-display text-3xl font-bold text-gold">50L+</p>
-                <p className="text-sm text-muted-foreground">Happy Families</p>
-              </div>
-              <div className="w-px h-12 bg-border" />
-              <div className="text-center">
                 <p className="font-display text-3xl font-bold text-gold">100%</p>
                 <p className="text-sm text-muted-foreground">Pure & Natural</p>
+              </div>
+              <div className="w-px h-12 bg-border" />
+              <div className="text-center">
+                <p className="font-display text-3xl font-bold text-gold">Fresh</p>
+                <p className="text-sm text-muted-foreground">Quality Spices</p>
+              </div>
+              <div className="w-px h-12 bg-border" />
+              <div className="text-center">
+                <p className="font-display text-3xl font-bold text-gold">2026</p>
+                <p className="text-sm text-muted-foreground">Launch Year</p>
               </div>
             </div>
           </div>

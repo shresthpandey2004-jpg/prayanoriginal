@@ -68,12 +68,14 @@ Thank you!`;
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-full bg-gradient-gold flex items-center justify-center">
-                <span className="font-display text-xl font-bold text-primary-foreground">प्</span>
-              </div>
+              <img 
+                src="/prayan-new-logo.png" 
+                alt="PRAYAN Logo" 
+                className="w-12 h-12 object-contain"
+              />
               <div>
                 <h4 className="font-display text-2xl font-bold">PRAYAN</h4>
-                <p className="text-xs text-brown-foreground/70">Pure Taste, Pure Emotions</p>
+                <p className="text-xs text-brown-foreground/70">Swad Ki Nayi Yatra</p>
               </div>
             </div>
             <p className="text-brown-foreground/80 text-sm leading-relaxed mb-6">
