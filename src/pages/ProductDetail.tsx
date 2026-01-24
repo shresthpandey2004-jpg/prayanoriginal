@@ -134,9 +134,6 @@ const ProductDetail: React.FC = () => {
                   <ShoppingBag size={20} /> 
                   Add to Cart
                 </Button>
-                <Button variant="outline" size="icon" className="h-14 w-14">
-                  <Heart size={20} />
-                </Button>
               </div>
 
               {/* Trust Badges */}

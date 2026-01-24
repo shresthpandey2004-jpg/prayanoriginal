@@ -142,12 +142,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
           className="p-2.5 bg-background/90 backdrop-blur-sm rounded-full shadow-soft hover:bg-primary hover:text-primary-foreground transition-colors"
           onClick={(e) => e.preventDefault()}
         >
-          <Heart size={18} />
-        </button>
-        <button
-          className="p-2.5 bg-background/90 backdrop-blur-sm rounded-full shadow-soft hover:bg-primary hover:text-primary-foreground transition-colors"
-          onClick={(e) => e.preventDefault()}
-        >
           <Eye size={18} />
         </button>
       </div>
