@@ -223,14 +223,14 @@ export const products: Product[] = [
     usageIdeas: ['Daily cooking', 'All curries', 'Rice dishes'],
     weightOptions: [
       {
-        weight: '250g (125g each)',
+        weight: '250g (250g each)',
         price: 215,
         originalPrice: 240,
         sku: 'PM-COMBO-HC-250',
         stock: 110
       },
       {
-        weight: '500g (250g each)',
+        weight: '500g (500g each)',
         price: 360,
         originalPrice: 370,
         sku: 'PM-COMBO-HC-500',
@@ -260,14 +260,14 @@ export const products: Product[] = [
     usageIdeas: ['Curries', 'Dal', 'Vegetable dishes'],
     weightOptions: [
       {
-        weight: '250g (125g each)',
+        weight: '250g (250g each)',
         price: 150,
         originalPrice: 170,
         sku: 'PM-COMBO-DC-250',
         stock: 90
       },
       {
-        weight: '500g (250g each)',
+        weight: '500g (500g each)',
         price: 280,
         originalPrice: 280,
         sku: 'PM-COMBO-DC-500',
@@ -297,14 +297,14 @@ export const products: Product[] = [
     usageIdeas: ['Dal tadka', 'Curry base', 'Vegetable cooking'],
     weightOptions: [
       {
-        weight: '250g (125g each)',
+        weight: '250g (250g each)',
         price: 155,
         originalPrice: 175,
         sku: 'PM-COMBO-HD-250',
         stock: 105
       },
       {
-        weight: '500g (250g each)',
+        weight: '500g (500g each)',
         price: 260,
         originalPrice: 260,
         sku: 'PM-COMBO-HD-500',
@@ -334,14 +334,14 @@ export const products: Product[] = [
     usageIdeas: ['All Indian dishes', 'Complete cooking', 'Restaurant style'],
     weightOptions: [
       {
-        weight: '250g (mixed)',
+        weight: '250g (mixed 250g each)',
         price: 250,
         originalPrice: 280,
         sku: 'PM-COMBO-HDM-250',
         stock: 125
       },
       {
-        weight: '500g (mixed)',
+        weight: '500g (mixed 500g each)',
         price: 430,
         originalPrice: 450,
         sku: 'PM-COMBO-HDM-500',
@@ -356,8 +356,8 @@ export const products: Product[] = [
     name: 'Ultimate Combo: Haldi + Mirchi + Dhaniya + Garam Masala',
     nameHindi: 'अल्टीमेट कॉम्बो: हल्दी + मिर्च + धनिया + गरम मसाला',
     description: 'Complete spice solution with all four essential spices for authentic Indian cooking.',
-    price: 160, // Base price for 100g combo
-    originalPrice: 190,
+    price: 190, // Base price for 100g combo (updated - total 400g)
+    originalPrice: 220,
     image: '/products/combo-pack.jpeg',
     category: 'Combo Packs',
     weight: '100g', // Default weight
@@ -373,9 +373,9 @@ export const products: Product[] = [
     usageIdeas: ['All Indian dishes', 'Complete cooking', 'Starter kit', 'Travel pack'],
     weightOptions: [
       {
-        weight: '100g (25g each)',
-        price: 160,
-        originalPrice: 190,
+        weight: '100g (100g each)',
+        price: 190,
+        originalPrice: 220,
         sku: 'PM-COMBO-ULTIMATE-100',
         stock: 150
       }
