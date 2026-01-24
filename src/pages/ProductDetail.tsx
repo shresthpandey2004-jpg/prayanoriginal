@@ -78,7 +78,6 @@ const ProductDetail: React.FC = () => {
                 <span className="text-4xl font-bold text-primary">₹{currentPrice}</span>
                 {currentOriginalPrice && <span className="text-xl text-muted-foreground line-through">₹{currentOriginalPrice}</span>}
                 <span className="bg-secondary px-3 py-1 rounded text-sm">{currentWeight}</span>
-                {currentStock <= 10 && <span className="bg-orange-500 text-white px-3 py-1 rounded text-sm">Only {currentStock} left!</span>}
               </div>
 
               <p className="text-muted-foreground mb-6 leading-relaxed">{product.description}</p>
@@ -103,7 +102,6 @@ const ProductDetail: React.FC = () => {
                         {option.originalPrice && (
                           <div className="text-xs text-muted-foreground line-through">₹{option.originalPrice}</div>
                         )}
-                        <div className="text-xs text-muted-foreground">Stock: {option.stock}</div>
                       </button>
                     ))}
                   </div>
@@ -121,9 +119,8 @@ const ProductDetail: React.FC = () => {
                   </button>
                   <span className="w-8 text-center font-semibold">{quantity}</span>
                   <button 
-                    onClick={() => setQuantity(q => Math.min(currentStock, q + 1))} 
+                    onClick={() => setQuantity(q => q + 1)} 
                     className="p-3 hover:bg-muted rounded-lg"
-                    disabled={quantity >= currentStock}
                   >
                     <Plus size={18} />
                   </button>
@@ -133,10 +130,9 @@ const ProductDetail: React.FC = () => {
                   size="xl" 
                   onClick={handleAddToCart} 
                   className="flex-1 gap-2"
-                  disabled={currentStock === 0}
                 >
                   <ShoppingBag size={20} /> 
-                  {currentStock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                  Add to Cart
                 </Button>
                 <Button variant="outline" size="icon" className="h-14 w-14">
                   <Heart size={20} />
