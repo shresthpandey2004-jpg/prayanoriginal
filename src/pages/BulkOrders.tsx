@@ -130,24 +130,18 @@ Please provide bulk pricing and terms for the above requirements. Thank you!`;
     }
   ];
 
-  const testimonials = [
+  const bulkBenefits = [
     {
-      name: "Rajesh Kumar",
-      business: "Kumar Restaurant Chain",
-      rating: 5,
-      text: "PRAYAN has been our spice supplier for 3 years. Consistent quality and competitive pricing make them our preferred choice."
+      title: "Competitive Pricing",
+      description: "Special wholesale rates for bulk orders with attractive discounts based on quantity."
     },
     {
-      name: "Priya Catering",
-      business: "Priya's Catering Services",
-      rating: 5,
-      text: "Excellent bulk pricing and timely delivery. Their spices have enhanced the taste of our catered events significantly."
+      title: "Consistent Quality",
+      description: "Same premium quality maintained across all bulk orders with strict quality control."
     },
     {
-      name: "Mumbai Spice Mart",
-      business: "Retail Chain",
-      rating: 5,
-      text: "As a retailer, PRAYAN's bulk orders help us maintain good margins while offering quality products to our customers."
+      title: "Reliable Supply",
+      description: "Timely delivery and consistent supply chain to meet your business requirements."
     }
   ];
 
@@ -391,28 +385,23 @@ Please provide bulk pricing and terms for the above requirements. Thank you!`;
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Benefits */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">What Our Bulk Customers Say</h2>
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">Why Choose PRAYAN for Bulk Orders?</h2>
             <p className="text-xl text-gray-600">Trusted by businesses across India</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
+            {bulkBenefits.map((benefit, index) => (
               <Card key={index} className="hover:shadow-lg transition-all duration-300">
-                <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                    ))}
+                <CardContent className="p-6 text-center">
+                  <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Star className="w-8 h-8 text-orange-600" />
                   </div>
-                  <p className="text-gray-700 mb-4 italic">"{testimonial.text}"</p>
-                  <div className="border-t pt-4">
-                    <p className="font-semibold text-gray-800">{testimonial.name}</p>
-                    <p className="text-sm text-gray-600">{testimonial.business}</p>
-                  </div>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3">{benefit.title}</h3>
+                  <p className="text-gray-600">{benefit.description}</p>
                 </CardContent>
               </Card>
             ))}

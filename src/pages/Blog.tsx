@@ -26,7 +26,7 @@ const Blog = () => {
       excerpt: "Discover the fundamental spices that form the backbone of Indian cuisine and learn how to use them effectively in your daily cooking.",
       image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80",
       category: "tips",
-      author: "Chef Priya Sharma",
+      author: "PRAYAN Team",
       date: "2024-01-15",
       readTime: "5 min read",
       featured: true
@@ -37,7 +37,7 @@ const Blog = () => {
       excerpt: "Explore the incredible health benefits of turmeric, from anti-inflammatory properties to immune system support.",
       image: "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=800&q=80",
       category: "health",
-      author: "Dr. Rajesh Kumar",
+      author: "PRAYAN Team",
       date: "2024-01-12",
       readTime: "7 min read",
       featured: true

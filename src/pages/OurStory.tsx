@@ -340,36 +340,30 @@ const OurStory = () => {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-              What Our <span className="text-orange-600">Customers Say</span>
+              Our <span className="text-orange-600">Promise</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Real stories from families who trust Prayan for their daily cooking needs.
+              Every spice tells a story of tradition, quality, and authentic flavors.
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                name: "Priya Sharma",
-                location: "Satisfied Customer",
-                rating: 5,
-                text: "Prayan spices have transformed my cooking! The aroma and taste are exactly like what my grandmother used to make. Pure quality!"
+                title: "Premium Quality",
+                description: "Hand-selected spices from the finest farms across India, ensuring exceptional taste and aroma in every pack."
               },
               {
-                name: "Rajesh Kumar",
-                location: "Loyal Customer",
-                rating: 5,
-                text: "Been using Prayan spices for 5 years now. The consistency in quality and the authentic taste keeps me coming back."
+                title: "Traditional Methods",
+                description: "Time-tested grinding and processing techniques that preserve the natural essence and nutritional value of spices."
               },
               {
-                name: "Meera Patel",
-                location: "Professional Chef",
-                rating: 5,
-                text: "As a professional chef, I trust only Prayan for my restaurant. The spices are fresh, aromatic, and always premium quality."
+                title: "Pure & Natural",
+                description: "No artificial colors, preservatives, or additives. Just pure, authentic spices the way nature intended."
               }
-            ].map((testimonial, index) => (
+            ].map((value, index) => (
               <motion.div
-                key={testimonial.name}
+                key={value.title}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
@@ -377,17 +371,12 @@ const OurStory = () => {
                 whileHover={{ y: -5 }}
               >
                 <Card className="h-full bg-gradient-to-br from-orange-50 to-red-50 border-orange-200 hover:shadow-xl transition-all duration-300">
-                  <CardContent className="p-6">
-                    <div className="flex items-center mb-4">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                      ))}
+                  <CardContent className="p-6 text-center">
+                    <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Star className="w-8 h-8 text-orange-600" />
                     </div>
-                    <p className="text-gray-700 mb-4 italic">"{testimonial.text}"</p>
-                    <div className="border-t pt-4">
-                      <p className="font-semibold text-gray-800">{testimonial.name}</p>
-                      <p className="text-sm text-gray-600">{testimonial.location}</p>
-                    </div>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-3">{value.title}</h3>
+                    <p className="text-gray-600">{value.description}</p>
                   </CardContent>
                 </Card>
               </motion.div>
