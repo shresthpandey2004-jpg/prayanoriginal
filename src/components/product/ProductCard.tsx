@@ -161,7 +161,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
       </div>
 
       {/* Content */}
-      <div className="p-5">
+      <div className="p-5 relative z-10">
         {/* Category */}
         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
           {product.category}
@@ -221,7 +221,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
         {/* Add to Cart */}
         <Button
           variant="premium"
-          className="w-full gap-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+          className="w-full gap-2 opacity-100 visible relative z-20"
           onClick={handleAddToCart}
           disabled={product.isInStock === false}
         >
