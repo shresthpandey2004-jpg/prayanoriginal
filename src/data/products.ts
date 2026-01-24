@@ -38,7 +38,7 @@ export const products: Product[] = [
     nameHindi: 'हल्दी पाउडर',
     description: 'Pure and vibrant turmeric sourced from the finest farms. Known for its golden color and medicinal properties.',
     price: 200, // Base price for 500g (updated)
-    image: '/products/TurmericPowder.jpeg',
+    image: '/products/turmeric-powder-new.jpg',
     category: 'Pure Spices',
     weight: '500g', // Default weight (updated)
     rating: 4.8,
@@ -79,7 +79,7 @@ export const products: Product[] = [
     nameHindi: 'लाल मिर्च पाउडर',
     description: 'Premium red chilli powder that gives your dishes a beautiful red color with perfect heat.',
     price: 210, // Base price for 500g (updated)
-    image: '/products/Chillipowder.jpeg',
+    image: '/products/chilli-powder-new.jpg',
     category: 'Pure Spices',
     weight: '500g', // Default weight (updated)
     rating: 4.7,
@@ -120,7 +120,7 @@ export const products: Product[] = [
     nameHindi: 'धनिया पाउडर',
     description: 'Aromatic coriander powder with fresh, citrusy flavor. Essential for authentic Indian cooking.',
     price: 120, // Base price for 500g (updated)
-    image: '/products/CuminPowder.jpeg',
+    image: '/products/coriander-powder-new.jpg',
     category: 'Pure Spices',
     weight: '500g', // Default weight (updated)
     rating: 4.9,
@@ -161,7 +161,7 @@ export const products: Product[] = [
     nameHindi: 'गरम मसाला',
     description: 'A perfect blend of aromatic spices that brings warmth and depth to your dishes. Hand-ground using traditional methods.',
     price: 310, // Base price for 500g (updated)
-    image: '/products/GaramMasala.jpeg',
+    image: '/products/garam-masala-new.jpg',
     category: 'Blended Spices',
     weight: '500g', // Default weight (updated)
     rating: 4.9,
@@ -209,7 +209,7 @@ export const products: Product[] = [
     description: 'Perfect combo of Haldi + Chilli for everyday cooking needs.',
     price: 215, // Base price for 250g combo (updated - total 500g)
     originalPrice: 210,
-    image: '/products/combo-pack.jpeg',
+    image: '/products/combo-pack-2-spice.jpg',
     category: 'Combo Packs',
     weight: '250g', // Default weight (updated)
     rating: 4.8,
@@ -246,7 +246,7 @@ export const products: Product[] = [
     description: 'Essential combo of Dhaniya + Chilli for authentic Indian flavors.',
     price: 150, // Base price for 250g combo (updated - total 500g)
     originalPrice: 140,
-    image: '/products/combo-pack.jpeg',
+    image: '/products/combo-pack-2-spice.jpg',
     category: 'Combo Packs',
     weight: '250g', // Default weight (updated)
     rating: 4.7,
@@ -283,7 +283,7 @@ export const products: Product[] = [
     description: 'Classic combination of Haldi + Dhaniya for traditional cooking.',
     price: 155, // Base price for 250g combo (updated - total 500g)
     originalPrice: 145,
-    image: '/products/combo-pack.jpeg',
+    image: '/products/combo-pack-2-spice.jpg',
     category: 'Combo Packs',
     weight: '250g', // Default weight (updated)
     rating: 4.8,
@@ -320,7 +320,7 @@ export const products: Product[] = [
     description: 'Complete spice trio - Haldi + Dhaniya + Mirchi for all your cooking needs.',
     price: 250, // Base price for 250g combo (updated - total 500g)
     originalPrice: 250,
-    image: '/products/combo-pack.jpeg',
+    image: '/products/combo-pack-3-spice.jpg',
     category: 'Combo Packs',
     weight: '250g', // Default weight (updated)
     rating: 4.9,
@@ -358,7 +358,7 @@ export const products: Product[] = [
     description: 'Complete spice solution with all four essential spices for authentic Indian cooking.',
     price: 190, // Base price for 100g combo (updated - total 400g)
     originalPrice: 220,
-    image: '/products/combo-pack.jpeg',
+    image: '/products/combo-pack-ultimate.jpg',
     category: 'Combo Packs',
     weight: '100g', // Default weight
     rating: 4.9,
