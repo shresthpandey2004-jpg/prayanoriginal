@@ -38,7 +38,7 @@ export const products: Product[] = [
     nameHindi: 'हल्दी पाउडर',
     description: 'Pure and vibrant turmeric sourced from the finest farms. Known for its golden color and medicinal properties.',
     price: 200, // Base price for 500g (updated)
-    image: '/products/turmeric-powder-new.jpg',
+    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=400&fit=crop&auto=format',
     category: 'Pure Spices',
     weight: '500g', // Default weight (updated)
     rating: 4.8,
@@ -79,7 +79,7 @@ export const products: Product[] = [
     nameHindi: 'लाल मिर्च पाउडर',
     description: 'Premium red chilli powder that gives your dishes a beautiful red color with perfect heat.',
     price: 210, // Base price for 500g (updated)
-    image: '/products/chilli-powder-new.jpg',
+    image: 'https://images.unsplash.com/photo-1583327117662-a4c2c5217c8d?w=400&h=400&fit=crop&auto=format',
     category: 'Pure Spices',
     weight: '500g', // Default weight (updated)
     rating: 4.7,
@@ -120,7 +120,7 @@ export const products: Product[] = [
     nameHindi: 'धनिया पाउडर',
     description: 'Aromatic coriander powder with fresh, citrusy flavor. Essential for authentic Indian cooking.',
     price: 120, // Base price for 500g (updated)
-    image: '/products/coriander-powder-new.jpg',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop&auto=format',
     category: 'Pure Spices',
     weight: '500g', // Default weight (updated)
     rating: 4.9,
@@ -161,7 +161,7 @@ export const products: Product[] = [
     nameHindi: 'गरम मसाला',
     description: 'A perfect blend of aromatic spices that brings warmth and depth to your dishes. Hand-ground using traditional methods.',
     price: 310, // Base price for 500g (updated)
-    image: '/products/garam-masala-new.jpg',
+    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=400&fit=crop&auto=format',
     category: 'Blended Spices',
     weight: '500g', // Default weight (updated)
     rating: 4.9,
