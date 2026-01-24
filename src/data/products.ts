@@ -207,25 +207,25 @@ export const products: Product[] = [
     name: 'Combo Pack: Haldi + Chilli',
     nameHindi: 'कॉम्बो पैक: हल्दी + मिर्च',
     description: 'Perfect combo of Haldi + Chilli for everyday cooking needs.',
-    price: 360, // Base price for 500g combo (updated)
+    price: 215, // Base price for 250g combo (updated - total 500g)
     originalPrice: 210,
     image: '/products/combo-pack.jpeg',
     category: 'Combo Packs',
-    weight: '500g', // Default weight (updated)
+    weight: '250g', // Default weight (updated)
     rating: 4.8,
     reviews: 1234,
     isNew: true,
     lowStockThreshold: 15,
     isInStock: true,
-    sku: 'PM-COMBO-HC-500', // Default SKU (updated)
+    sku: 'PM-COMBO-HC-250', // Default SKU (updated)
     ingredients: ['Haldi', 'Red Chilli'],
     benefits: ['Complete spice solution', 'Cost effective', 'Fresh quality'],
     usageIdeas: ['Daily cooking', 'All curries', 'Rice dishes'],
     weightOptions: [
       {
         weight: '250g (125g each)',
-        price: 185,
-        originalPrice: 210,
+        price: 215,
+        originalPrice: 240,
         sku: 'PM-COMBO-HC-250',
         stock: 110
       },
@@ -244,25 +244,25 @@ export const products: Product[] = [
     name: 'Combo Pack: Dhaniya + Chilli',
     nameHindi: 'कॉम्बो पैक: धनिया + मिर्च',
     description: 'Essential combo of Dhaniya + Chilli for authentic Indian flavors.',
-    price: 280, // Base price for 500g combo (updated)
+    price: 150, // Base price for 250g combo (updated - total 500g)
     originalPrice: 140,
     image: '/products/combo-pack.jpeg',
     category: 'Combo Packs',
-    weight: '500g', // Default weight (updated)
+    weight: '250g', // Default weight (updated)
     rating: 4.7,
     reviews: 987,
     isNew: true,
     lowStockThreshold: 12,
     isInStock: true,
-    sku: 'PM-COMBO-DC-500', // Default SKU (updated)
+    sku: 'PM-COMBO-DC-250', // Default SKU (updated)
     ingredients: ['Dhaniya', 'Red Chilli'],
     benefits: ['Perfect pair', 'Authentic taste', 'Value for money'],
     usageIdeas: ['Curries', 'Dal', 'Vegetable dishes'],
     weightOptions: [
       {
         weight: '250g (125g each)',
-        price: 120,
-        originalPrice: 140,
+        price: 150,
+        originalPrice: 170,
         sku: 'PM-COMBO-DC-250',
         stock: 90
       },
@@ -281,25 +281,25 @@ export const products: Product[] = [
     name: 'Combo Pack: Haldi + Dhaniya',
     nameHindi: 'कॉम्बो पैक: हल्दी + धनिया',
     description: 'Classic combination of Haldi + Dhaniya for traditional cooking.',
-    price: 260, // Base price for 500g combo (updated)
+    price: 155, // Base price for 250g combo (updated - total 500g)
     originalPrice: 145,
     image: '/products/combo-pack.jpeg',
     category: 'Combo Packs',
-    weight: '500g', // Default weight (updated)
+    weight: '250g', // Default weight (updated)
     rating: 4.8,
     reviews: 1456,
     isNew: true,
     lowStockThreshold: 15,
     isInStock: true,
-    sku: 'PM-COMBO-HD-500', // Default SKU (updated)
+    sku: 'PM-COMBO-HD-250', // Default SKU (updated)
     ingredients: ['Haldi', 'Dhaniya'],
     benefits: ['Health benefits', 'Traditional combo', 'Premium quality'],
     usageIdeas: ['Dal tadka', 'Curry base', 'Vegetable cooking'],
     weightOptions: [
       {
         weight: '250g (125g each)',
-        price: 125,
-        originalPrice: 145,
+        price: 155,
+        originalPrice: 175,
         sku: 'PM-COMBO-HD-250',
         stock: 105
       },
@@ -318,25 +318,25 @@ export const products: Product[] = [
     name: 'Combo Pack: Haldi + Dhaniya + Mirchi',
     nameHindi: 'कॉम्बो पैक: हल्दी + धनिया + मिर्च',
     description: 'Complete spice trio - Haldi + Dhaniya + Mirchi for all your cooking needs.',
-    price: 430, // Base price for 500g combo (updated)
+    price: 250, // Base price for 250g combo (updated - total 500g)
     originalPrice: 250,
     image: '/products/combo-pack.jpeg',
     category: 'Combo Packs',
-    weight: '500g', // Default weight (updated)
+    weight: '250g', // Default weight (updated)
     rating: 4.9,
     reviews: 2134,
     isBestSeller: true,
     lowStockThreshold: 18,
     isInStock: true,
-    sku: 'PM-COMBO-HDM-500', // Default SKU (updated)
+    sku: 'PM-COMBO-HDM-250', // Default SKU (updated)
     ingredients: ['Haldi', 'Dhaniya', 'Red Chilli'],
     benefits: ['Complete solution', 'All-in-one', 'Best value'],
     usageIdeas: ['All Indian dishes', 'Complete cooking', 'Restaurant style'],
     weightOptions: [
       {
         weight: '250g (mixed)',
-        price: 220,
-        originalPrice: 250,
+        price: 250,
+        originalPrice: 280,
         sku: 'PM-COMBO-HDM-250',
         stock: 125
       },
