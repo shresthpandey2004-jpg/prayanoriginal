@@ -14,6 +14,7 @@ const ProductDetail: React.FC = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
   const [quantity, setQuantity] = React.useState(1);
+  const [selectedWeightIndex, setSelectedWeightIndex] = React.useState(0);
 
   const product = products.find(p => p.id === id);
   const relatedProducts = products.filter(p => p.id !== id && p.category === product?.category).slice(0, 4);
@@ -22,14 +23,21 @@ const ProductDetail: React.FC = () => {
     return <div className="min-h-screen flex items-center justify-center">Product not found</div>;
   }
 
+  // Get current selected weight option
+  const selectedWeight = product.weightOptions[selectedWeightIndex];
+  const currentPrice = selectedWeight.price;
+  const currentOriginalPrice = selectedWeight.originalPrice;
+  const currentWeight = selectedWeight.weight;
+  const currentStock = selectedWeight.stock;
+
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
       addToCart({
         id: product.id,
         name: product.name,
-        price: product.price,
+        price: currentPrice,
         image: product.image,
-        weight: product.weight,
+        weight: currentWeight,
       });
     }
   };
@@ -67,29 +75,79 @@ const ProductDetail: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-4 mb-6">
-                <span className="text-4xl font-bold text-primary">₹{product.price}</span>
-                {product.originalPrice && <span className="text-xl text-muted-foreground line-through">₹{product.originalPrice}</span>}
-                <span className="bg-secondary px-3 py-1 rounded text-sm">{product.weight}</span>
+                <span className="text-4xl font-bold text-primary">₹{currentPrice}</span>
+                {currentOriginalPrice && <span className="text-xl text-muted-foreground line-through">₹{currentOriginalPrice}</span>}
+                <span className="bg-secondary px-3 py-1 rounded text-sm">{currentWeight}</span>
+                {currentStock <= 10 && <span className="bg-orange-500 text-white px-3 py-1 rounded text-sm">Only {currentStock} left!</span>}
               </div>
 
-              <p className="text-muted-foreground mb-8 leading-relaxed">{product.description}</p>
+              <p className="text-muted-foreground mb-6 leading-relaxed">{product.description}</p>
+
+              {/* Weight Selection */}
+              {product.weightOptions.length > 1 && (
+                <div className="mb-6">
+                  <h3 className="font-semibold mb-3">Select Weight:</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {product.weightOptions.map((option, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setSelectedWeightIndex(index)}
+                        className={`p-3 rounded-xl border-2 transition-all ${
+                          selectedWeightIndex === index
+                            ? 'border-primary bg-primary/10 text-primary'
+                            : 'border-border hover:border-primary/50'
+                        }`}
+                      >
+                        <div className="text-sm font-medium">{option.weight}</div>
+                        <div className="text-lg font-bold">₹{option.price}</div>
+                        {option.originalPrice && (
+                          <div className="text-xs text-muted-foreground line-through">₹{option.originalPrice}</div>
+                        )}
+                        <div className="text-xs text-muted-foreground">Stock: {option.stock}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Quantity & Add to Cart */}
               <div className="flex items-center gap-4 mb-8">
                 <div className="flex items-center gap-3 bg-secondary rounded-xl px-2">
-                  <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="p-3 hover:bg-muted rounded-lg"><Minus size={18} /></button>
+                  <button 
+                    onClick={() => setQuantity(q => Math.max(1, q - 1))} 
+                    className="p-3 hover:bg-muted rounded-lg"
+                  >
+                    <Minus size={18} />
+                  </button>
                   <span className="w-8 text-center font-semibold">{quantity}</span>
-                  <button onClick={() => setQuantity(q => q + 1)} className="p-3 hover:bg-muted rounded-lg"><Plus size={18} /></button>
+                  <button 
+                    onClick={() => setQuantity(q => Math.min(currentStock, q + 1))} 
+                    className="p-3 hover:bg-muted rounded-lg"
+                    disabled={quantity >= currentStock}
+                  >
+                    <Plus size={18} />
+                  </button>
                 </div>
-                <Button variant="hero" size="xl" onClick={handleAddToCart} className="flex-1 gap-2"><ShoppingBag size={20} /> Add to Cart</Button>
-                <Button variant="outline" size="icon" className="h-14 w-14"><Heart size={20} /></Button>
+                <Button 
+                  variant="hero" 
+                  size="xl" 
+                  onClick={handleAddToCart} 
+                  className="flex-1 gap-2"
+                  disabled={currentStock === 0}
+                >
+                  <ShoppingBag size={20} /> 
+                  {currentStock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                </Button>
+                <Button variant="outline" size="icon" className="h-14 w-14">
+                  <Heart size={20} />
+                </Button>
               </div>
 
               {/* Trust Badges */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-center gap-3 bg-secondary/50 rounded-xl p-4">
                   <Truck className="text-gold" size={24} />
-                  <div><p className="font-medium">Free Delivery</p><p className="text-xs text-muted-foreground">On orders above ₹499</p></div>
+                  <div><p className="font-medium">Free Delivery</p><p className="text-xs text-muted-foreground">On orders above ₹199</p></div>
                 </div>
                 <div className="flex items-center gap-3 bg-secondary/50 rounded-xl p-4">
                   <Shield className="text-gold" size={24} />
