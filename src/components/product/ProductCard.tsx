@@ -72,6 +72,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
               </div>
               <span className="text-xs text-muted-foreground">({product.reviews} reviews)</span>
               <span className="text-xs bg-secondary px-2 py-1 rounded">{product.weight}</span>
+              {product.weightOptions && product.weightOptions.length > 1 && (
+                <span className="text-xs text-primary">+{product.weightOptions.length - 1} sizes</span>
+              )}
             </div>
           </div>
           
@@ -209,9 +212,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
               </span>
             )}
           </div>
-          <span className="text-xs text-muted-foreground bg-secondary px-2 py-1 rounded">
-            {product.weight}
-          </span>
+          <div className="text-right">
+            <span className="text-xs text-muted-foreground bg-secondary px-2 py-1 rounded block">
+              {product.weight}
+            </span>
+            {product.weightOptions && product.weightOptions.length > 1 && (
+              <span className="text-xs text-primary mt-1 block">
+                +{product.weightOptions.length - 1} more sizes
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Add to Cart */}

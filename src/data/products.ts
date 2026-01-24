@@ -3,11 +3,11 @@ export interface Product {
   name: string;
   nameHindi?: string;
   description: string;
-  price: number;
+  price: number; // Base price (will be updated based on selected variant)
   originalPrice?: number;
   image: string;
   category: string;
-  weight: string;
+  weight: string; // Default weight (will be updated based on selected variant)
   rating: number;
   reviews: number;
   isNew?: boolean;
@@ -15,6 +15,14 @@ export interface Product {
   ingredients?: string[];
   benefits?: string[];
   usageIdeas?: string[];
+  // Multiple weight options with pricing
+  weightOptions: {
+    weight: string;
+    price: number;
+    originalPrice?: number;
+    sku: string;
+    stock: number;
+  }[];
   // Inventory Management (optional for now)
   stock?: number;
   lowStockThreshold?: number;
@@ -23,465 +31,355 @@ export interface Product {
 }
 
 export const products: Product[] = [
-  // Haldi (Turmeric) Products
+  // Haldi (Turmeric)
   {
-    id: 'haldi-250g',
+    id: 'haldi',
     name: 'Haldi (Turmeric Powder)',
     nameHindi: 'हल्दी पाउडर',
     description: 'Pure and vibrant turmeric sourced from the finest farms. Known for its golden color and medicinal properties.',
-    price: 95,
+    price: 95, // Base price for 250g
     image: '/products/TurmericPowder.jpeg',
     category: 'Pure Spices',
-    weight: '250g',
+    weight: '250g', // Default weight
     rating: 4.8,
     reviews: 3214,
     isBestSeller: true,
-    stock: 200,
     lowStockThreshold: 30,
     isInStock: true,
-    sku: 'PM-H-250',
+    sku: 'PM-H-250', // Default SKU
     ingredients: ['100% Pure Turmeric'],
     benefits: ['Anti-inflammatory', 'Immunity booster', 'Skin health'],
-    usageIdeas: ['Golden milk', 'Curries', 'Rice dishes', 'Face masks']
-  },
-  {
-    id: 'haldi-500g',
-    name: 'Haldi (Turmeric Powder)',
-    nameHindi: 'हल्दी पाउडर',
-    description: 'Pure and vibrant turmeric sourced from the finest farms. Known for its golden color and medicinal properties.',
-    price: 170,
-    image: '/products/TurmericPowder.jpeg',
-    category: 'Pure Spices',
-    weight: '500g',
-    rating: 4.8,
-    reviews: 2847,
-    isBestSeller: true,
-    stock: 150,
-    lowStockThreshold: 25,
-    isInStock: true,
-    sku: 'PM-H-500',
-    ingredients: ['100% Pure Turmeric'],
-    benefits: ['Anti-inflammatory', 'Immunity booster', 'Skin health'],
-    usageIdeas: ['Golden milk', 'Curries', 'Rice dishes', 'Face masks']
-  },
-  {
-    id: 'haldi-1kg',
-    name: 'Haldi (Turmeric Powder)',
-    nameHindi: 'हल्दी पाउडर',
-    description: 'Pure and vibrant turmeric sourced from the finest farms. Known for its golden color and medicinal properties.',
-    price: 320,
-    image: '/products/TurmericPowder.jpeg',
-    category: 'Pure Spices',
-    weight: '1kg',
-    rating: 4.8,
-    reviews: 1876,
-    isBestSeller: true,
-    stock: 100,
-    lowStockThreshold: 20,
-    isInStock: true,
-    sku: 'PM-H-1KG',
-    ingredients: ['100% Pure Turmeric'],
-    benefits: ['Anti-inflammatory', 'Immunity booster', 'Skin health'],
-    usageIdeas: ['Golden milk', 'Curries', 'Rice dishes', 'Face masks']
+    usageIdeas: ['Golden milk', 'Curries', 'Rice dishes', 'Face masks'],
+    weightOptions: [
+      {
+        weight: '250g',
+        price: 95,
+        sku: 'PM-H-250',
+        stock: 200
+      },
+      {
+        weight: '500g',
+        price: 170,
+        sku: 'PM-H-500',
+        stock: 150
+      },
+      {
+        weight: '1kg',
+        price: 320,
+        sku: 'PM-H-1KG',
+        stock: 100
+      }
+    ]
   },
 
-  // Chilli Products
+  // Chilli
   {
-    id: 'chilli-250g',
+    id: 'chilli',
     name: 'Red Chilli Powder',
     nameHindi: 'लाल मिर्च पाउडर',
     description: 'Premium red chilli powder that gives your dishes a beautiful red color with perfect heat.',
-    price: 100,
+    price: 100, // Base price for 250g
     image: '/products/Chillipowder.jpeg',
     category: 'Pure Spices',
-    weight: '250g',
+    weight: '250g', // Default weight
     rating: 4.7,
     reviews: 1987,
     isNew: true,
-    ingredients: ['100% Red Chilli'],
-    benefits: ['Rich in Vitamin C', 'Metabolism booster', 'Natural color'],
-    usageIdeas: ['Tandoori dishes', 'Gravies', 'Marinades'],
-    stock: 180,
     lowStockThreshold: 30,
     isInStock: true,
-    sku: 'PM-C-250'
-  },
-  {
-    id: 'chilli-500g',
-    name: 'Red Chilli Powder',
-    nameHindi: 'लाल मिर्च पाउडर',
-    description: 'Premium red chilli powder that gives your dishes a beautiful red color with perfect heat.',
-    price: 180,
-    image: '/products/Chillipowder.jpeg',
-    category: 'Pure Spices',
-    weight: '500g',
-    rating: 4.7,
-    reviews: 1654,
-    isNew: true,
+    sku: 'PM-C-250', // Default SKU
     ingredients: ['100% Red Chilli'],
     benefits: ['Rich in Vitamin C', 'Metabolism booster', 'Natural color'],
     usageIdeas: ['Tandoori dishes', 'Gravies', 'Marinades'],
-    stock: 140,
-    lowStockThreshold: 25,
-    isInStock: true,
-    sku: 'PM-C-500'
-  },
-  {
-    id: 'chilli-1kg',
-    name: 'Red Chilli Powder',
-    nameHindi: 'लाल मिर्च पाउडर',
-    description: 'Premium red chilli powder that gives your dishes a beautiful red color with perfect heat.',
-    price: 340,
-    image: '/products/Chillipowder.jpeg',
-    category: 'Pure Spices',
-    weight: '1kg',
-    rating: 4.7,
-    reviews: 1234,
-    isNew: true,
-    ingredients: ['100% Red Chilli'],
-    benefits: ['Rich in Vitamin C', 'Metabolism booster', 'Natural color'],
-    usageIdeas: ['Tandoori dishes', 'Gravies', 'Marinades'],
-    stock: 90,
-    lowStockThreshold: 20,
-    isInStock: true,
-    sku: 'PM-C-1KG'
+    weightOptions: [
+      {
+        weight: '250g',
+        price: 100,
+        sku: 'PM-C-250',
+        stock: 180
+      },
+      {
+        weight: '500g',
+        price: 180,
+        sku: 'PM-C-500',
+        stock: 140
+      },
+      {
+        weight: '1kg',
+        price: 340,
+        sku: 'PM-C-1KG',
+        stock: 90
+      }
+    ]
   },
 
-  // Dhaniya (Coriander) Products
+  // Dhaniya (Coriander)
   {
-    id: 'dhaniya-250g',
+    id: 'dhaniya',
     name: 'Dhaniya (Coriander Powder)',
     nameHindi: 'धनिया पाउडर',
     description: 'Aromatic coriander powder with fresh, citrusy flavor. Essential for authentic Indian cooking.',
-    price: 40,
+    price: 40, // Base price for 250g
     image: '/products/CuminPowder.jpeg',
     category: 'Pure Spices',
-    weight: '250g',
+    weight: '250g', // Default weight
     rating: 4.9,
     reviews: 2341,
     isBestSeller: true,
-    ingredients: ['100% Pure Coriander Seeds'],
-    benefits: ['Improves digestion', 'Rich in antioxidants', 'Natural detox'],
-    usageIdeas: ['Dal', 'Curries', 'Chutneys', 'Marinades'],
-    stock: 200,
     lowStockThreshold: 30,
     isInStock: true,
-    sku: 'PM-D-250'
-  },
-  {
-    id: 'dhaniya-500g',
-    name: 'Dhaniya (Coriander Powder)',
-    nameHindi: 'धनिया पाउडर',
-    description: 'Aromatic coriander powder with fresh, citrusy flavor. Essential for authentic Indian cooking.',
-    price: 90,
-    image: '/products/CuminPowder.jpeg',
-    category: 'Pure Spices',
-    weight: '500g',
-    rating: 4.9,
-    reviews: 1876,
-    isBestSeller: true,
+    sku: 'PM-D-250', // Default SKU
     ingredients: ['100% Pure Coriander Seeds'],
     benefits: ['Improves digestion', 'Rich in antioxidants', 'Natural detox'],
     usageIdeas: ['Dal', 'Curries', 'Chutneys', 'Marinades'],
-    stock: 160,
-    lowStockThreshold: 25,
-    isInStock: true,
-    sku: 'PM-D-500'
-  },
-  {
-    id: 'dhaniya-1kg',
-    name: 'Dhaniya (Coriander Powder)',
-    nameHindi: 'धनिया पाउडर',
-    description: 'Aromatic coriander powder with fresh, citrusy flavor. Essential for authentic Indian cooking.',
-    price: 210,
-    image: '/products/CuminPowder.jpeg',
-    category: 'Pure Spices',
-    weight: '1kg',
-    rating: 4.9,
-    reviews: 1456,
-    isBestSeller: true,
-    ingredients: ['100% Pure Coriander Seeds'],
-    benefits: ['Improves digestion', 'Rich in antioxidants', 'Natural detox'],
-    usageIdeas: ['Dal', 'Curries', 'Chutneys', 'Marinades'],
-    stock: 120,
-    lowStockThreshold: 20,
-    isInStock: true,
-    sku: 'PM-D-1KG'
+    weightOptions: [
+      {
+        weight: '250g',
+        price: 40,
+        sku: 'PM-D-250',
+        stock: 200
+      },
+      {
+        weight: '500g',
+        price: 90,
+        sku: 'PM-D-500',
+        stock: 160
+      },
+      {
+        weight: '1kg',
+        price: 210,
+        sku: 'PM-D-1KG',
+        stock: 120
+      }
+    ]
   },
 
-  // Garam Masala Products
+  // Garam Masala
   {
-    id: 'garam-masala-100g',
+    id: 'garam-masala',
     name: 'Garam Masala',
     nameHindi: 'गरम मसाला',
     description: 'A perfect blend of aromatic spices that brings warmth and depth to your dishes. Hand-ground using traditional methods.',
-    price: 80,
+    price: 80, // Base price for 100g
     image: '/products/GaramMasala.jpeg',
     category: 'Blended Spices',
-    weight: '100g',
+    weight: '100g', // Default weight
     rating: 4.9,
     reviews: 2847,
     isBestSeller: true,
-    ingredients: ['Cinnamon', 'Cardamom', 'Cloves', 'Cumin', 'Coriander', 'Black Pepper', 'Bay Leaves'],
-    benefits: ['Improves digestion', 'Boosts metabolism', 'Rich in antioxidants'],
-    usageIdeas: ['Add to curries', 'Sprinkle on rice dishes', 'Perfect for biryanis'],
-    stock: 150,
     lowStockThreshold: 20,
     isInStock: true,
-    sku: 'PM-GM-100'
-  },
-  {
-    id: 'garam-masala-250g',
-    name: 'Garam Masala',
-    nameHindi: 'गरम मसाला',
-    description: 'A perfect blend of aromatic spices that brings warmth and depth to your dishes. Hand-ground using traditional methods.',
-    price: 150,
-    image: '/products/GaramMasala.jpeg',
-    category: 'Blended Spices',
-    weight: '250g',
-    rating: 4.9,
-    reviews: 2341,
-    isBestSeller: true,
+    sku: 'PM-GM-100', // Default SKU
     ingredients: ['Cinnamon', 'Cardamom', 'Cloves', 'Cumin', 'Coriander', 'Black Pepper', 'Bay Leaves'],
     benefits: ['Improves digestion', 'Boosts metabolism', 'Rich in antioxidants'],
     usageIdeas: ['Add to curries', 'Sprinkle on rice dishes', 'Perfect for biryanis'],
-    stock: 120,
-    lowStockThreshold: 18,
-    isInStock: true,
-    sku: 'PM-GM-250'
-  },
-  {
-    id: 'garam-masala-500g',
-    name: 'Garam Masala',
-    nameHindi: 'गरम मसाला',
-    description: 'A perfect blend of aromatic spices that brings warmth and depth to your dishes. Hand-ground using traditional methods.',
-    price: 280,
-    image: '/products/GaramMasala.jpeg',
-    category: 'Blended Spices',
-    weight: '500g',
-    rating: 4.9,
-    reviews: 1987,
-    isBestSeller: true,
-    ingredients: ['Cinnamon', 'Cardamom', 'Cloves', 'Cumin', 'Coriander', 'Black Pepper', 'Bay Leaves'],
-    benefits: ['Improves digestion', 'Boosts metabolism', 'Rich in antioxidants'],
-    usageIdeas: ['Add to curries', 'Sprinkle on rice dishes', 'Perfect for biryanis'],
-    stock: 100,
-    lowStockThreshold: 15,
-    isInStock: true,
-    sku: 'PM-GM-500'
-  },
-  {
-    id: 'garam-masala-1kg',
-    name: 'Garam Masala',
-    nameHindi: 'गरम मसाला',
-    description: 'A perfect blend of aromatic spices that brings warmth and depth to your dishes. Hand-ground using traditional methods.',
-    price: 600,
-    image: '/products/GaramMasala.jpeg',
-    category: 'Blended Spices',
-    weight: '1kg',
-    rating: 4.9,
-    reviews: 1654,
-    isBestSeller: true,
-    ingredients: ['Cinnamon', 'Cardamom', 'Cloves', 'Cumin', 'Coriander', 'Black Pepper', 'Bay Leaves'],
-    benefits: ['Improves digestion', 'Boosts metabolism', 'Rich in antioxidants'],
-    usageIdeas: ['Add to curries', 'Sprinkle on rice dishes', 'Perfect for biryanis'],
-    stock: 80,
-    lowStockThreshold: 12,
-    isInStock: true,
-    sku: 'PM-GM-1KG'
+    weightOptions: [
+      {
+        weight: '100g',
+        price: 80,
+        sku: 'PM-GM-100',
+        stock: 150
+      },
+      {
+        weight: '250g',
+        price: 150,
+        sku: 'PM-GM-250',
+        stock: 120
+      },
+      {
+        weight: '500g',
+        price: 280,
+        sku: 'PM-GM-500',
+        stock: 100
+      },
+      {
+        weight: '1kg',
+        price: 600,
+        sku: 'PM-GM-1KG',
+        stock: 80
+      }
+    ]
   },
 
   // Combo Packs - 500g
   {
-    id: 'combo-haldi-chilli-500g',
-    name: 'Combo Pack: Haldi + Chilli (500g)',
+    id: 'combo-haldi-chilli',
+    name: 'Combo Pack: Haldi + Chilli',
     nameHindi: 'कॉम्बो पैक: हल्दी + मिर्च',
-    description: 'Perfect combo of Haldi (250g) + Chilli (250g) for everyday cooking needs.',
-    price: 330,
-    originalPrice: 370,
-    image: '/products/combo-pack.jpeg',
-    category: 'Combo Packs',
-    weight: '500g (250g each)',
-    rating: 4.8,
-    reviews: 1234,
-    isNew: true,
-    ingredients: ['Haldi 250g', 'Chilli 250g'],
-    benefits: ['Complete spice solution', 'Cost effective', 'Fresh quality'],
-    usageIdeas: ['Daily cooking', 'All curries', 'Rice dishes'],
-    stock: 75,
-    lowStockThreshold: 15,
-    isInStock: true,
-    sku: 'PM-COMBO-HC-500'
-  },
-  {
-    id: 'combo-dhaniya-chilli-500g',
-    name: 'Combo Pack: Dhaniya + Chilli (500g)',
-    nameHindi: 'कॉम्बो पैक: धनिया + मिर्च',
-    description: 'Essential combo of Dhaniya (250g) + Chilli (250g) for authentic Indian flavors.',
-    price: 250,
-    originalPrice: 280,
-    image: '/products/combo-pack.jpeg',
-    category: 'Combo Packs',
-    weight: '500g (250g each)',
-    rating: 4.7,
-    reviews: 987,
-    isNew: true,
-    ingredients: ['Dhaniya 250g', 'Chilli 250g'],
-    benefits: ['Perfect pair', 'Authentic taste', 'Value for money'],
-    usageIdeas: ['Curries', 'Dal', 'Vegetable dishes'],
-    stock: 60,
-    lowStockThreshold: 12,
-    isInStock: true,
-    sku: 'PM-COMBO-DC-500'
-  },
-  {
-    id: 'combo-haldi-dhaniya-500g',
-    name: 'Combo Pack: Haldi + Dhaniya (500g)',
-    nameHindi: 'कॉम्बो पैक: हल्दी + धनिया',
-    description: 'Classic combination of Haldi (250g) + Dhaniya (250g) for traditional cooking.',
-    price: 230,
-    originalPrice: 260,
-    image: '/products/combo-pack.jpeg',
-    category: 'Combo Packs',
-    weight: '500g (250g each)',
-    rating: 4.8,
-    reviews: 1456,
-    isNew: true,
-    ingredients: ['Haldi 250g', 'Dhaniya 250g'],
-    benefits: ['Health benefits', 'Traditional combo', 'Premium quality'],
-    usageIdeas: ['Dal tadka', 'Curry base', 'Vegetable cooking'],
-    stock: 85,
-    lowStockThreshold: 15,
-    isInStock: true,
-    sku: 'PM-COMBO-HD-500'
-  },
-  {
-    id: 'combo-haldi-dhaniya-mirchi-500g',
-    name: 'Combo Pack: Haldi + Dhaniya + Mirchi (500g)',
-    nameHindi: 'कॉम्बो पैक: हल्दी + धनिया + मिर्च',
-    description: 'Complete spice trio - Haldi + Dhaniya + Mirchi for all your cooking needs.',
-    price: 400,
-    originalPrice: 450,
-    image: '/products/combo-pack.jpeg',
-    category: 'Combo Packs',
-    weight: '500g (mixed)',
-    rating: 4.9,
-    reviews: 2134,
-    isBestSeller: true,
-    ingredients: ['Haldi', 'Dhaniya', 'Red Chilli'],
-    benefits: ['Complete solution', 'All-in-one', 'Best value'],
-    usageIdeas: ['All Indian dishes', 'Complete cooking', 'Restaurant style'],
-    stock: 95,
-    lowStockThreshold: 18,
-    isInStock: true,
-    sku: 'PM-COMBO-HDM-500'
-  },
-
-  // Combo Packs - 250g
-  {
-    id: 'combo-haldi-chilli-250g',
-    name: 'Combo Pack: Haldi + Chilli (250g)',
-    nameHindi: 'कॉम्बो पैक: हल्दी + मिर्च',
-    description: 'Starter combo of Haldi (125g) + Chilli (125g) perfect for small families.',
-    price: 185,
+    description: 'Perfect combo of Haldi + Chilli for everyday cooking needs.',
+    price: 185, // Base price for 250g combo
     originalPrice: 210,
     image: '/products/combo-pack.jpeg',
     category: 'Combo Packs',
-    weight: '250g (125g each)',
-    rating: 4.7,
-    reviews: 876,
-    ingredients: ['Haldi 125g', 'Chilli 125g'],
-    benefits: ['Perfect starter', 'Small family size', 'Quality assured'],
-    usageIdeas: ['Daily cooking', 'Small portions', 'Trial pack'],
-    stock: 110,
-    lowStockThreshold: 20,
+    weight: '250g', // Default weight
+    rating: 4.8,
+    reviews: 1234,
+    isNew: true,
+    lowStockThreshold: 15,
     isInStock: true,
-    sku: 'PM-COMBO-HC-250'
+    sku: 'PM-COMBO-HC-250', // Default SKU
+    ingredients: ['Haldi', 'Red Chilli'],
+    benefits: ['Complete spice solution', 'Cost effective', 'Fresh quality'],
+    usageIdeas: ['Daily cooking', 'All curries', 'Rice dishes'],
+    weightOptions: [
+      {
+        weight: '250g (125g each)',
+        price: 185,
+        originalPrice: 210,
+        sku: 'PM-COMBO-HC-250',
+        stock: 110
+      },
+      {
+        weight: '500g (250g each)',
+        price: 330,
+        originalPrice: 370,
+        sku: 'PM-COMBO-HC-500',
+        stock: 75
+      }
+    ]
   },
+
   {
-    id: 'combo-dhaniya-chilli-250g',
-    name: 'Combo Pack: Dhaniya + Chilli (250g)',
+    id: 'combo-dhaniya-chilli',
+    name: 'Combo Pack: Dhaniya + Chilli',
     nameHindi: 'कॉम्बो पैक: धनिया + मिर्च',
-    description: 'Essential starter combo of Dhaniya (125g) + Chilli (125g).',
-    price: 120,
+    description: 'Essential combo of Dhaniya + Chilli for authentic Indian flavors.',
+    price: 120, // Base price for 250g combo
     originalPrice: 140,
     image: '/products/combo-pack.jpeg',
     category: 'Combo Packs',
-    weight: '250g (125g each)',
-    rating: 4.6,
-    reviews: 654,
-    ingredients: ['Dhaniya 125g', 'Chilli 125g'],
-    benefits: ['Affordable combo', 'Fresh quality', 'Perfect pair'],
-    usageIdeas: ['Basic cooking', 'Student meals', 'Starter kit'],
-    stock: 90,
-    lowStockThreshold: 18,
+    weight: '250g', // Default weight
+    rating: 4.7,
+    reviews: 987,
+    isNew: true,
+    lowStockThreshold: 12,
     isInStock: true,
-    sku: 'PM-COMBO-DC-250'
+    sku: 'PM-COMBO-DC-250', // Default SKU
+    ingredients: ['Dhaniya', 'Red Chilli'],
+    benefits: ['Perfect pair', 'Authentic taste', 'Value for money'],
+    usageIdeas: ['Curries', 'Dal', 'Vegetable dishes'],
+    weightOptions: [
+      {
+        weight: '250g (125g each)',
+        price: 120,
+        originalPrice: 140,
+        sku: 'PM-COMBO-DC-250',
+        stock: 90
+      },
+      {
+        weight: '500g (250g each)',
+        price: 250,
+        originalPrice: 280,
+        sku: 'PM-COMBO-DC-500',
+        stock: 60
+      }
+    ]
   },
+
   {
-    id: 'combo-haldi-dhaniya-250g',
-    name: 'Combo Pack: Haldi + Dhaniya (250g)',
+    id: 'combo-haldi-dhaniya',
+    name: 'Combo Pack: Haldi + Dhaniya',
     nameHindi: 'कॉम्बो पैक: हल्दी + धनिया',
-    description: 'Health combo of Haldi (125g) + Dhaniya (125g) for wellness cooking.',
-    price: 125,
+    description: 'Classic combination of Haldi + Dhaniya for traditional cooking.',
+    price: 125, // Base price for 250g combo
     originalPrice: 145,
     image: '/products/combo-pack.jpeg',
     category: 'Combo Packs',
-    weight: '250g (125g each)',
+    weight: '250g', // Default weight
     rating: 4.8,
-    reviews: 789,
-    ingredients: ['Haldi 125g', 'Dhaniya 125g'],
-    benefits: ['Health focused', 'Natural healing', 'Pure quality'],
-    usageIdeas: ['Healthy cooking', 'Ayurvedic meals', 'Wellness dishes'],
-    stock: 105,
-    lowStockThreshold: 20,
+    reviews: 1456,
+    isNew: true,
+    lowStockThreshold: 15,
     isInStock: true,
-    sku: 'PM-COMBO-HD-250'
+    sku: 'PM-COMBO-HD-250', // Default SKU
+    ingredients: ['Haldi', 'Dhaniya'],
+    benefits: ['Health benefits', 'Traditional combo', 'Premium quality'],
+    usageIdeas: ['Dal tadka', 'Curry base', 'Vegetable cooking'],
+    weightOptions: [
+      {
+        weight: '250g (125g each)',
+        price: 125,
+        originalPrice: 145,
+        sku: 'PM-COMBO-HD-250',
+        stock: 105
+      },
+      {
+        weight: '500g (250g each)',
+        price: 230,
+        originalPrice: 260,
+        sku: 'PM-COMBO-HD-500',
+        stock: 85
+      }
+    ]
   },
+
   {
-    id: 'combo-haldi-dhaniya-mirchi-250g',
-    name: 'Combo Pack: Haldi + Dhaniya + Mirchi (250g)',
+    id: 'combo-haldi-dhaniya-mirchi',
+    name: 'Combo Pack: Haldi + Dhaniya + Mirchi',
     nameHindi: 'कॉम्बो पैक: हल्दी + धनिया + मिर्च',
-    description: 'Mini trio pack with all essential spices for complete cooking.',
-    price: 220,
+    description: 'Complete spice trio - Haldi + Dhaniya + Mirchi for all your cooking needs.',
+    price: 220, // Base price for 250g combo
     originalPrice: 250,
     image: '/products/combo-pack.jpeg',
     category: 'Combo Packs',
-    weight: '250g (mixed)',
-    rating: 4.8,
-    reviews: 1123,
+    weight: '250g', // Default weight
+    rating: 4.9,
+    reviews: 2134,
     isBestSeller: true,
-    ingredients: ['Haldi', 'Dhaniya', 'Red Chilli'],
-    benefits: ['Complete starter', 'All essentials', 'Great value'],
-    usageIdeas: ['Complete cooking', 'All dishes', 'Starter pack'],
-    stock: 125,
-    lowStockThreshold: 25,
+    lowStockThreshold: 18,
     isInStock: true,
-    sku: 'PM-COMBO-HDM-250'
+    sku: 'PM-COMBO-HDM-250', // Default SKU
+    ingredients: ['Haldi', 'Dhaniya', 'Red Chilli'],
+    benefits: ['Complete solution', 'All-in-one', 'Best value'],
+    usageIdeas: ['All Indian dishes', 'Complete cooking', 'Restaurant style'],
+    weightOptions: [
+      {
+        weight: '250g (mixed)',
+        price: 220,
+        originalPrice: 250,
+        sku: 'PM-COMBO-HDM-250',
+        stock: 125
+      },
+      {
+        weight: '500g (mixed)',
+        price: 400,
+        originalPrice: 450,
+        sku: 'PM-COMBO-HDM-500',
+        stock: 95
+      }
+    ]
   },
 
-  // Combo Pack - 100g
+  // Ultimate Combo
   {
-    id: 'combo-haldi-mirchi-dhaniya-garam-masala-100g',
-    name: 'Ultimate Combo: Haldi + Mirchi + Dhaniya + Garam Masala (100g)',
+    id: 'combo-ultimate',
+    name: 'Ultimate Combo: Haldi + Mirchi + Dhaniya + Garam Masala',
     nameHindi: 'अल्टीमेट कॉम्बो: हल्दी + मिर्च + धनिया + गरम मसाला',
     description: 'Complete spice solution with all four essential spices for authentic Indian cooking.',
-    price: 160,
+    price: 160, // Base price for 100g combo
     originalPrice: 190,
     image: '/products/combo-pack.jpeg',
     category: 'Combo Packs',
-    weight: '100g (25g each)',
+    weight: '100g', // Default weight
     rating: 4.9,
     reviews: 1876,
     isBestSeller: true,
     isNew: true,
-    ingredients: ['Haldi 25g', 'Red Chilli 25g', 'Dhaniya 25g', 'Garam Masala 25g'],
-    benefits: ['Complete spice kit', 'All-in-one solution', 'Perfect for beginners'],
-    usageIdeas: ['All Indian dishes', 'Complete cooking', 'Starter kit', 'Travel pack'],
-    stock: 150,
     lowStockThreshold: 30,
     isInStock: true,
-    sku: 'PM-COMBO-ULTIMATE-100'
+    sku: 'PM-COMBO-ULTIMATE-100', // Default SKU
+    ingredients: ['Haldi', 'Red Chilli', 'Dhaniya', 'Garam Masala'],
+    benefits: ['Complete spice kit', 'All-in-one solution', 'Perfect for beginners'],
+    usageIdeas: ['All Indian dishes', 'Complete cooking', 'Starter kit', 'Travel pack'],
+    weightOptions: [
+      {
+        weight: '100g (25g each)',
+        price: 160,
+        originalPrice: 190,
+        sku: 'PM-COMBO-ULTIMATE-100',
+        stock: 150
+      }
+    ]
   }
 ];
 
