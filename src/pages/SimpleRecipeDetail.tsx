@@ -372,6 +372,38 @@ const SimpleRecipeDetail = () => {
                     Add {selectedSpices.size} Spices to Cart
                   </Button>
                   
+                  {/* Debug button to test cart drawer */}
+                  <Button 
+                    onClick={() => {
+                      console.log('🧪 Debug: Force opening cart drawer');
+                      setIsCartOpen(true);
+                    }}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    🧪 Test Cart Drawer
+                  </Button>
+                  
+                  {/* Debug button to test adding items */}
+                  <Button 
+                    onClick={() => {
+                      console.log('🧪 Debug: Adding test item to cart');
+                      addToCart({
+                        id: 'haldi',
+                        name: 'Test Haldi',
+                        price: 150,
+                        image: '/products/haldi.jpg',
+                        weight: '100g'
+                      });
+                      console.log('🧪 Debug: Opening cart after adding test item');
+                      setIsCartOpen(true);
+                    }}
+                    variant="secondary"
+                    className="w-full"
+                  >
+                    🧪 Add Test Item + Open Cart
+                  </Button>
+                  
                   <Button 
                     onClick={() => navigate('/shop')}
                     variant="outline"
