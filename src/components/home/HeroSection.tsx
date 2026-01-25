@@ -109,12 +109,6 @@ const HeroSection: React.FC = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 to-transparent" />
               </div>
-
-              {/* Price Tag */}
-              <div className="absolute -top-4 -right-4 bg-accent text-accent-foreground rounded-2xl px-6 py-3 shadow-medium animate-float-slow">
-                <p className="text-xs opacity-80">Starting from</p>
-                <p className="font-display text-2xl font-bold">₹99</p>
-              </div>
             </div>
           </div>
         </div>
