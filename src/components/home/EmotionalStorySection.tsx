@@ -15,8 +15,8 @@ const EmotionalStorySection: React.FC = () => {
           <div className="relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=800&q=80"
-                alt="Traditional Indian Kitchen"
+                src="/buddhi-amma-kitchen.jpg"
+                alt="PRAYAN Traditional Spices and Kitchen Heritage"
                 className="w-full aspect-[4/5] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brown/60 to-transparent" />
