@@ -27,8 +27,8 @@ const HeroSection: React.FC = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=2000&q=80"
-          alt="Indian Spices"
+          src="/hero-spices-new.jpg"
+          alt="PRAYAN Premium Indian Spices"
           className="w-full h-full object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/50" />
@@ -103,8 +103,8 @@ const HeroSection: React.FC = () => {
               {/* Main Product Image */}
               <div className="relative rounded-3xl overflow-hidden shadow-gold animate-float">
                 <img
-                  src="https://images.unsplash.com/photo-1506368249639-73a05d6f6488?auto=format&fit=crop&w=800&q=80"
-                  alt="PRAYAN Premium Spices"
+                  src="/hero-spices-new.jpg"
+                  alt="PRAYAN Premium Spices Collection"
                   className="w-full aspect-square object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 to-transparent" />
