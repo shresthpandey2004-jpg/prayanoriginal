@@ -65,8 +65,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // Simulate API call - In real app, this would be an actual API
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Check existing users using UserService
-      const existingUser = UserService.getUserByEmail(email);
+      // Check existing users using UserService (now async)
+      const existingUser = await UserService.getUserByEmail(email);
       
       if (existingUser && existingUser.password === password) {
         const { password: _, ...userWithoutPassword } = existingUser;
@@ -78,8 +78,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setUser(updatedUser);
         localStorage.setItem('prayan-user', JSON.stringify(updatedUser));
         
-        // Update user's last login using UserService
-        UserService.updateUser(email, { lastLogin: updatedUser.lastLogin });
+        // Update user's last login using UserService (now async)
+        await UserService.updateUser(email, { lastLogin: updatedUser.lastLogin });
         
         setIsLoading(false);
         return true;
@@ -88,6 +88,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setIsLoading(false);
       return false;
     } catch (error) {
+      console.error('❌ Login error:', error);
       setIsLoading(false);
       return false;
     }
@@ -103,9 +104,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // Sanitize user data
       const sanitizedData = sanitizeUserData(userData);
       
-      // Check for duplicates using UserService
-      const existingUserByEmail = UserService.getUserByEmail(sanitizedData.email);
-      const existingUserByPhone = UserService.getUserByPhone(sanitizedData.phone);
+      // Check for duplicates using UserService (now async)
+      const existingUserByEmail = await UserService.getUserByEmail(sanitizedData.email);
+      const existingUserByPhone = await UserService.getUserByPhone(sanitizedData.phone);
       
       if (existingUserByEmail) {
         console.log(`❌ Duplicate email:`, sanitizedData.email);
@@ -151,8 +152,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         totalSpent: 0
       };
       
-      // Save user using UserService
-      const saveSuccess = UserService.saveUser(newUserData);
+      // Save user using UserService (now async)
+      const saveSuccess = await UserService.saveUser(newUserData);
       
       if (!saveSuccess) {
         console.error('❌ Failed to save user with UserService');
@@ -163,7 +164,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         };
       }
       
-      console.log('✅ User saved successfully with UserService');
+      console.log('✅ User saved successfully with Firebase + UserService');
       
       // Set current user (without password)
       setUser(newUser);
@@ -186,15 +187,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     localStorage.removeItem('prayan-user');
   };
 
-  const updateProfile = (userData: Partial<User>) => {
+  const updateProfile = async (userData: Partial<User>) => {
     if (!user) return;
     
     const updatedUser = { ...user, ...userData };
     setUser(updatedUser);
     localStorage.setItem('prayan-user', JSON.stringify(updatedUser));
     
-    // Update using UserService
-    UserService.updateUser(user.email, userData);
+    // Update using UserService (now async)
+    try {
+      await UserService.updateUser(user.email, userData);
+      console.log('✅ Profile updated in Firebase');
+    } catch (error) {
+      console.error('❌ Error updating profile:', error);
+    }
   };
 
   return (

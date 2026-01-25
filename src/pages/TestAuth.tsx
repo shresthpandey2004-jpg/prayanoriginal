@@ -10,41 +10,77 @@ const TestAuth = () => {
   const [testPhone, setTestPhone] = useState('');
   const [results, setResults] = useState<any>(null);
 
-  const testDuplicateCheck = () => {
+  const testDuplicateCheck = async () => {
     const normalizedEmail = normalizeEmail(testEmail);
     const normalizedPhone = normalizePhone(testPhone);
     
-    // Test using UserService
-    const existingUserByEmail = UserService.getUserByEmail(normalizedEmail);
-    const existingUserByPhone = UserService.getUserByPhone(normalizedPhone);
-    
-    const emailValid = validateEmailFormat(normalizedEmail);
-    const phoneValid = validatePhoneFormat(normalizedPhone);
-    
-    setResults({
-      existingUserByEmail: !!existingUserByEmail,
-      existingUserByPhone: !!existingUserByPhone,
-      emailValid,
-      phoneValid,
-      normalizedEmail,
-      normalizedPhone,
-      originalEmail: testEmail,
-      originalPhone: testPhone,
-      userStats: UserService.getUserStats()
-    });
+    try {
+      // Test using UserService (now async)
+      const existingUserByEmail = await UserService.getUserByEmail(normalizedEmail);
+      const existingUserByPhone = await UserService.getUserByPhone(normalizedPhone);
+      
+      const emailValid = validateEmailFormat(normalizedEmail);
+      const phoneValid = validatePhoneFormat(normalizedPhone);
+      const userStats = await UserService.getUserStats();
+      
+      setResults({
+        existingUserByEmail: !!existingUserByEmail,
+        existingUserByPhone: !!existingUserByPhone,
+        emailValid,
+        phoneValid,
+        normalizedEmail,
+        normalizedPhone,
+        originalEmail: testEmail,
+        originalPhone: testPhone,
+        userStats
+      });
+    } catch (error) {
+      console.error('Error testing duplicate check:', error);
+      alert('Error testing Firebase connection. Check console for details.');
+    }
   };
 
-  const showExistingUsers = () => {
-    const users = UserService.getAllUsers();
-    console.log('📋 Existing users:', users);
-    alert(`Found ${users.length} existing users. Check console for details.`);
+  const showExistingUsers = async () => {
+    try {
+      const users = await UserService.getAllUsers();
+      console.log('📋 Existing users from Firebase:', users);
+      alert(`Found ${users.length} existing users in Firebase. Check console for details.`);
+    } catch (error) {
+      console.error('Error loading users:', error);
+      alert('Error loading users from Firebase. Check console for details.');
+    }
   };
 
-  const clearAllUsers = () => {
-    if (confirm('Are you sure you want to clear all users? This cannot be undone.')) {
-      UserService.clearAllUsers();
-      localStorage.removeItem('prayan-user');
-      alert('All users cleared!');
+  const clearAllUsers = async () => {
+    if (confirm('Are you sure you want to clear all users from Firebase? This cannot be undone.')) {
+      try {
+        const success = await UserService.clearAllUsers();
+        if (success) {
+          localStorage.removeItem('prayan-user');
+          alert('All users cleared from Firebase and localStorage!');
+        } else {
+          alert('Error clearing users. Check console for details.');
+        }
+      } catch (error) {
+        console.error('Error clearing users:', error);
+        alert('Error clearing users. Check console for details.');
+      }
+    }
+  };
+
+  const migrateUsers = async () => {
+    if (confirm('Migrate localStorage users to Firebase?')) {
+      try {
+        const success = await UserService.migrateLocalStorageToFirebase();
+        if (success) {
+          alert('Users successfully migrated to Firebase!');
+        } else {
+          alert('Migration completed with some errors. Check console for details.');
+        }
+      } catch (error) {
+        console.error('Error migrating users:', error);
+        alert('Error migrating users. Check console for details.');
+      }
     }
   };
 
@@ -53,7 +89,7 @@ const TestAuth = () => {
       <div className="max-w-2xl mx-auto space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>🧪 Authentication System Test</CardTitle>
+            <CardTitle>🔥 Firebase Integration Test</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
@@ -77,10 +113,13 @@ const TestAuth = () => {
             
             <div className="flex gap-2">
               <Button onClick={testDuplicateCheck}>
-                Test Duplicate Check
+                Test Firebase Check
               </Button>
               <Button variant="outline" onClick={showExistingUsers}>
-                Show Existing Users
+                Show Firebase Users
+              </Button>
+              <Button variant="secondary" onClick={migrateUsers}>
+                Migrate to Firebase
               </Button>
               <Button variant="destructive" onClick={clearAllUsers}>
                 Clear All Users
@@ -125,19 +164,19 @@ const TestAuth = () => {
                 </div>
                 
                 <div>
-                  <strong>UserService Duplicate Check:</strong>
+                  <strong>Firebase Duplicate Check:</strong>
                   <div className="ml-4">
                     <div className={results.existingUserByEmail ? 'text-red-600' : 'text-green-600'}>
-                      Email: {results.existingUserByEmail ? '❌ Already exists' : '✅ Available'}
+                      Email: {results.existingUserByEmail ? '❌ Already exists in Firebase' : '✅ Available'}
                     </div>
                     <div className={results.existingUserByPhone ? 'text-red-600' : 'text-green-600'}>
-                      Phone: {results.existingUserByPhone ? '❌ Already exists' : '✅ Available'}
+                      Phone: {results.existingUserByPhone ? '❌ Already exists in Firebase' : '✅ Available'}
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <strong>User Statistics:</strong>
+                  <strong>Firebase User Statistics:</strong>
                   <div className="ml-4">
                     <div>Total Users: {results.userStats.totalUsers}</div>
                     <div>Active Users: {results.userStats.activeUsers}</div>
@@ -156,15 +195,19 @@ const TestAuth = () => {
           </CardHeader>
           <CardContent>
             <div className="text-sm space-y-2">
-              <p><strong>Test these scenarios:</strong></p>
+              <p><strong>Firebase Integration Test Cases:</strong></p>
               <ul className="list-disc ml-6 space-y-1">
-                <li>Register a new user, then try to register again with same email</li>
-                <li>Register a new user, then try to register again with same phone</li>
-                <li>Try different email cases (Test@Example.com vs test@example.com)</li>
-                <li>Try phone with/without spaces (98765 43210 vs 9876543210)</li>
-                <li>Test invalid email formats</li>
-                <li>Test invalid phone formats (less than 10 digits, starting with wrong digit)</li>
+                <li>Register a new user, check if it appears in Firebase</li>
+                <li>Try to register again with same email (should show Firebase duplicate error)</li>
+                <li>Check admin panel - users should load from Firebase</li>
+                <li>Test migration from localStorage to Firebase</li>
+                <li>Verify real-time data sync across devices</li>
+                <li>Test offline fallback to localStorage</li>
               </ul>
+              <div className="mt-4 p-3 bg-green-50 rounded-lg">
+                <p className="text-green-800 font-medium">✅ Firebase Status: Connected</p>
+                <p className="text-green-700 text-sm">Project: prayanmasale.firebaseapp.com</p>
+              </div>
             </div>
           </CardContent>
         </Card>

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useOrders } from '@/context/OrderContext';
-import UserService from '@/services/userService';
+import UserService, { UserData } from '@/services/userService';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -19,7 +19,8 @@ import {
   MessageCircle,
   Gift,
   BarChart3,
-  Award
+  Award,
+  Loader2
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
@@ -29,17 +30,50 @@ const AdminDashboard = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('overview');
+  
+  // Firebase state
+  const [allUsers, setAllUsers] = useState<UserData[]>([]);
+  const [userStats, setUserStats] = useState({
+    totalUsers: 0,
+    activeUsers: 0,
+    newUsersThisMonth: 0,
+    totalRevenue: 0
+  });
+  const [isLoadingUsers, setIsLoadingUsers] = useState(true);
+
+  // Load users from Firebase on component mount
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
+  const loadUsers = async () => {
+    try {
+      setIsLoadingUsers(true);
+      const users = await UserService.getAllUsers();
+      const stats = await UserService.getUserStats();
+      
+      setAllUsers(users);
+      setUserStats(stats);
+      
+      console.log(`✅ Loaded ${users.length} users from Firebase`);
+    } catch (error) {
+      console.error('❌ Error loading users:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load users from database",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoadingUsers(false);
+    }
+  };
 
   // Calculate statistics
   const totalOrders = orders.length;
   const totalRevenue = orders.reduce((sum, order) => sum + order.totalPrice, 0);
   const pendingOrders = orders.filter(order => order.status === 'pending').length;
   const completedOrders = orders.filter(order => order.status === 'delivered').length;
-
-  // Get all users from UserService for user management
-  const allUsers = UserService.getAllUsers();
   const totalUsers = allUsers.length;
-  const userStats = UserService.getUserStats();
 
   // Filter orders
   const filteredOrders = orders.filter(order => {
@@ -360,55 +394,93 @@ const AdminDashboard = () => {
           <TabsContent value="users">
             <Card>
               <CardHeader>
-                <CardTitle>User Management</CardTitle>
+                <div className="flex justify-between items-center">
+                  <CardTitle>User Management</CardTitle>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={loadUsers}
+                    disabled={isLoadingUsers}
+                  >
+                    {isLoadingUsers ? (
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    ) : (
+                      <Download className="w-4 h-4 mr-2" />
+                    )}
+                    Refresh
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b">
-                        <th className="text-left p-4 font-medium">Name</th>
-                        <th className="text-left p-4 font-medium">Email</th>
-                        <th className="text-left p-4 font-medium">Phone</th>
-                        <th className="text-left p-4 font-medium">Orders</th>
-                        <th className="text-left p-4 font-medium">Joined</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {allUsers.map((user) => {
-                        const userOrders = orders.filter(order => order.customerDetails.email === user.email);
-                        return (
-                          <tr key={user.id} className="border-b hover:bg-gray-50">
-                            <td className="p-4">
-                              <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
-                                  <span className="text-white text-sm font-bold">
-                                    {user.name?.charAt(0).toUpperCase()}
-                                  </span>
+                {isLoadingUsers ? (
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+                    <span className="ml-2 text-gray-600">Loading users from Firebase...</span>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left p-4 font-medium">Name</th>
+                          <th className="text-left p-4 font-medium">Email</th>
+                          <th className="text-left p-4 font-medium">Phone</th>
+                          <th className="text-left p-4 font-medium">Orders</th>
+                          <th className="text-left p-4 font-medium">Status</th>
+                          <th className="text-left p-4 font-medium">Joined</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {allUsers.map((user) => {
+                          const userOrders = orders.filter(order => order.customerDetails.email === user.email);
+                          return (
+                            <tr key={user.id} className="border-b hover:bg-gray-50">
+                              <td className="p-4">
+                                <div className="flex items-center gap-3">
+                                  <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
+                                    <span className="text-white text-sm font-bold">
+                                      {user.name?.charAt(0).toUpperCase()}
+                                    </span>
+                                  </div>
+                                  <p className="font-medium">{user.name}</p>
                                 </div>
-                                <p className="font-medium">{user.name}</p>
-                              </div>
-                            </td>
-                            <td className="p-4 text-sm">{user.email}</td>
-                            <td className="p-4 text-sm">{user.phone || 'N/A'}</td>
-                            <td className="p-4">
-                              <Badge variant="outline">{userOrders.length} orders</Badge>
-                            </td>
-                            <td className="p-4 text-sm">
-                              {new Date(user.createdAt || Date.now()).toLocaleDateString('en-IN')}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+                              </td>
+                              <td className="p-4 text-sm">{user.email}</td>
+                              <td className="p-4 text-sm">{user.phone || 'N/A'}</td>
+                              <td className="p-4">
+                                <Badge variant="outline">{userOrders.length} orders</Badge>
+                              </td>
+                              <td className="p-4">
+                                <Badge 
+                                  variant={user.isActive ? "default" : "secondary"}
+                                  className={user.isActive ? "bg-green-100 text-green-800" : ""}
+                                >
+                                  {user.isActive ? 'Active' : 'Inactive'}
+                                </Badge>
+                              </td>
+                              <td className="p-4 text-sm">
+                                {new Date(user.createdAt || Date.now()).toLocaleDateString('en-IN')}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
 
-                {allUsers.length === 0 && (
+                {!isLoadingUsers && allUsers.length === 0 && (
                   <div className="text-center py-8">
                     <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                     <h3 className="text-lg font-semibold mb-2">No users yet</h3>
                     <p className="text-gray-600">Registered users will appear here.</p>
+                    <Button 
+                      variant="outline" 
+                      className="mt-4"
+                      onClick={() => UserService.migrateLocalStorageToFirebase()}
+                    >
+                      Migrate Local Users to Firebase
+                    </Button>
                   </div>
                 )}
               </CardContent>
