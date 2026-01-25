@@ -1,65 +1,15 @@
-import React, { useState } from 'react';
-import { X, Plus, Minus, ShoppingBag, ArrowRight, Trash2, Tag, Percent } from 'lucide-react';
+import React from 'react';
+import { X, Plus, Minus, ShoppingBag, ArrowRight, Trash2 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
-import { useCoupons } from '@/context/CouponContext';
-import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { toast } from '@/hooks/use-toast';
 
 const CartDrawer: React.FC = () => {
   const { items, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart, totalPrice, totalItems } = useCart();
-  const { appliedCoupon, applyCoupon, removeCoupon, calculateDiscount, getAvailableCoupons } = useCoupons();
-  const { user } = useAuth();
-  
-  const [couponCode, setCouponCode] = useState('');
-  const [showAvailableCoupons, setShowAvailableCoupons] = useState(false);
-
-  const isFirstTimeUser = !user || user.createdAt === user.lastLogin;
-  const availableCoupons = getAvailableCoupons(totalPrice, isFirstTimeUser);
-  const discount = appliedCoupon ? calculateDiscount(appliedCoupon, totalPrice) : 0;
-  const finalTotal = totalPrice - discount;
 
   if (!isCartOpen) return null;
-
-  const handleApplyCoupon = () => {
-    if (!couponCode.trim()) {
-      toast({
-        title: "Enter coupon code",
-        description: "Please enter a valid coupon code.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    const result = applyCoupon(couponCode.trim(), totalPrice, isFirstTimeUser);
-    
-    if (result.success) {
-      toast({
-        title: "Coupon applied! 🎉",
-        description: result.message,
-      });
-      setCouponCode('');
-      setShowAvailableCoupons(false);
-    } else {
-      toast({
-        title: "Coupon not applied",
-        description: result.message,
-        variant: "destructive"
-      });
-    }
-  };
-
-  const handleRemoveCoupon = () => {
-    removeCoupon();
-    toast({
-      title: "Coupon removed",
-      description: "Coupon has been removed from your order.",
-    });
-  };
 
   return (
     <>
@@ -174,89 +124,6 @@ const CartDrawer: React.FC = () => {
               ))}
             </div>
 
-            {/* Coupon Section */}
-            <div className="border-t border-gray-200 p-4 space-y-3">
-              {!appliedCoupon ? (
-                <div className="space-y-3">
-                  <div className="flex gap-2">
-                    <Input
-                      placeholder="Enter coupon code"
-                      value={couponCode}
-                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                      className="flex-1 text-sm"
-                    />
-                    <Button
-                      onClick={handleApplyCoupon}
-                      size="sm"
-                      variant="outline"
-                      className="px-4"
-                    >
-                      Apply
-                    </Button>
-                  </div>
-                  
-                  {availableCoupons.length > 0 && (
-                    <div>
-                      <button
-                        onClick={() => setShowAvailableCoupons(!showAvailableCoupons)}
-                        className="text-sm text-orange-500 hover:text-orange-600 flex items-center gap-1"
-                      >
-                        <Tag size={14} />
-                        View available coupons ({availableCoupons.length})
-                      </button>
-                      
-                      {showAvailableCoupons && (
-                        <div className="mt-2 space-y-2 max-h-32 overflow-y-auto">
-                          {availableCoupons.map((coupon) => (
-                            <div
-                              key={coupon.code}
-                              className="p-2 bg-green-50 border border-green-200 rounded-md cursor-pointer hover:bg-green-100 transition-colors"
-                              onClick={() => {
-                                setCouponCode(coupon.code);
-                                handleApplyCoupon();
-                              }}
-                            >
-                              <div className="flex items-center justify-between">
-                                <span className="font-medium text-sm text-green-700">
-                                  {coupon.code}
-                                </span>
-                                <span className="text-xs text-green-600">
-                                  {coupon.type === 'percentage' ? `${coupon.value}% OFF` : `₹${coupon.value} OFF`}
-                                </span>
-                              </div>
-                              <p className="text-xs text-green-600 mt-1">
-                                {coupon.description}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <Percent size={16} className="text-green-600" />
-                    <div>
-                      <span className="font-medium text-sm text-green-700">
-                        {appliedCoupon.code}
-                      </span>
-                      <p className="text-xs text-green-600">
-                        Saved ₹{discount.toFixed(2)}
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={handleRemoveCoupon}
-                    className="text-red-500 hover:text-red-600 p-1"
-                  >
-                    <X size={16} />
-                  </button>
-                </div>
-              )}
-            </div>
-
             {/* Order Summary */}
             <div className="border-t border-gray-200 p-4 space-y-3 bg-gray-50">
               <div className="space-y-2 text-sm">
@@ -265,13 +132,6 @@ const CartDrawer: React.FC = () => {
                   <span>₹{totalPrice.toFixed(2)}</span>
                 </div>
                 
-                {discount > 0 && (
-                  <div className="flex justify-between text-green-600">
-                    <span>Discount</span>
-                    <span>-₹{discount.toFixed(2)}</span>
-                  </div>
-                )}
-                
                 <div className="flex justify-between text-xs text-gray-500">
                   <span>Delivery charges</span>
                   <span className="text-green-600 font-medium">FREE 🎉</span>
@@ -279,7 +139,7 @@ const CartDrawer: React.FC = () => {
                 
                 <div className="border-t border-gray-300 pt-2 flex justify-between font-semibold">
                   <span>Total</span>
-                  <span>₹{finalTotal.toFixed(2)}</span>
+                  <span>₹{totalPrice.toFixed(2)}</span>
                 </div>
               </div>
 
