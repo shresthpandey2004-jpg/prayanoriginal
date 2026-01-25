@@ -6,48 +6,48 @@ import { Button } from '@/components/ui/button';
 const RecipesSection: React.FC = () => {
   const featuredRecipes = [
     {
-      id: 'butter-chicken',
-      name: 'Butter Chicken',
-      nameHindi: 'बटर चिकन',
-      description: 'Creamy, rich and delicious butter chicken made with tender chicken pieces',
-      image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500',
-      cookingTime: '45 mins',
-      difficulty: 'Medium',
-      servings: '4 people',
-      spicesCount: 7
-    },
-    {
-      id: 'biryani',
-      name: 'Chicken Biryani',
-      nameHindi: 'चिकन बिरयानी',
-      description: 'Aromatic basmati rice layered with spiced chicken and cooked to perfection',
-      image: 'https://images.unsplash.com/photo-1563379091339-03246963d96c?w=500',
-      cookingTime: '90 mins',
-      difficulty: 'Hard',
-      servings: '6 people',
-      spicesCount: 12
-    },
-    {
       id: 'dal-tadka',
       name: 'Dal Tadka',
       nameHindi: 'दाल तड़का',
-      description: 'Comfort food at its best - yellow lentils tempered with aromatic spices',
+      description: 'Classic comfort dal with aromatic tempering using our pure Prayan spices',
       image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500',
       cookingTime: '30 mins',
       difficulty: 'Easy',
       servings: '4 people',
-      spicesCount: 7
+      spicesCount: 3
     },
     {
-      id: 'paneer-butter-masala',
-      name: 'Paneer Butter Masala',
-      nameHindi: 'पनीर बटर मसाला',
-      description: 'Soft paneer cubes in a rich, creamy tomato-based gravy',
-      image: 'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500',
-      cookingTime: '35 mins',
-      difficulty: 'Easy',
+      id: 'chicken-curry',
+      name: 'Chicken Curry',
+      nameHindi: 'चिकन करी',
+      description: 'Rich and flavorful chicken curry using all four Prayan masalas',
+      image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500',
+      cookingTime: '45 mins',
+      difficulty: 'Medium',
       servings: '4 people',
-      spicesCount: 6
+      spicesCount: 4
+    },
+    {
+      id: 'chicken-biryani',
+      name: 'Chicken Biryani',
+      nameHindi: 'चिकन बिरयानी',
+      description: 'Royal aromatic basmati rice layered with spiced chicken using Prayan masalas',
+      image: 'https://images.unsplash.com/photo-1563379091339-03246963d96c?w=500',
+      cookingTime: '90 mins',
+      difficulty: 'Hard',
+      servings: '6 people',
+      spicesCount: 3
+    },
+    {
+      id: 'paneer-masala',
+      name: 'Paneer Masala',
+      nameHindi: 'पनीर मसाला',
+      description: 'Rich and creamy paneer curry with all Prayan spices for authentic taste',
+      image: 'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500',
+      cookingTime: '30 mins',
+      difficulty: 'Medium',
+      servings: '4 people',
+      spicesCount: 4
     }
   ];
 
@@ -73,7 +73,7 @@ const RecipesSection: React.FC = () => {
               Discover authentic Indian recipes with all the spices you need. Click any recipe to view ingredients and add spices to cart!
             </p>
           </div>
-          <Link to="/simple-recipes">
+          <Link to="/recipes">
             <Button variant="outline" size="lg" className="border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white">
               <span className="gap-2 flex items-center">
                 View All Recipes <ArrowRight size={18} />
@@ -136,7 +136,7 @@ const RecipesSection: React.FC = () => {
 
                 {/* Call to Action */}
                 <div className="mt-4 pt-3 border-t border-gray-100">
-                  <Link to={`/simple-recipe/${recipe.id}`}>
+                  <Link to={`/recipe/${recipe.id}`}>
                     <Button size="sm" className="w-full bg-orange-600 hover:bg-orange-700 text-xs">
                       View Recipe & Buy Spices
                     </Button>
@@ -157,7 +157,7 @@ const RecipesSection: React.FC = () => {
               Browse our collection of traditional recipes and add all required spices directly to your cart with one click. 
               Perfect for home cooking enthusiasts!
             </p>
-            <Link to="/simple-recipes">
+            <Link to="/recipes">
               <Button className="bg-orange-600 hover:bg-orange-700">
                 Explore All Recipes
               </Button>
