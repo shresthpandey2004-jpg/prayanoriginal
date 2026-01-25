@@ -46,13 +46,17 @@ const SimpleRecipeDetail = () => {
   }, [recipe]);
 
   const toggleSpice = (spiceId: string) => {
+    console.log('🌶️ Toggling spice:', spiceId);
     const newSelected = new Set(selectedSpices);
     if (newSelected.has(spiceId)) {
       newSelected.delete(spiceId);
+      console.log('➖ Removed spice:', spiceId);
     } else {
       newSelected.add(spiceId);
+      console.log('➕ Added spice:', spiceId);
     }
     setSelectedSpices(newSelected);
+    console.log('📋 Selected spices now:', Array.from(newSelected));
   };
 
   const updateQuantity = (spiceId: string, change: number) => {
@@ -64,7 +68,12 @@ const SimpleRecipeDetail = () => {
   };
 
   const addSelectedSpicesToCart = () => {
+    console.log('🛒 Add to Cart clicked!');
+    console.log('Selected spices:', selectedSpices);
+    console.log('Quantities:', quantities);
+    
     if (selectedSpices.size === 0) {
+      console.log('❌ No spices selected');
       toast({
         title: "No spices selected",
         description: "Please select at least one spice to add to cart.",
@@ -78,11 +87,15 @@ const SimpleRecipeDetail = () => {
 
     selectedSpices.forEach(spiceId => {
       const product = products.find(p => p.id === spiceId);
+      console.log('🌶️ Processing spice:', spiceId, product);
+      
       if (product) {
         const quantity = quantities[spiceId] || 1;
+        console.log('📦 Adding quantity:', quantity);
         
         // Add each item the specified number of times
         for (let i = 0; i < quantity; i++) {
+          console.log('➕ Adding to cart:', product.name);
           addToCart({
             id: product.id,
             name: product.name,
@@ -97,18 +110,22 @@ const SimpleRecipeDetail = () => {
       }
     });
 
+    console.log('✅ Added count:', addedCount, 'Total price:', totalPrice);
+
     if (addedCount > 0) {
       toast({
         title: "Added to Cart! 🛒",
         description: `${addedCount} spices added for ₹${totalPrice}`,
       });
       
+      console.log('🔄 Opening cart drawer...');
       // Open cart drawer
       setIsCartOpen(true);
       
       // Reset selections
       setSelectedSpices(new Set());
       setQuantities({});
+      console.log('🔄 Selections reset');
     }
   };
 
@@ -345,7 +362,10 @@ const SimpleRecipeDetail = () => {
                   </div>
                   
                   <Button 
-                    onClick={addSelectedSpicesToCart}
+                    onClick={() => {
+                      console.log('🛒 Add to Cart button clicked!');
+                      addSelectedSpicesToCart();
+                    }}
                     className="w-full bg-orange-600 hover:bg-orange-700"
                     disabled={selectedSpices.size === 0}
                   >
