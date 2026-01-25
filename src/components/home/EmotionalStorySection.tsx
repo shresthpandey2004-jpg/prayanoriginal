@@ -79,8 +79,12 @@ const EmotionalStorySection: React.FC = () => {
             {/* Signature */}
             <div className="mt-10 pt-8 border-t border-brown-foreground/20">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center">
-                  <span className="font-display text-2xl text-gold">प्</span>
+                <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center p-2">
+                  <img 
+                    src="/prayan-new-logo.png" 
+                    alt="PRAYAN Logo" 
+                    className="w-full h-full object-contain rounded-full"
+                  />
                 </div>
                 <div>
                   <p className="font-display text-xl font-semibold text-brown-foreground">
