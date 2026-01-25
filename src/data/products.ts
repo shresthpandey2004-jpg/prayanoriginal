@@ -38,6 +38,7 @@ export const products: Product[] = [
     nameHindi: 'हल्दी पाउडर',
     description: 'Pure and vibrant turmeric sourced from the finest farms. Known for its golden color and medicinal properties.',
     price: 200, // Base price for 500g (updated)
+    originalPrice: 250, // Original price higher than current
     image: '/products/turmeric-powder-new.jpg',
     category: 'Pure Spices',
     weight: '500g', // Default weight (updated)
@@ -54,18 +55,21 @@ export const products: Product[] = [
       {
         weight: '250g',
         price: 95,
+        originalPrice: 120,
         sku: 'PM-H-250',
         stock: 200
       },
       {
         weight: '500g',
         price: 200,
+        originalPrice: 250,
         sku: 'PM-H-500',
         stock: 150
       },
       {
         weight: '1kg',
         price: 350,
+        originalPrice: 420,
         sku: 'PM-H-1KG',
         stock: 100
       }
@@ -79,6 +83,7 @@ export const products: Product[] = [
     nameHindi: 'लाल मिर्च पाउडर',
     description: 'Premium red chilli powder that gives your dishes a beautiful red color with perfect heat.',
     price: 210, // Base price for 500g (updated)
+    originalPrice: 260, // Original price higher than current
     image: '/products/chilli-powder-new.jpg',
     category: 'Pure Spices',
     weight: '500g', // Default weight (updated)
@@ -95,18 +100,21 @@ export const products: Product[] = [
       {
         weight: '250g',
         price: 100,
+        originalPrice: 130,
         sku: 'PM-C-250',
         stock: 180
       },
       {
         weight: '500g',
         price: 210,
+        originalPrice: 260,
         sku: 'PM-C-500',
         stock: 140
       },
       {
         weight: '1kg',
         price: 370,
+        originalPrice: 450,
         sku: 'PM-C-1KG',
         stock: 90
       }
@@ -120,6 +128,7 @@ export const products: Product[] = [
     nameHindi: 'धनिया पाउडर',
     description: 'Aromatic coriander powder with fresh, citrusy flavor. Essential for authentic Indian cooking.',
     price: 120, // Base price for 500g (updated)
+    originalPrice: 150, // Original price higher than current
     image: '/products/coriander-powder-new.jpg',
     category: 'Pure Spices',
     weight: '500g', // Default weight (updated)
@@ -136,18 +145,21 @@ export const products: Product[] = [
       {
         weight: '250g',
         price: 40,
+        originalPrice: 55,
         sku: 'PM-D-250',
         stock: 200
       },
       {
         weight: '500g',
         price: 120,
+        originalPrice: 150,
         sku: 'PM-D-500',
         stock: 160
       },
       {
         weight: '1kg',
         price: 240,
+        originalPrice: 300,
         sku: 'PM-D-1KG',
         stock: 120
       }
@@ -161,6 +173,7 @@ export const products: Product[] = [
     nameHindi: 'गरम मसाला',
     description: 'A perfect blend of aromatic spices that brings warmth and depth to your dishes. Hand-ground using traditional methods.',
     price: 310, // Base price for 500g (updated)
+    originalPrice: 380, // Original price higher than current
     image: '/products/garam-masala-new.jpg',
     category: 'Blended Spices',
     weight: '500g', // Default weight (updated)
@@ -177,24 +190,28 @@ export const products: Product[] = [
       {
         weight: '100g',
         price: 80,
+        originalPrice: 100,
         sku: 'PM-GM-100',
         stock: 150
       },
       {
         weight: '250g',
         price: 150,
+        originalPrice: 190,
         sku: 'PM-GM-250',
         stock: 120
       },
       {
         weight: '500g',
         price: 310,
+        originalPrice: 380,
         sku: 'PM-GM-500',
         stock: 100
       },
       {
         weight: '1kg',
         price: 630,
+        originalPrice: 750,
         sku: 'PM-GM-1KG',
         stock: 80
       }
@@ -208,7 +225,7 @@ export const products: Product[] = [
     nameHindi: 'कॉम्बो पैक: हल्दी + मिर्च',
     description: 'Perfect combo of Haldi + Chilli for everyday cooking needs.',
     price: 215, // Base price for 250g combo (updated - total 500g)
-    originalPrice: 210,
+    originalPrice: 270, // Original price higher than current
     image: '/products/combo-pack-2-spice.jpg',
     category: 'Combo Packs',
     weight: '250g', // Default weight (updated)
@@ -225,14 +242,14 @@ export const products: Product[] = [
       {
         weight: '250g (250g each)',
         price: 215,
-        originalPrice: 240,
+        originalPrice: 270,
         sku: 'PM-COMBO-HC-250',
         stock: 110
       },
       {
         weight: '500g (500g each)',
         price: 360,
-        originalPrice: 370,
+        originalPrice: 450,
         sku: 'PM-COMBO-HC-500',
         stock: 75
       }
@@ -245,7 +262,7 @@ export const products: Product[] = [
     nameHindi: 'कॉम्बो पैक: धनिया + मिर्च',
     description: 'Essential combo of Dhaniya + Chilli for authentic Indian flavors.',
     price: 150, // Base price for 250g combo (updated - total 500g)
-    originalPrice: 140,
+    originalPrice: 190, // Original price higher than current
     image: '/products/combo-pack-2-spice.jpg',
     category: 'Combo Packs',
     weight: '250g', // Default weight (updated)
@@ -262,14 +279,14 @@ export const products: Product[] = [
       {
         weight: '250g (250g each)',
         price: 150,
-        originalPrice: 170,
+        originalPrice: 190,
         sku: 'PM-COMBO-DC-250',
         stock: 90
       },
       {
         weight: '500g (500g each)',
         price: 280,
-        originalPrice: 280,
+        originalPrice: 350,
         sku: 'PM-COMBO-DC-500',
         stock: 60
       }
@@ -282,7 +299,7 @@ export const products: Product[] = [
     nameHindi: 'कॉम्बो पैक: हल्दी + धनिया',
     description: 'Classic combination of Haldi + Dhaniya for traditional cooking.',
     price: 155, // Base price for 250g combo (updated - total 500g)
-    originalPrice: 145,
+    originalPrice: 195, // Original price higher than current
     image: '/products/combo-pack-2-spice.jpg',
     category: 'Combo Packs',
     weight: '250g', // Default weight (updated)
@@ -299,14 +316,14 @@ export const products: Product[] = [
       {
         weight: '250g (250g each)',
         price: 155,
-        originalPrice: 175,
+        originalPrice: 195,
         sku: 'PM-COMBO-HD-250',
         stock: 105
       },
       {
         weight: '500g (500g each)',
         price: 260,
-        originalPrice: 260,
+        originalPrice: 320,
         sku: 'PM-COMBO-HD-500',
         stock: 85
       }
@@ -319,7 +336,7 @@ export const products: Product[] = [
     nameHindi: 'कॉम्बो पैक: हल्दी + धनिया + मिर्च',
     description: 'Complete spice trio - Haldi + Dhaniya + Mirchi for all your cooking needs.',
     price: 250, // Base price for 250g combo (updated - total 500g)
-    originalPrice: 250,
+    originalPrice: 310, // Original price higher than current
     image: '/products/combo-pack-3-spice.jpg',
     category: 'Combo Packs',
     weight: '250g', // Default weight (updated)
@@ -336,14 +353,14 @@ export const products: Product[] = [
       {
         weight: '250g (mixed 250g each)',
         price: 250,
-        originalPrice: 280,
+        originalPrice: 310,
         sku: 'PM-COMBO-HDM-250',
         stock: 125
       },
       {
         weight: '500g (mixed 500g each)',
         price: 430,
-        originalPrice: 450,
+        originalPrice: 530,
         sku: 'PM-COMBO-HDM-500',
         stock: 95
       }
@@ -357,7 +374,7 @@ export const products: Product[] = [
     nameHindi: 'अल्टीमेट कॉम्बो: हल्दी + मिर्च + धनिया + गरम मसाला',
     description: 'Complete spice solution with all four essential spices for authentic Indian cooking.',
     price: 190, // Base price for 100g combo (updated - total 400g)
-    originalPrice: 220,
+    originalPrice: 240, // Original price higher than current
     image: '/products/combo-pack-ultimate.jpg',
     category: 'Combo Packs',
     weight: '100g', // Default weight
@@ -375,7 +392,7 @@ export const products: Product[] = [
       {
         weight: '100g (100g each)',
         price: 190,
-        originalPrice: 220,
+        originalPrice: 240,
         sku: 'PM-COMBO-ULTIMATE-100',
         stock: 150
       }
