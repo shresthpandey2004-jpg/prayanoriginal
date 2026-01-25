@@ -295,7 +295,7 @@ const OurStory = () => {
             {[
               { number: "Fresh", label: "Daily Grinding", icon: <Clock className="w-8 h-8" /> },
               { number: "Pure", label: "No Additives", icon: <Users className="w-8 h-8" /> },
-              { number: "7", label: "Premium Spices", icon: <Star className="w-8 h-8" /> },
+              { number: "Authentic", label: "Taste", icon: <Star className="w-8 h-8" /> },
               { number: "India", label: "Nationwide Delivery", icon: <MapPin className="w-8 h-8" /> }
             ].map((stat, index) => (
               <motion.div
