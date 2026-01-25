@@ -6,9 +6,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, Eye, EyeOff, User, Mail, Phone, Lock, Gift } from 'lucide-react';
+import { ArrowLeft, Eye, EyeOff, User, Mail, Phone, Lock } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import { processReferralRegistration } from '@/utils/referralUtils';
+
 import { validateEmailFormat, validatePhoneFormat, normalizePhone } from '@/utils/authUtils';
 
   const from = location.state?.from?.pathname || '/';
@@ -25,8 +25,7 @@ const Auth = () => {
     email: '',
     phone: '',
     password: '',
-    confirmPassword: '',
-    referralCode: ''
+    confirmPassword: ''
   });
   const [errors, setErrors] = useState<any>({});
   const [realTimeValidation, setRealTimeValidation] = useState<any>({});
@@ -58,15 +57,6 @@ const Auth = () => {
       phone: existingUser ? 'This phone number is already registered' : 'Phone number is available'
     }));
   };
-
-  // Check for referral code in URL parameters
-  useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const refCode = urlParams.get('ref');
-    if (refCode) {
-      setRegisterData(prev => ({ ...prev, referralCode: refCode }));
-    }
-  }, [location.search]);
 
   const validateLogin = () => {
     const newErrors: any = {};
@@ -151,44 +141,14 @@ const Auth = () => {
       name: registerData.name,
       email: registerData.email,
       phone: registerData.phone,
-      password: registerData.password,
-      referralCode: registerData.referralCode.trim()
+      password: registerData.password
     });
 
     if (result.success) {
-      // Process referral code if provided
-      if (registerData.referralCode.trim()) {
-        console.log('🎯 Starting referral processing...');
-        const users = JSON.parse(localStorage.getItem('prayan-users') || '[]');
-        const newUser = users[users.length - 1]; // Get the newly registered user
-        
-        console.log('👤 New user:', newUser);
-        console.log('🔗 Referral code:', registerData.referralCode.trim());
-        
-        const referralProcessed = processReferralRegistration(
-          registerData.referralCode.trim(),
-          newUser.id,
-          registerData.name,
-          registerData.email
-        );
-
-        if (referralProcessed) {
-          toast({
-            title: "Account created & Referral applied! 🎉",
-            description: "Welcome to Prayan Masale! You'll get ₹50 off on your first order.",
-          });
-        } else {
-          toast({
-            title: "Account created! ⚠️",
-            description: "Welcome to Prayan Masale! Invalid referral code, but your account is ready.",
-          });
-        }
-      } else {
-        toast({
-          title: "Account created! 🎉",
-          description: "Welcome to Prayan Masale! You are now logged in.",
-        });
-      }
+      toast({
+        title: "Account created! 🎉",
+        description: "Welcome to Prayan Masale! You are now logged in.",
+      });
       
       navigate(from, { replace: true });
     } else {
@@ -403,21 +363,6 @@ const Auth = () => {
                       />
                     </div>
                     {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="register-referral-code">Referral Code (Optional)</Label>
-                    <div className="relative">
-                      <Gift className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <Input
-                        id="register-referral-code"
-                        placeholder="Enter referral code if you have one"
-                        value={registerData.referralCode}
-                        onChange={(e) => setRegisterData(prev => ({ ...prev, referralCode: e.target.value.toUpperCase() }))}
-                        className="pl-10"
-                      />
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1">Get ₹50 off on your first order with a referral code!</p>
                   </div>
 
                   <Button 

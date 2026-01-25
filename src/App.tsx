@@ -9,7 +9,6 @@ import { OrderProvider } from "@/context/OrderContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { CouponProvider } from "@/context/CouponContext";
-import { ReferralProvider } from "@/context/ReferralContext";
 import { LoyaltyProvider } from "@/context/LoyaltyContext";
 import { ReviewProvider } from "@/context/ReviewContext";
 import Index from "./pages/Index";
@@ -24,7 +23,6 @@ import AccountSimple from "./pages/AccountSimple";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
 import AdminLogin from "./pages/AdminLogin";
-import Referrals from "./pages/Referrals";
 import Loyalty from "./pages/Loyalty";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import Recipes from "./pages/Recipes";
@@ -41,7 +39,6 @@ import TermsConditions from "./pages/TermsConditions";
 import Blog from "./pages/Blog";
 import BulkOrders from "./pages/BulkOrders";
 import NotFound from "./pages/NotFound";
-import TestReferral from "./pages/TestReferral";
 import TestLoyalty from "./pages/TestLoyalty";
 import TestAuth from "./pages/TestAuth";
 import MobileBottomNav from "./components/mobile/MobileBottomNav";
@@ -283,13 +280,12 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <ReferralProvider>
-          <LoyaltyProvider>
-            <ReviewProvider>
-              <WishlistProvider>
-                <CouponProvider>
-                  <OrderProvider>
-                    <CartProvider>
+        <LoyaltyProvider>
+          <ReviewProvider>
+            <WishlistProvider>
+              <CouponProvider>
+                <OrderProvider>
+                  <CartProvider>
                       <TooltipProvider>
                         <Toaster />
                         <Sonner />
@@ -306,7 +302,6 @@ const App = () => {
                               <Route path="/my-orders" element={<MyOrders />} />
                               <Route path="/auth" element={<Auth />} />
                               <Route path="/account" element={<AccountSimple />} />
-                              <Route path="/referrals" element={<Referrals />} />
                               <Route path="/loyalty" element={<Loyalty />} />
                               <Route path="/return-policy" element={<ReturnPolicy />} />
                               <Route path="/recipes" element={<Recipes />} />
@@ -326,7 +321,6 @@ const App = () => {
                               <Route path="/admin/orders" element={<AdminOrdersPage />} />
                               <Route path="/admin/login" element={<AdminLogin />} />
                               <Route path="/admin-login" element={<AdminLogin />} />
-                              <Route path="/test-referral" element={<TestReferral />} />
                               <Route path="/test-loyalty" element={<TestLoyalty />} />
                               <Route path="/test-auth" element={<TestAuth />} />
                               <Route path="*" element={<NotFound />} />
@@ -344,9 +338,8 @@ const App = () => {
               </WishlistProvider>
             </ReviewProvider>
           </LoyaltyProvider>
-        </ReferralProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+        </AuthProvider>
+      </QueryClientProvider>
   );
 };
 

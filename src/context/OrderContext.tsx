@@ -3,7 +3,6 @@ import { orderService, FirebaseOrder } from '@/services/orderService';
 import { toast } from '@/hooks/use-toast';
 import { useAuth } from './AuthContext';
 import { awardOrderPoints } from '@/utils/loyaltyUtils';
-import { completeReferralOnOrder } from '@/utils/orderUtils';
 
 export interface TrackingInfo {
   courierPartner: string;
@@ -272,15 +271,6 @@ Thank you for choosing Prayan Masale! 🙏`;
               description: `You earned ${pointsEarned} points from this order. Keep shopping to unlock more rewards!`,
             });
           }
-          
-          // Complete referral if this user was referred
-          const referralCompleted = completeReferralOnOrder(user.id, enhancedOrder.totalPrice);
-          if (referralCompleted) {
-            toast({
-              title: "Referral completed! 🎉",
-              description: "Your referrer has earned rewards for referring you!",
-            });
-          }
         }
         
         toast({
@@ -305,15 +295,6 @@ Thank you for choosing Prayan Masale! 🙏`;
             toast({
               title: `Earned ${pointsEarned} loyalty points! 💎`,
               description: `You earned ${pointsEarned} points from this order.`,
-            });
-          }
-          
-          // Complete referral if this user was referred
-          const referralCompleted = completeReferralOnOrder(user.id, enhancedOrder.totalPrice);
-          if (referralCompleted) {
-            toast({
-              title: "Referral completed! 🎉",
-              description: "Your referrer has earned rewards for referring you!",
             });
           }
         }
@@ -354,15 +335,6 @@ Thank you for choosing Prayan Masale! 🙏`;
           toast({
             title: `Earned ${pointsEarned} loyalty points! 💎`,
             description: `You earned ${pointsEarned} points from this order.`,
-          });
-        }
-        
-        // Complete referral if this user was referred
-        const referralCompleted = completeReferralOnOrder(user.id, enhancedOrder.totalPrice);
-        if (referralCompleted) {
-          toast({
-            title: "Referral completed! 🎉",
-            description: "Your referrer has earned rewards for referring you!",
           });
         }
       }

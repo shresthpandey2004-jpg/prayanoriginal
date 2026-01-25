@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useOrders } from '@/context/OrderContext';
-import { useReferrals } from '@/context/ReferralContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -25,7 +24,6 @@ import { toast } from '@/hooks/use-toast';
 
 const AdminDashboard = () => {
   const { orders, updateOrderStatus } = useOrders();
-  const { referrals } = useReferrals();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
@@ -36,13 +34,6 @@ const AdminDashboard = () => {
   const totalRevenue = orders.reduce((sum, order) => sum + order.totalPrice, 0);
   const pendingOrders = orders.filter(order => order.status === 'pending').length;
   const completedOrders = orders.filter(order => order.status === 'delivered').length;
-  
-  // Referral statistics
-  const totalReferrals = referrals.length;
-  const completedReferrals = referrals.filter(r => r.status === 'completed').length;
-  const totalReferralRewards = referrals
-    .filter(r => r.status === 'completed')
-    .reduce((sum, r) => sum + r.rewardAmount, 0);
 
   // Get all users from localStorage for user management
   const allUsers = JSON.parse(localStorage.getItem('prayan-users') || '[]');
@@ -137,23 +128,11 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Referrals</p>
-                  <p className="text-3xl font-bold text-gray-900">{totalReferrals}</p>
-                  <p className="text-xs text-orange-600">{completedReferrals} completed</p>
-                </div>
-                <Gift className="w-8 h-8 text-orange-600" />
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
         {/* Admin Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="overview" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
               Overview
@@ -161,10 +140,6 @@ const AdminDashboard = () => {
             <TabsTrigger value="orders" className="flex items-center gap-2">
               <Package className="w-4 h-4" />
               Orders
-            </TabsTrigger>
-            <TabsTrigger value="referrals" className="flex items-center gap-2">
-              <Gift className="w-4 h-4" />
-              Referrals
             </TabsTrigger>
             <TabsTrigger value="users" className="flex items-center gap-2">
               <Users className="w-4 h-4" />
@@ -216,10 +191,6 @@ const AdminDashboard = () => {
                       <span className="text-lg font-bold text-blue-600">
                         ₹{totalOrders > 0 ? Math.round(totalRevenue / totalOrders) : 0}
                       </span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
-                      <span className="font-medium">Referral Rewards</span>
-                      <span className="text-lg font-bold text-orange-600">₹{totalReferralRewards}</span>
                     </div>
                   </div>
                 </CardContent>
@@ -368,96 +339,6 @@ const AdminDashboard = () => {
             </Card>
           </TabsContent>
 
-          {/* Referrals Tab */}
-          <TabsContent value="referrals">
-            <Card>
-              <CardHeader>
-                <CardTitle>Referral Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                  <div className="bg-orange-50 p-4 rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Gift className="w-5 h-5 text-orange-600" />
-                      <h3 className="font-semibold text-orange-800">Total Referrals</h3>
-                    </div>
-                    <p className="text-2xl font-bold text-orange-600">{totalReferrals}</p>
-                  </div>
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Award className="w-5 h-5 text-green-600" />
-                      <h3 className="font-semibold text-green-800">Completed</h3>
-                    </div>
-                    <p className="text-2xl font-bold text-green-600">{completedReferrals}</p>
-                  </div>
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <IndianRupee className="w-5 h-5 text-blue-600" />
-                      <h3 className="font-semibold text-blue-800">Total Rewards</h3>
-                    </div>
-                    <p className="text-2xl font-bold text-blue-600">₹{totalReferralRewards}</p>
-                  </div>
-                </div>
-
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b">
-                        <th className="text-left p-4 font-medium">Referrer</th>
-                        <th className="text-left p-4 font-medium">Referred User</th>
-                        <th className="text-left p-4 font-medium">Code Used</th>
-                        <th className="text-left p-4 font-medium">Status</th>
-                        <th className="text-left p-4 font-medium">Reward</th>
-                        <th className="text-left p-4 font-medium">Date</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {referrals.map((referral) => {
-                        const referrer = allUsers.find(u => u.id === referral.referrerId);
-                        return (
-                          <tr key={referral.id} className="border-b hover:bg-gray-50">
-                            <td className="p-4">
-                              <p className="font-medium">{referrer?.name || 'Unknown'}</p>
-                              <p className="text-sm text-gray-600">{referrer?.email || 'N/A'}</p>
-                            </td>
-                            <td className="p-4">
-                              <p className="font-medium">{referral.referredUserName}</p>
-                              <p className="text-sm text-gray-600">{referral.referredUserEmail}</p>
-                            </td>
-                            <td className="p-4 font-mono text-sm">{referral.referralCode}</td>
-                            <td className="p-4">
-                              <Badge 
-                                className={
-                                  referral.status === 'completed' ? 'bg-green-100 text-green-800' :
-                                  referral.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                                  'bg-blue-100 text-blue-800'
-                                }
-                              >
-                                {referral.status.charAt(0).toUpperCase() + referral.status.slice(1)}
-                              </Badge>
-                            </td>
-                            <td className="p-4 font-semibold">₹{referral.rewardAmount}</td>
-                            <td className="p-4 text-sm">
-                              {new Date(referral.createdAt).toLocaleDateString('en-IN')}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-
-                {referrals.length === 0 && (
-                  <div className="text-center py-8">
-                    <Gift className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">No referrals yet</h3>
-                    <p className="text-gray-600">Referrals will appear here once customers start sharing.</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
           {/* Users Tab */}
           <TabsContent value="users">
             <Card>
@@ -473,14 +354,12 @@ const AdminDashboard = () => {
                         <th className="text-left p-4 font-medium">Email</th>
                         <th className="text-left p-4 font-medium">Phone</th>
                         <th className="text-left p-4 font-medium">Orders</th>
-                        <th className="text-left p-4 font-medium">Referrals</th>
                         <th className="text-left p-4 font-medium">Joined</th>
                       </tr>
                     </thead>
                     <tbody>
                       {allUsers.map((user) => {
                         const userOrders = orders.filter(order => order.customerDetails.email === user.email);
-                        const userReferrals = referrals.filter(r => r.referrerId === user.id);
                         return (
                           <tr key={user.id} className="border-b hover:bg-gray-50">
                             <td className="p-4">
@@ -497,9 +376,6 @@ const AdminDashboard = () => {
                             <td className="p-4 text-sm">{user.phone || 'N/A'}</td>
                             <td className="p-4">
                               <Badge variant="outline">{userOrders.length} orders</Badge>
-                            </td>
-                            <td className="p-4">
-                              <Badge variant="outline">{userReferrals.length} referrals</Badge>
                             </td>
                             <td className="p-4 text-sm">
                               {new Date(user.createdAt || Date.now()).toLocaleDateString('en-IN')}

@@ -497,16 +497,6 @@ const Loyalty = () => {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Gift className="w-5 h-5 text-purple-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium">Refer Friends</h4>
-                    <p className="text-sm text-gray-600">Earn 100 points for each successful referral</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
                   <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <Zap className="w-5 h-5 text-yellow-600" />
                   </div>
@@ -524,15 +514,6 @@ const Loyalty = () => {
                 <CardTitle className="text-lg">Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button 
-                  onClick={() => navigate('/referrals')}
-                  variant="outline" 
-                  className="w-full justify-start"
-                >
-                  <Gift className="w-4 h-4 mr-2" />
-                  Refer Friends
-                </Button>
-                
                 <Button 
                   onClick={() => navigate('/shop')}
                   variant="outline" 
