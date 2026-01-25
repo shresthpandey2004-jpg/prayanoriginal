@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useCart } from '@/context/CartContext';
 import { ArrowLeft, Clock, Users, ChefHat, ShoppingCart, Plus, Minus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -9,10 +10,12 @@ import Header from '@/components/layout/Header';
 import CartDrawer from '@/components/cart/CartDrawer';
 import { getSimpleRecipeById } from '@/data/simpleRecipes';
 import { products } from '@/data/products';
+import { toast } from '@/hooks/use-toast';
 
 const SimpleRecipeDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { addToCart, setIsCartOpen } = useCart();
   
   const [selectedSpices, setSelectedSpices] = useState<Set<string>>(new Set());
   const [quantities, setQuantities] = useState<Record<string, number>>({});
@@ -61,13 +64,52 @@ const SimpleRecipeDetail = () => {
   };
 
   const addSelectedSpicesToCart = () => {
-    // Simple alert for now - will add proper cart functionality later
-    const spiceNames = Array.from(selectedSpices).map(spiceId => {
+    if (selectedSpices.size === 0) {
+      toast({
+        title: "No spices selected",
+        description: "Please select at least one spice to add to cart.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    let addedCount = 0;
+    let totalPrice = 0;
+
+    selectedSpices.forEach(spiceId => {
       const product = products.find(p => p.id === spiceId);
-      return product ? `${product.name} (${quantities[spiceId] || 1})` : '';
-    }).filter(Boolean);
-    
-    alert(`Added to cart:\n${spiceNames.join('\n')}\n\nTotal: ${selectedSpices.size} spices`);
+      if (product) {
+        const quantity = quantities[spiceId] || 1;
+        
+        // Add each item the specified number of times
+        for (let i = 0; i < quantity; i++) {
+          addToCart({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            weight: product.weight
+          });
+        }
+        
+        addedCount++;
+        totalPrice += product.price * quantity;
+      }
+    });
+
+    if (addedCount > 0) {
+      toast({
+        title: "Added to Cart! 🛒",
+        description: `${addedCount} spices added for ₹${totalPrice}`,
+      });
+      
+      // Open cart drawer
+      setIsCartOpen(true);
+      
+      // Reset selections
+      setSelectedSpices(new Set());
+      setQuantities({});
+    }
   };
 
   const getSpiceProduct = (spiceName: string) => {
