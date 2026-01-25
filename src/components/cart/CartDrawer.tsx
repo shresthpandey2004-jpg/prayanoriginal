@@ -9,8 +9,6 @@ import { cn } from '@/lib/utils';
 const CartDrawer: React.FC = () => {
   const { items, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart, totalPrice, totalItems } = useCart();
 
-  console.log('🛒 CartDrawer render - isCartOpen:', isCartOpen, 'totalItems:', totalItems);
-
   if (!isCartOpen) return null;
 
   return (
