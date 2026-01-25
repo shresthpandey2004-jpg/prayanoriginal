@@ -41,6 +41,7 @@ import BulkOrders from "./pages/BulkOrders";
 import NotFound from "./pages/NotFound";
 import TestLoyalty from "./pages/TestLoyalty";
 import TestAuth from "./pages/TestAuth";
+import DebugUsers from "./pages/DebugUsers";
 import MobileBottomNav from "./components/mobile/MobileBottomNav";
 import PWAInstallPrompt from "./components/mobile/PWAInstallPrompt";
 
@@ -323,6 +324,7 @@ const App = () => {
                               <Route path="/admin-login" element={<AdminLogin />} />
                               <Route path="/test-loyalty" element={<TestLoyalty />} />
                               <Route path="/test-auth" element={<TestAuth />} />
+                              <Route path="/debug-users" element={<DebugUsers />} />
                               <Route path="*" element={<NotFound />} />
                             </Routes>
                             

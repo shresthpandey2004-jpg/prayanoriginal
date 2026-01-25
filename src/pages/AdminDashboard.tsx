@@ -49,13 +49,28 @@ const AdminDashboard = () => {
   const loadUsers = async () => {
     try {
       setIsLoadingUsers(true);
+      console.log('🔄 Loading users from Firebase...');
+      
       const users = await UserService.getAllUsers();
       const stats = await UserService.getUserStats();
       
       setAllUsers(users);
       setUserStats(stats);
       
-      console.log(`✅ Loaded ${users.length} users from Firebase`);
+      console.log(`✅ Loaded ${users.length} users from Firebase:`, users);
+      console.log('📊 User stats:', stats);
+      
+      // If no users in Firebase, check localStorage for migration
+      if (users.length === 0) {
+        const localUsers = JSON.parse(localStorage.getItem('prayan-users') || '[]');
+        const localUsersNew = JSON.parse(localStorage.getItem('prayan-users-database') || '[]');
+        console.log('📦 LocalStorage users (old key):', localUsers.length);
+        console.log('📦 LocalStorage users (new key):', localUsersNew.length);
+        
+        if (localUsers.length > 0 || localUsersNew.length > 0) {
+          console.log('🔄 Found local users, suggesting migration...');
+        }
+      }
     } catch (error) {
       console.error('❌ Error loading users:', error);
       toast({
@@ -396,19 +411,66 @@ const AdminDashboard = () => {
               <CardHeader>
                 <div className="flex justify-between items-center">
                   <CardTitle>User Management</CardTitle>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={loadUsers}
-                    disabled={isLoadingUsers}
-                  >
-                    {isLoadingUsers ? (
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    ) : (
-                      <Download className="w-4 h-4 mr-2" />
-                    )}
-                    Refresh
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={async () => {
+                        try {
+                          console.log('🧪 Testing Firebase connection...');
+                          const testUser = {
+                            id: 'test-' + Date.now(),
+                            name: 'Test User',
+                            email: 'test@firebase.com',
+                            phone: '9999999999',
+                            password: 'test123',
+                            createdAt: new Date().toISOString(),
+                            lastLogin: new Date().toISOString(),
+                            isActive: true,
+                            totalOrders: 0,
+                            totalSpent: 0
+                          };
+                          
+                          const success = await UserService.saveUser(testUser);
+                          if (success) {
+                            toast({
+                              title: "Firebase Test Successful",
+                              description: "Test user saved to Firebase!",
+                            });
+                            loadUsers();
+                          } else {
+                            toast({
+                              title: "Firebase Test Failed",
+                              description: "Could not save test user to Firebase",
+                              variant: "destructive"
+                            });
+                          }
+                        } catch (error) {
+                          console.error('Firebase test error:', error);
+                          toast({
+                            title: "Firebase Connection Error",
+                            description: "Check console for details",
+                            variant: "destructive"
+                          });
+                        }
+                      }}
+                    >
+                      🧪 Test Firebase
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={loadUsers}
+                      disabled={isLoadingUsers}
+                    >
+                      {isLoadingUsers ? (
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      ) : (
+                        <Download className="w-4 h-4 mr-2" />
+                      )}
+                      Refresh
+                    </Button>
+                  </div>
                 </div>
               </CardHeader>
               <CardContent>
@@ -472,15 +534,57 @@ const AdminDashboard = () => {
                 {!isLoadingUsers && allUsers.length === 0 && (
                   <div className="text-center py-8">
                     <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">No users yet</h3>
-                    <p className="text-gray-600">Registered users will appear here.</p>
-                    <Button 
-                      variant="outline" 
-                      className="mt-4"
-                      onClick={() => UserService.migrateLocalStorageToFirebase()}
-                    >
-                      Migrate Local Users to Firebase
-                    </Button>
+                    <h3 className="text-lg font-semibold mb-2">No users in Firebase yet</h3>
+                    <p className="text-gray-600 mb-4">Users will appear here after Firebase migration.</p>
+                    
+                    <div className="space-y-3">
+                      <Button 
+                        variant="default" 
+                        className="w-full"
+                        onClick={async () => {
+                          try {
+                            console.log('🔄 Starting migration...');
+                            const success = await UserService.migrateLocalStorageToFirebase();
+                            if (success) {
+                              toast({
+                                title: "Migration Successful",
+                                description: "Users migrated to Firebase successfully!",
+                              });
+                              loadUsers(); // Reload users after migration
+                            } else {
+                              toast({
+                                title: "Migration Error",
+                                description: "Some users failed to migrate. Check console.",
+                                variant: "destructive"
+                              });
+                            }
+                          } catch (error) {
+                            console.error('Migration error:', error);
+                            toast({
+                              title: "Migration Failed",
+                              description: "Error migrating users. Check console for details.",
+                              variant: "destructive"
+                            });
+                          }
+                        }}
+                      >
+                        🔄 Migrate LocalStorage Users to Firebase
+                      </Button>
+                      
+                      <Button 
+                        variant="outline" 
+                        className="w-full"
+                        onClick={() => {
+                          const oldUsers = JSON.parse(localStorage.getItem('prayan-users') || '[]');
+                          const newUsers = JSON.parse(localStorage.getItem('prayan-users-database') || '[]');
+                          console.log('📦 Old localStorage users:', oldUsers);
+                          console.log('📦 New localStorage users:', newUsers);
+                          alert(`Found ${oldUsers.length} old users and ${newUsers.length} new users in localStorage. Check console for details.`);
+                        }}
+                      >
+                        🔍 Check LocalStorage Users
+                      </Button>
+                    </div>
                   </div>
                 )}
               </CardContent>

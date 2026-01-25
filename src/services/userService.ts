@@ -66,8 +66,22 @@ export class UserService {
   // Fallback method for localStorage (backward compatibility)
   private static getAllUsersFromLocalStorage(): UserData[] {
     try {
-      const users = localStorage.getItem('prayan-users-database');
-      return users ? JSON.parse(users) : [];
+      // Try new key first
+      let users = localStorage.getItem('prayan-users-database');
+      if (users) {
+        console.log('📦 Found users in new localStorage key');
+        return JSON.parse(users);
+      }
+      
+      // Try old key
+      users = localStorage.getItem('prayan-users');
+      if (users) {
+        console.log('📦 Found users in old localStorage key');
+        return JSON.parse(users);
+      }
+      
+      console.log('📦 No users found in localStorage');
+      return [];
     } catch (error) {
       console.error('Error loading users from localStorage:', error);
       return [];
@@ -288,22 +302,49 @@ export class UserService {
   // Migrate localStorage users to Firebase (one-time migration)
   static async migrateLocalStorageToFirebase(): Promise<boolean> {
     try {
-      const localUsers = this.getAllUsersFromLocalStorage();
+      // Check both old and new localStorage keys
+      const oldUsers = JSON.parse(localStorage.getItem('prayan-users') || '[]');
+      const newUsers = JSON.parse(localStorage.getItem('prayan-users-database') || '[]');
       
-      if (localUsers.length === 0) {
+      // Combine and deduplicate users
+      const allLocalUsers = [...oldUsers, ...newUsers];
+      const uniqueUsers = allLocalUsers.filter((user, index, self) => 
+        index === self.findIndex(u => u.email === user.email)
+      );
+      
+      if (uniqueUsers.length === 0) {
         console.log('No users to migrate from localStorage');
         return true;
       }
       
-      console.log(`🔄 Migrating ${localUsers.length} users to Firebase...`);
+      console.log(`🔄 Migrating ${uniqueUsers.length} unique users to Firebase...`);
+      console.log('Users to migrate:', uniqueUsers);
       
-      const migrationPromises = localUsers.map(user => this.saveUser(user));
+      const migrationPromises = uniqueUsers.map(user => {
+        // Ensure user has all required fields
+        const completeUser: UserData = {
+          id: user.id || 'user-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+          name: user.name || 'Unknown User',
+          email: user.email,
+          phone: user.phone || '',
+          password: user.password || 'temp123',
+          createdAt: user.createdAt || new Date().toISOString(),
+          lastLogin: user.lastLogin || new Date().toISOString(),
+          isActive: user.isActive !== undefined ? user.isActive : true,
+          totalOrders: user.totalOrders || 0,
+          totalSpent: user.totalSpent || 0,
+          address: user.address
+        };
+        
+        return this.saveUser(completeUser);
+      });
+      
       const results = await Promise.all(migrationPromises);
       
       const successCount = results.filter(result => result).length;
-      console.log(`✅ Successfully migrated ${successCount}/${localUsers.length} users to Firebase`);
+      console.log(`✅ Successfully migrated ${successCount}/${uniqueUsers.length} users to Firebase`);
       
-      return successCount === localUsers.length;
+      return successCount === uniqueUsers.length;
     } catch (error) {
       console.error('❌ Error migrating users to Firebase:', error);
       return false;
