@@ -49,7 +49,7 @@ const TermsConditions = () => {
             <section>
               <h2 className="text-xl font-semibold text-gray-800 mb-3">4. Shipping and Delivery</h2>
               <p className="text-gray-600 leading-relaxed">
-                We aim to process and ship orders within 1-2 business days. Delivery times may vary based on location and shipping method selected. Free shipping is available on orders above ₹199.
+                We aim to process and ship orders within 1-2 business days. Delivery times may vary based on location. We offer FREE delivery on all orders across India with no minimum order value required.
               </p>
             </section>
 

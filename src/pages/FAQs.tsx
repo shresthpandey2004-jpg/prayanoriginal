@@ -38,7 +38,7 @@ const FAQs: React.FC = () => {
       faqs: [
         {
           question: 'What are your shipping charges?',
-          answer: 'Free shipping on orders above ₹499. For orders ₹299-₹498, shipping is ₹49. For orders below ₹299, shipping is ₹79.'
+          answer: 'We offer FREE delivery on all orders! No minimum order value required. Enjoy free shipping across India.'
         },
         {
           question: 'How long does delivery take?',
@@ -94,7 +94,7 @@ const FAQs: React.FC = () => {
         },
         {
           question: 'Are there any return charges?',
-          answer: 'No return charges for quality issues or damaged products. For other returns, return shipping charges may apply as per our return policy.'
+          answer: 'No return charges for quality issues or damaged products. For other returns, we provide free return pickup as well!'
         }
       ]
     },

@@ -56,7 +56,8 @@ const DISCOUNT_CODES: DiscountCode[] = [
   }
 ];
 
-const FREE_SHIPPING_THRESHOLD = 199;
+// All orders now have free shipping!
+const FREE_SHIPPING_THRESHOLD = 0;
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -161,7 +162,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const finalPrice = Math.max(0, totalPrice - discountAmount);
-  const isFreeShipping = totalPrice >= FREE_SHIPPING_THRESHOLD;
+  const isFreeShipping = true; // All orders have free shipping now!
 
   return (
     <CartContext.Provider

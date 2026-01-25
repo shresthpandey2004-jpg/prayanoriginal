@@ -140,7 +140,7 @@ const ProductDetail: React.FC = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-center gap-3 bg-secondary/50 rounded-xl p-4">
                   <Truck className="text-gold" size={24} />
-                  <div><p className="font-medium">Free Delivery</p><p className="text-xs text-muted-foreground">On orders above ₹199</p></div>
+                  <div><p className="font-medium">Free Delivery</p><p className="text-xs text-muted-foreground">On ALL orders - no minimum!</p></div>
                 </div>
                 <div className="flex items-center gap-3 bg-secondary/50 rounded-xl p-4">
                   <Shield className="text-gold" size={24} />

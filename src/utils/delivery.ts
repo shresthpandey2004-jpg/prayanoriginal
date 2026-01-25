@@ -8,36 +8,12 @@ export interface DeliveryInfo {
 }
 
 export const calculateDeliveryCharge = (pincode: string, orderTotal: number): DeliveryInfo => {
-  // Check if free delivery applies
-  if (orderTotal >= BUSINESS_CONFIG.delivery.freeDeliveryAbove) {
-    return {
-      charge: 0,
-      isFree: true,
-      area: getAreaByPincode(pincode),
-      estimatedDays: "2-3 business days"
-    };
-  }
-
-  // Find specific pincode delivery charge
-  const deliveryArea = BUSINESS_CONFIG.delivery.deliveryAreas.find(
-    area => area.pincode === pincode
-  );
-
-  if (deliveryArea) {
-    return {
-      charge: deliveryArea.charge,
-      isFree: false,
-      area: deliveryArea.area,
-      estimatedDays: "1-2 business days"
-    };
-  }
-
-  // Default delivery charge for other areas
+  // All deliveries are now FREE!
   return {
-    charge: BUSINESS_CONFIG.delivery.standardDeliveryCharge,
-    isFree: false,
-    area: "Other Areas",
-    estimatedDays: "3-5 business days"
+    charge: 0,
+    isFree: true,
+    area: getAreaByPincode(pincode),
+    estimatedDays: "2-3 business days"
   };
 };
 

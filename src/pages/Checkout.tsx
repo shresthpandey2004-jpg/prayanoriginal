@@ -654,12 +654,7 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                     )}
                   </div>
                   
-                  {isFreeShipping && (
-                    <div className="flex justify-between text-sm text-green-600">
-                      <span>🎉 Free shipping unlocked!</span>
-                      <span>You saved ₹{deliveryInfo.charge || 50}</span>
-                    </div>
-                  )}
+                  {/* No need for free shipping message since all orders are free */}
                   
                   {deliveryInfo.area && (
                     <div className="flex justify-between text-sm text-gray-600">

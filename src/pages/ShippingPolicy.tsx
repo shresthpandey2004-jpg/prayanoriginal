@@ -54,7 +54,7 @@ const ShippingPolicy: React.FC = () => {
               {
                 icon: <Truck className="w-8 h-8" />,
                 title: 'Free Shipping',
-                description: 'On orders above ₹499',
+                description: 'On ALL orders - no minimum!',
                 color: 'from-green-500 to-emerald-500'
               },
               {
@@ -176,19 +176,13 @@ const ShippingPolicy: React.FC = () => {
               Shipping Charges
             </h2>
 
-            <div className="bg-gradient-to-r from-orange-100 to-red-100 rounded-2xl p-8">
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-green-600 mb-2">FREE</div>
-                  <div className="text-gray-700">Orders ≥ ₹499</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-orange-600 mb-2">₹49</div>
-                  <div className="text-gray-700">Orders ₹299-₹498</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-red-600 mb-2">₹79</div>
-                  <div className="text-gray-700">Orders &lt; ₹299</div>
+            <div className="bg-gradient-to-r from-green-100 to-emerald-100 rounded-2xl p-8">
+              <div className="text-center">
+                <div className="text-5xl font-bold text-green-600 mb-4">🎉 FREE DELIVERY 🎉</div>
+                <div className="text-2xl font-bold text-gray-800 mb-2">On All Orders!</div>
+                <div className="text-lg text-gray-700">No minimum order value required</div>
+                <div className="text-sm text-gray-600 mt-4">
+                  Enjoy free shipping across India on every single order, big or small!
                 </div>
               </div>
             </div>

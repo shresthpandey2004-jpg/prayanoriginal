@@ -185,7 +185,7 @@ const TermsConditions = () => {
                       during transit. Delivery timelines are estimates and may vary based on location.
                     </p>
                     <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-4">
-                      <p className="text-gray-700 font-medium">🚚 Free shipping on orders above ₹499</p>
+                      <p className="text-gray-700 font-medium">🚚 FREE shipping on ALL orders!</p>
                     </div>
                   </div>
                 </div>

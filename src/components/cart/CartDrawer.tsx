@@ -274,20 +274,18 @@ const CartDrawer: React.FC = () => {
                 
                 <div className="flex justify-between text-xs text-gray-500">
                   <span>Delivery charges</span>
-                  <span>{finalTotal >= 499 ? 'FREE' : '₹50'}</span>
+                  <span className="text-green-600 font-medium">FREE 🎉</span>
                 </div>
                 
                 <div className="border-t border-gray-300 pt-2 flex justify-between font-semibold">
                   <span>Total</span>
-                  <span>₹{(finalTotal + (finalTotal >= 499 ? 0 : 50)).toFixed(2)}</span>
+                  <span>₹{finalTotal.toFixed(2)}</span>
                 </div>
               </div>
 
-              {finalTotal < 499 && (
-                <div className="text-xs text-orange-600 bg-orange-50 p-2 rounded">
-                  Add ₹{(499 - finalTotal).toFixed(2)} more for FREE delivery!
-                </div>
-              )}
+              <div className="text-xs text-green-600 bg-green-50 p-2 rounded">
+                🎉 FREE delivery on all orders!
+              </div>
 
               <Button
                 asChild
