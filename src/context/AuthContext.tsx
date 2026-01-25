@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { checkForDuplicateUser, generateUserId, sanitizeUserData } from '@/utils/authUtils';
+import UserService, { UserData } from '@/services/userService';
 
 export interface User {
   id: string;
@@ -64,13 +65,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // Simulate API call - In real app, this would be an actual API
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Check existing users (case-insensitive email)
-      const users = JSON.parse(localStorage.getItem('prayan-users') || '[]');
-      const existingUser = users.find((u: any) => 
-        u.email.toLowerCase() === email.toLowerCase() && u.password === password
-      );
+      // Check existing users using UserService
+      const existingUser = UserService.getUserByEmail(email);
       
-      if (existingUser) {
+      if (existingUser && existingUser.password === password) {
         const { password: _, ...userWithoutPassword } = existingUser;
         const updatedUser = {
           ...userWithoutPassword,
@@ -80,11 +78,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setUser(updatedUser);
         localStorage.setItem('prayan-user', JSON.stringify(updatedUser));
         
-        // Update user in users array
-        const updatedUsers = users.map((u: any) => 
-          u.email.toLowerCase() === email.toLowerCase() ? { ...u, lastLogin: updatedUser.lastLogin } : u
-        );
-        localStorage.setItem('prayan-users', JSON.stringify(updatedUsers));
+        // Update user's last login using UserService
+        UserService.updateUser(email, { lastLogin: updatedUser.lastLogin });
         
         setIsLoading(false);
         return true;
@@ -108,15 +103,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // Sanitize user data
       const sanitizedData = sanitizeUserData(userData);
       
-      // Check for duplicates with detailed error messages
-      const duplicateCheck = checkForDuplicateUser(sanitizedData.email, sanitizedData.phone);
+      // Check for duplicates using UserService
+      const existingUserByEmail = UserService.getUserByEmail(sanitizedData.email);
+      const existingUserByPhone = UserService.getUserByPhone(sanitizedData.phone);
       
-      if (duplicateCheck.isDuplicate) {
-        console.log(`❌ Duplicate ${duplicateCheck.duplicateType}:`, sanitizedData[duplicateCheck.duplicateType!]);
+      if (existingUserByEmail) {
+        console.log(`❌ Duplicate email:`, sanitizedData.email);
         setIsLoading(false);
         return { 
           success: false, 
-          error: duplicateCheck.message 
+          error: 'An account with this email already exists. Please use a different email or try logging in.' 
+        };
+      }
+      
+      if (existingUserByPhone) {
+        console.log(`❌ Duplicate phone:`, sanitizedData.phone);
+        setIsLoading(false);
+        return { 
+          success: false, 
+          error: 'An account with this phone number already exists. Please use a different phone number or try logging in.' 
         };
       }
       
@@ -132,12 +137,33 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         lastLogin: new Date().toISOString()
       };
       
-      // Save user with password to users array
-      const users = JSON.parse(localStorage.getItem('prayan-users') || '[]');
-      const userWithPassword = { ...newUser, password: sanitizedData.password };
-      users.push(userWithPassword);
-      localStorage.setItem('prayan-users', JSON.stringify(users));
-      console.log('💾 Saved new user to localStorage');
+      // Create UserData object for UserService
+      const newUserData: UserData = {
+        id: newUser.id,
+        name: sanitizedData.name,
+        email: sanitizedData.email,
+        phone: sanitizedData.phone,
+        password: sanitizedData.password,
+        createdAt: new Date().toISOString(),
+        lastLogin: new Date().toISOString(),
+        isActive: true,
+        totalOrders: 0,
+        totalSpent: 0
+      };
+      
+      // Save user using UserService
+      const saveSuccess = UserService.saveUser(newUserData);
+      
+      if (!saveSuccess) {
+        console.error('❌ Failed to save user with UserService');
+        setIsLoading(false);
+        return { 
+          success: false, 
+          error: 'Failed to create account. Please try again.' 
+        };
+      }
+      
+      console.log('✅ User saved successfully with UserService');
       
       // Set current user (without password)
       setUser(newUser);
@@ -167,12 +193,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUser(updatedUser);
     localStorage.setItem('prayan-user', JSON.stringify(updatedUser));
     
-    // Update in users array too
-    const users = JSON.parse(localStorage.getItem('prayan-users') || '[]');
-    const updatedUsers = users.map((u: any) => 
-      u.id === user.id ? { ...u, ...userData } : u
-    );
-    localStorage.setItem('prayan-users', JSON.stringify(updatedUsers));
+    // Update using UserService
+    UserService.updateUser(user.email, userData);
   };
 
   return (

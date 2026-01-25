@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useOrders } from '@/context/OrderContext';
+import UserService from '@/services/userService';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -35,9 +36,10 @@ const AdminDashboard = () => {
   const pendingOrders = orders.filter(order => order.status === 'pending').length;
   const completedOrders = orders.filter(order => order.status === 'delivered').length;
 
-  // Get all users from localStorage for user management
-  const allUsers = JSON.parse(localStorage.getItem('prayan-users') || '[]');
+  // Get all users from UserService for user management
+  const allUsers = UserService.getAllUsers();
   const totalUsers = allUsers.length;
+  const userStats = UserService.getUserStats();
 
   // Filter orders
   const filteredOrders = orders.filter(order => {
@@ -121,9 +123,22 @@ const AdminDashboard = () => {
                 <div>
                   <p className="text-sm font-medium text-gray-600">Total Users</p>
                   <p className="text-3xl font-bold text-gray-900">{totalUsers}</p>
-                  <p className="text-xs text-blue-600">Registered customers</p>
+                  <p className="text-xs text-blue-600">{userStats.activeUsers} active</p>
                 </div>
                 <Users className="w-8 h-8 text-purple-600" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Completed Orders</p>
+                  <p className="text-3xl font-bold text-gray-900">{completedOrders}</p>
+                  <p className="text-xs text-green-600">Successfully delivered</p>
+                </div>
+                <Award className="w-8 h-8 text-orange-600" />
               </div>
             </CardContent>
           </Card>
@@ -175,22 +190,24 @@ const AdminDashboard = () => {
                 </CardContent>
               </Card>
 
-              {/* Business Stats */}
+              {/* User Statistics */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Business Analytics</CardTitle>
+                  <CardTitle>User Analytics</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
-                      <span className="font-medium">Total Revenue</span>
-                      <span className="text-xl font-bold text-green-600">₹{totalRevenue.toLocaleString()}</span>
+                    <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                      <span className="font-medium">Total Users</span>
+                      <span className="text-xl font-bold text-purple-600">{userStats.totalUsers}</span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
-                      <span className="font-medium">Average Order Value</span>
-                      <span className="text-lg font-bold text-blue-600">
-                        ₹{totalOrders > 0 ? Math.round(totalRevenue / totalOrders) : 0}
-                      </span>
+                      <span className="font-medium">Active Users</span>
+                      <span className="text-lg font-bold text-blue-600">{userStats.activeUsers}</span>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                      <span className="font-medium">New This Month</span>
+                      <span className="text-lg font-bold text-green-600">{userStats.newUsersThisMonth}</span>
                     </div>
                   </div>
                 </CardContent>

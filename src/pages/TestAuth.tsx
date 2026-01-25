@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { checkForDuplicateUser, validateEmailFormat, validatePhoneFormat, normalizePhone, normalizeEmail } from '@/utils/authUtils';
+import { validateEmailFormat, validatePhoneFormat, normalizePhone, normalizeEmail } from '@/utils/authUtils';
+import UserService from '@/services/userService';
 
 const TestAuth = () => {
   const [testEmail, setTestEmail] = useState('');
@@ -13,30 +14,35 @@ const TestAuth = () => {
     const normalizedEmail = normalizeEmail(testEmail);
     const normalizedPhone = normalizePhone(testPhone);
     
-    const duplicateResult = checkForDuplicateUser(normalizedEmail, normalizedPhone);
+    // Test using UserService
+    const existingUserByEmail = UserService.getUserByEmail(normalizedEmail);
+    const existingUserByPhone = UserService.getUserByPhone(normalizedPhone);
+    
     const emailValid = validateEmailFormat(normalizedEmail);
     const phoneValid = validatePhoneFormat(normalizedPhone);
     
     setResults({
-      duplicateResult,
+      existingUserByEmail: !!existingUserByEmail,
+      existingUserByPhone: !!existingUserByPhone,
       emailValid,
       phoneValid,
       normalizedEmail,
       normalizedPhone,
       originalEmail: testEmail,
-      originalPhone: testPhone
+      originalPhone: testPhone,
+      userStats: UserService.getUserStats()
     });
   };
 
   const showExistingUsers = () => {
-    const users = JSON.parse(localStorage.getItem('prayan-users') || '[]');
+    const users = UserService.getAllUsers();
     console.log('📋 Existing users:', users);
     alert(`Found ${users.length} existing users. Check console for details.`);
   };
 
   const clearAllUsers = () => {
     if (confirm('Are you sure you want to clear all users? This cannot be undone.')) {
-      localStorage.removeItem('prayan-users');
+      UserService.clearAllUsers();
       localStorage.removeItem('prayan-user');
       alert('All users cleared!');
     }
@@ -119,19 +125,24 @@ const TestAuth = () => {
                 </div>
                 
                 <div>
-                  <strong>Duplicate Check:</strong>
+                  <strong>UserService Duplicate Check:</strong>
                   <div className="ml-4">
-                    <div className={results.duplicateResult.isDuplicate ? 'text-red-600' : 'text-green-600'}>
-                      Status: {results.duplicateResult.isDuplicate ? '❌ Duplicate Found' : '✅ Available'}
+                    <div className={results.existingUserByEmail ? 'text-red-600' : 'text-green-600'}>
+                      Email: {results.existingUserByEmail ? '❌ Already exists' : '✅ Available'}
                     </div>
-                    {results.duplicateResult.duplicateType && (
-                      <div className="text-red-600">
-                        Type: {results.duplicateResult.duplicateType}
-                      </div>
-                    )}
-                    <div className="text-gray-600">
-                      Message: {results.duplicateResult.message}
+                    <div className={results.existingUserByPhone ? 'text-red-600' : 'text-green-600'}>
+                      Phone: {results.existingUserByPhone ? '❌ Already exists' : '✅ Available'}
                     </div>
+                  </div>
+                </div>
+
+                <div>
+                  <strong>User Statistics:</strong>
+                  <div className="ml-4">
+                    <div>Total Users: {results.userStats.totalUsers}</div>
+                    <div>Active Users: {results.userStats.activeUsers}</div>
+                    <div>New This Month: {results.userStats.newUsersThisMonth}</div>
+                    <div>Total Revenue: ₹{results.userStats.totalRevenue}</div>
                   </div>
                 </div>
               </div>
