@@ -153,23 +153,23 @@ Please provide detailed export quotation, FOB/CIF prices, minimum order quantiti
 
   const exportProducts = [
     {
-      category: "Whole Spices",
-      products: ["Cardamom", "Cinnamon", "Cloves", "Black Pepper", "Cumin Seeds"],
+      category: "Pure Spices",
+      products: ["Prayan Haldi (Turmeric) Powder", "Prayan Red Chilli Powder", "Prayan Dhaniya (Coriander) Powder"],
       image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300"
     },
     {
-      category: "Ground Spices",
-      products: ["Turmeric Powder", "Red Chili Powder", "Coriander Powder", "Garam Masala"],
+      category: "Blended Spices",
+      products: ["Prayan Garam Masala"],
       image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300"
     },
     {
-      category: "Spice Blends",
-      products: ["Curry Powder", "Biryani Masala", "Tandoori Masala", "Chat Masala"],
+      category: "Combo Packs",
+      products: ["Haldi + Chilli Combo", "Dhaniya + Chilli Combo", "Haldi + Dhaniya Combo", "Ultimate 4-Spice Combo"],
       image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300"
     },
     {
-      category: "Organic Range",
-      products: ["Organic Turmeric", "Organic Cumin", "Organic Coriander", "Organic Garam Masala"],
+      category: "Premium Range",
+      products: ["100% Organic Turmeric", "Premium Garam Masala", "Export Quality Spices", "Custom Blends Available"],
       image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300"
     }
   ];
