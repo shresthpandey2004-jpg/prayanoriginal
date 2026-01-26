@@ -646,12 +646,20 @@ button:hover,
     padding: 1rem;
   }
 
-  /* Ensure text doesn't get cut off */
+  /* Ensure text doesn't get cut off - MOBILE ONLY */
   .order-details-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
     margin-bottom: 1rem;
+  }
+
+  /* Desktop - restore original grid layout */
+  @media (min-width: 1024px) {
+    .order-details-grid.lg\\:order-details-grid-desktop {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
   }
 
   /* Better button styling */
@@ -677,9 +685,18 @@ button:hover,
     padding-right: 0.75rem;
   }
 
+  /* MOBILE ONLY - Account page single column */
   .account-page .grid.lg\\:grid-cols-3 {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+
+  /* Desktop - restore original 3-column layout */
+  @media (min-width: 1024px) {
+    .account-page .grid.lg\\:grid-cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2rem;
+    }
   }
 
   .account-page .card {
@@ -723,6 +740,14 @@ button:hover,
     text-align: center;
   }
 
+  /* Desktop - restore original profile stats layout */
+  @media (min-width: 1024px) {
+    .account-page .profile-stats {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
   .account-page .profile-stats .stat-value {
     font-size: 1.5rem;
     font-weight: 700;
@@ -733,14 +758,32 @@ button:hover,
     color: #6b7280;
   }
 
+  /* MOBILE ONLY - Form grids single column */
   .account-page .form-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 
+  /* Desktop - restore original form grid layout */
+  @media (min-width: 1024px) {
+    .account-page .form-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  /* MOBILE ONLY - Address grid single column */
   .account-page .address-grid {
     grid-template-columns: 1fr;
     gap: 0.75rem;
+  }
+
+  /* Desktop - restore original address grid layout */
+  @media (min-width: 1024px) {
+    .account-page .address-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
   }
 
   .account-page .order-card {
