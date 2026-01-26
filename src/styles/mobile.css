@@ -1,5 +1,31 @@
 /* Mobile-specific fixes and improvements */
 
+/* ABSOLUTE NO BORDERS POLICY - User specifically requested NO BORDERS AT ALL */
+* {
+  outline: none !important;
+  border: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Ensure no focus states create borders or focus rings */
+*:focus,
+*:active {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Allow design shadows but no focus rings */
+button:hover,
+.shadow-lg,
+.shadow-xl,
+.shadow-soft,
+.shadow-glow,
+.shadow-gold {
+  border: none !important;
+  outline: none !important;
+}
+
 /* Ensure proper touch targets */
 @media (max-width: 768px) {
   /* Add bottom padding to body to account for mobile nav */
@@ -34,6 +60,7 @@
   select {
     font-size: 16px !important; /* Prevents zoom on iOS */
     -webkit-appearance: none;
+    appearance: none;
     border-radius: 8px;
     padding: 12px 16px;
     min-height: 48px;
@@ -53,34 +80,26 @@
     font-size: 16px !important;
     padding: 12px 16px !important;
     min-height: 48px !important;
-    border: 2px solid #e5e7eb;
     border-radius: 8px;
     transition: border-color 0.2s;
   }
 
   .checkout-form input:focus,
   .checkout-form textarea:focus {
-    border-color: #f97316;
     outline: none;
     box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
-  }
-
-  .checkout-form .error {
-    border-color: #ef4444 !important;
   }
 
   /* Better radio button styling */
   .checkout-form [role="radiogroup"] > div {
     min-height: 60px;
     padding: 16px;
-    border: 2px solid #e5e7eb;
     border-radius: 8px;
     margin-bottom: 12px;
   }
 
   .checkout-form [role="radiogroup"] > div:hover {
     background-color: #f9fafb;
-    border-color: #f97316;
   }
 
   /* Better button styling */
@@ -188,13 +207,14 @@
     }
   }
 
-  /* Better focus states for accessibility */
+  /* Better focus states for accessibility - NO BORDERS */
   button:focus,
   input:focus,
   textarea:focus,
   select:focus {
-    outline: 2px solid #f97316;
-    outline-offset: 2px;
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   /* Improve table responsiveness */
@@ -486,26 +506,27 @@
   .cart-drawer-summary {
     flex-shrink: 0;
     background: linear-gradient(135deg, #fff7ed, #fef3f2);
-    border-top: 1px solid #fed7aa;
     padding: 1rem;
     padding-bottom: 5rem; /* Extra space for mobile nav */
   }
 
-  /* Fix red border/outline issues on mobile */
+  /* Fix red border/outline issues on mobile - REMOVE ALL BORDERS */
   button:focus,
   button:active,
   .cart-drawer button:focus,
   .cart-drawer button:active,
   input:focus,
   textarea:focus,
-  select:focus {
+  select:focus,
+  *:focus,
+  *:active {
     outline: none !important;
-    border-color: #f97316 !important;
-    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2) !important;
+    border: none !important;
+    box-shadow: none !important;
     -webkit-tap-highlight-color: transparent !important;
   }
 
-  /* Remove webkit tap highlight */
+  /* Remove webkit tap highlight completely */
   * {
     -webkit-tap-highlight-color: transparent !important;
     -webkit-touch-callout: none;
@@ -514,24 +535,55 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    outline: none !important;
+    border: none !important;
   }
 
-  /* Allow text selection for inputs and text areas */
+  /* Allow text selection for inputs and text areas but no borders */
   input, textarea, [contenteditable] {
     -webkit-user-select: text;
     -khtml-user-select: text;
     -moz-user-select: text;
     -ms-user-select: text;
     user-select: text;
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
-  /* Better cart item styling */
+  /* Remove all focus rings and borders from buttons */
+  button, .btn, [role="button"] {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  button:focus, button:active, button:hover {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Remove borders from form elements */
+  input, textarea, select {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Better cart item styling - NO BORDERS */
   .cart-item-card {
     background: white;
     border-radius: 16px;
     padding: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 1px solid #fed7aa;
     transition: all 0.3s ease;
   }
 
@@ -540,13 +592,12 @@
     transform: translateY(-2px);
   }
 
-  /* Better quantity controls */
+  /* Better quantity controls - NO BORDERS */
   .quantity-btn {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     background: #fff7ed;
-    border: 1px solid #fed7aa;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -555,20 +606,18 @@
 
   .quantity-btn:hover {
     background: #ffedd5;
-    border-color: #fb923c;
   }
 
   .quantity-btn:active {
     transform: scale(0.95);
   }
 
-  /* Order tracking mobile fixes */
+  /* Order tracking mobile fixes - NO BORDERS */
   .order-total-section {
     margin-bottom: 1rem;
     padding: 1rem;
     background: #f0fdf4;
     border-radius: 8px;
-    border: 1px solid #bbf7d0;
   }
 
   .order-total-amount {
