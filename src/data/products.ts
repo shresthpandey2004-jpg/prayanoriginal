@@ -37,7 +37,7 @@ export const products: Product[] = [
     name: 'Haldi (Turmeric Powder)',
     nameHindi: 'हल्दी पाउडर',
     description: 'Pure and vibrant turmeric sourced from the finest farms. Known for its golden color and medicinal properties.',
-    price: 200, // Base price for 500g (updated)
+    price: 160, // Base price for 500g (reduced by ₹40)
     originalPrice: 250, // Original price higher than current
     image: '/products/turmeric-powder-new.jpg',
     category: 'Pure Spices',
@@ -61,14 +61,14 @@ export const products: Product[] = [
       },
       {
         weight: '500g',
-        price: 200,
+        price: 160,
         originalPrice: 250,
         sku: 'PM-H-500',
         stock: 150
       },
       {
         weight: '1kg',
-        price: 350,
+        price: 310,
         originalPrice: 420,
         sku: 'PM-H-1KG',
         stock: 100
@@ -82,7 +82,7 @@ export const products: Product[] = [
     name: 'Red Chilli Powder',
     nameHindi: 'लाल मिर्च पाउडर',
     description: 'Premium red chilli powder that gives your dishes a beautiful red color with perfect heat.',
-    price: 210, // Base price for 500g (updated)
+    price: 170, // Base price for 500g (reduced by ₹40)
     originalPrice: 260, // Original price higher than current
     image: '/products/chilli-powder-new.jpg',
     category: 'Pure Spices',
@@ -106,14 +106,14 @@ export const products: Product[] = [
       },
       {
         weight: '500g',
-        price: 210,
+        price: 170,
         originalPrice: 260,
         sku: 'PM-C-500',
         stock: 140
       },
       {
         weight: '1kg',
-        price: 370,
+        price: 330,
         originalPrice: 450,
         sku: 'PM-C-1KG',
         stock: 90
@@ -172,7 +172,7 @@ export const products: Product[] = [
     name: 'Garam Masala',
     nameHindi: 'गरम मसाला',
     description: 'A perfect blend of aromatic spices that brings warmth and depth to your dishes. Hand-ground using traditional methods.',
-    price: 310, // Base price for 500g (updated)
+    price: 270, // Base price for 500g (reduced by ₹40)
     originalPrice: 380, // Original price higher than current
     image: '/products/garam-masala-new.jpg',
     category: 'Blended Spices',
@@ -203,14 +203,14 @@ export const products: Product[] = [
       },
       {
         weight: '500g',
-        price: 310,
+        price: 270,
         originalPrice: 380,
         sku: 'PM-GM-500',
         stock: 100
       },
       {
         weight: '1kg',
-        price: 630,
+        price: 590,
         originalPrice: 750,
         sku: 'PM-GM-1KG',
         stock: 80
@@ -224,7 +224,7 @@ export const products: Product[] = [
     name: 'Combo Pack: Haldi + Chilli',
     nameHindi: 'कॉम्बो पैक: हल्दी + मिर्च',
     description: 'Perfect combo of Haldi + Chilli for everyday cooking needs.',
-    price: 215, // Base price for 250g combo (updated - total 500g)
+    price: 175, // Base price for 250g combo (reduced by ₹40)
     originalPrice: 270, // Original price higher than current
     image: '/products/combo-pack-2-spice.jpg',
     category: 'Combo Packs',
@@ -241,14 +241,14 @@ export const products: Product[] = [
     weightOptions: [
       {
         weight: '250g (250g each)',
-        price: 215,
+        price: 175,
         originalPrice: 270,
         sku: 'PM-COMBO-HC-250',
         stock: 110
       },
       {
         weight: '500g (500g each)',
-        price: 360,
+        price: 320,
         originalPrice: 450,
         sku: 'PM-COMBO-HC-500',
         stock: 75
@@ -285,7 +285,7 @@ export const products: Product[] = [
       },
       {
         weight: '500g (500g each)',
-        price: 280,
+        price: 240,
         originalPrice: 350,
         sku: 'PM-COMBO-DC-500',
         stock: 60
@@ -322,7 +322,7 @@ export const products: Product[] = [
       },
       {
         weight: '500g (500g each)',
-        price: 260,
+        price: 220,
         originalPrice: 320,
         sku: 'PM-COMBO-HD-500',
         stock: 85
@@ -335,7 +335,7 @@ export const products: Product[] = [
     name: 'Combo Pack: Haldi + Dhaniya + Mirchi',
     nameHindi: 'कॉम्बो पैक: हल्दी + धनिया + मिर्च',
     description: 'Complete spice trio - Haldi + Dhaniya + Mirchi for all your cooking needs.',
-    price: 250, // Base price for 250g combo (updated - total 500g)
+    price: 210, // Base price for 250g combo (reduced by ₹40)
     originalPrice: 310, // Original price higher than current
     image: '/products/combo-pack-3-spice.jpg',
     category: 'Combo Packs',
@@ -352,14 +352,14 @@ export const products: Product[] = [
     weightOptions: [
       {
         weight: '250g (mixed 250g each)',
-        price: 250,
+        price: 210,
         originalPrice: 310,
         sku: 'PM-COMBO-HDM-250',
         stock: 125
       },
       {
         weight: '500g (mixed 500g each)',
-        price: 430,
+        price: 390,
         originalPrice: 530,
         sku: 'PM-COMBO-HDM-500',
         stock: 95
