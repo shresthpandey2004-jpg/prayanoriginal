@@ -5,15 +5,31 @@ export interface DeliveryInfo {
   isFree: boolean;
   area: string;
   estimatedDays: string;
+  reason?: string;
 }
 
-export const calculateDeliveryCharge = (pincode: string, orderTotal: number): DeliveryInfo => {
-  // All deliveries are now FREE!
+export const calculateDeliveryCharge = (pincode: string, orderTotal: number, isFirstOrder: boolean = false): DeliveryInfo => {
+  const area = getAreaByPincode(pincode);
+  const standardCharge = 40; // Standard delivery charge
+  
+  // Free delivery only for first order
+  if (isFirstOrder) {
+    return {
+      charge: 0,
+      isFree: true,
+      area,
+      estimatedDays: "2-3 business days",
+      reason: "First Order - FREE Delivery"
+    };
+  }
+  
+  // Regular delivery charges for subsequent orders
   return {
-    charge: 0,
-    isFree: true,
-    area: getAreaByPincode(pincode),
-    estimatedDays: "2-3 business days"
+    charge: standardCharge,
+    isFree: false,
+    area,
+    estimatedDays: "2-3 business days",
+    reason: `Delivery Charge: ₹${standardCharge}`
   };
 };
 

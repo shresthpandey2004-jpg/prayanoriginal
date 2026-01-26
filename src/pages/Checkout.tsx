@@ -39,6 +39,8 @@ const Checkout = () => {
     applyDiscountCode, 
     removeDiscountCode, 
     isFreeShipping, 
+    deliveryCharge,
+    isFirstOrder,
     clearCart 
   } = useCart();
   const { addOrder } = useOrders();
@@ -74,17 +76,12 @@ const Checkout = () => {
   // Calculate delivery charges when pincode changes
   useEffect(() => {
     if (customerDetails.pincode && /^\d{6}$/.test(customerDetails.pincode)) {
-      const delivery = calculateDeliveryCharge(customerDetails.pincode, finalPrice);
-      // Override delivery charge if free shipping is unlocked
-      if (isFreeShipping) {
-        setDeliveryInfo({ ...delivery, charge: 0, isFree: true });
-      } else {
-        setDeliveryInfo(delivery);
-      }
+      const delivery = calculateDeliveryCharge(customerDetails.pincode, finalPrice, isFirstOrder);
+      setDeliveryInfo(delivery);
     } else {
       setDeliveryInfo({ charge: 0, isFree: false, area: '', estimatedDays: '' });
     }
-  }, [customerDetails.pincode, finalPrice, isFreeShipping]);
+  }, [customerDetails.pincode, finalPrice, isFirstOrder]);
 
   const handleApplyPromoCode = () => {
     if (!promoCode.trim()) {
@@ -644,7 +641,12 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                   
                   <div className="flex justify-between">
                     <span>Delivery Charges</span>
-                    {deliveryInfo.isFree || isFreeShipping ? (
+                    {isFirstOrder ? (
+                      <span className="text-green-600 flex items-center gap-1">
+                        <Gift className="w-4 h-4" />
+                        FREE (First Order)
+                      </span>
+                    ) : deliveryInfo.charge === 0 ? (
                       <span className="text-green-600 flex items-center gap-1">
                         <Gift className="w-4 h-4" />
                         FREE

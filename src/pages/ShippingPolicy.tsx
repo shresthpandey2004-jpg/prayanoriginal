@@ -53,8 +53,8 @@ const ShippingPolicy: React.FC = () => {
             {[
               {
                 icon: <Truck className="w-8 h-8" />,
-                title: 'Free Shipping',
-                description: 'On ALL orders - no minimum!',
+                title: 'Free First Order',
+                description: 'FREE delivery on your first order!',
                 color: 'from-green-500 to-emerald-500'
               },
               {
@@ -178,11 +178,13 @@ const ShippingPolicy: React.FC = () => {
 
             <div className="bg-gradient-to-r from-green-100 to-emerald-100 rounded-2xl p-8">
               <div className="text-center">
-                <div className="text-5xl font-bold text-green-600 mb-4">🎉 FREE DELIVERY 🎉</div>
-                <div className="text-2xl font-bold text-gray-800 mb-2">On All Orders!</div>
-                <div className="text-lg text-gray-700">No minimum order value required</div>
-                <div className="text-sm text-gray-600 mt-4">
-                  Enjoy free shipping across India on every single order, big or small!
+                <div className="text-5xl font-bold text-green-600 mb-4">🎉 FREE FIRST ORDER 🎉</div>
+                <div className="text-2xl font-bold text-gray-800 mb-2">FREE Delivery on Your First Order!</div>
+                <div className="text-lg text-gray-700 mb-4">After that, just ₹40 delivery charge</div>
+                <div className="text-sm text-gray-600 bg-white/50 rounded-lg p-4">
+                  <strong>New Customer Benefit:</strong> Enjoy completely FREE delivery on your very first order with us! 
+                  This gives you a chance to experience our premium spices without any extra cost. 
+                  Subsequent orders have a nominal ₹40 delivery charge to maintain our quality service.
                 </div>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useAuth } from './AuthContext';
 
 export interface CartItem {
   id: string;
@@ -33,6 +34,8 @@ interface CartContextType {
   removeDiscountCode: () => void;
   finalPrice: number;
   isFreeShipping: boolean;
+  deliveryCharge: number;
+  isFirstOrder: boolean;
 }
 
 const DISCOUNT_CODES: DiscountCode[] = [
@@ -56,12 +59,12 @@ const DISCOUNT_CODES: DiscountCode[] = [
   }
 ];
 
-// All orders now have free shipping!
-const FREE_SHIPPING_THRESHOLD = 0;
+const STANDARD_DELIVERY_CHARGE = 40;
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { user } = useAuth();
   const [items, setItems] = useState<CartItem[]>(() => {
     const saved = localStorage.getItem('prayan-cart');
     return saved ? JSON.parse(saved) : [];
@@ -71,6 +74,11 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return localStorage.getItem('prayan-discount-code') || '';
   });
   const [discountAmount, setDiscountAmount] = useState<number>(0);
+
+  // Check if this is user's first order
+  const isFirstOrder = user ? (user.orders?.length === 0 || !user.orders) : false;
+  const deliveryCharge = isFirstOrder ? 0 : STANDARD_DELIVERY_CHARGE;
+  const isFreeShipping = isFirstOrder;
 
   useEffect(() => {
     localStorage.setItem('prayan-cart', JSON.stringify(items));
@@ -161,8 +169,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const finalPrice = Math.max(0, totalPrice - discountAmount);
-  const isFreeShipping = true; // All orders have free shipping now!
+  const finalPrice = Math.max(0, totalPrice - discountAmount + deliveryCharge);
 
   return (
     <CartContext.Provider
@@ -182,6 +189,8 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         removeDiscountCode,
         finalPrice,
         isFreeShipping,
+        deliveryCharge,
+        isFirstOrder,
       }}
     >
       {children}

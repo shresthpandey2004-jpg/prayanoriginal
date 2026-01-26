@@ -86,7 +86,7 @@ const Header: React.FC = () => {
       {/* Top Banner */}
       <div className="bg-accent text-accent-foreground text-center py-2 px-4 text-sm font-body">
         <p>
-          🎉 FREE Shipping on ALL orders | Use code <span className="font-semibold text-gold">PRAYAN10</span> for 10% off
+          🎉 FREE delivery on your first order | Use code <span className="font-semibold text-gold">PRAYAN10</span> for 10% off
         </p>
       </div>
 

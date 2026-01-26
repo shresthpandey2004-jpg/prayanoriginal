@@ -295,7 +295,7 @@ const ShopAll: React.FC = () => {
               {
                 icon: '🚚',
                 title: 'Fast Delivery',
-                description: 'Free shipping on all orders across India - no minimum required!'
+                description: 'FREE delivery on your first order, then just ₹40!'
               }
             ].map((feature, index) => (
               <motion.div

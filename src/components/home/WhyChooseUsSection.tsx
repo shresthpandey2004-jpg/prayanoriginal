@@ -32,8 +32,8 @@ const features = [
   },
   {
     icon: Truck,
-    title: 'Free Delivery',
-    description: 'FREE delivery on all orders across India - no minimum required!',
+    title: 'Free First Order',
+    description: 'FREE delivery on your first order, then just ₹40!',
     color: 'text-cinnamon',
     bgColor: 'bg-cinnamon/10',
   },

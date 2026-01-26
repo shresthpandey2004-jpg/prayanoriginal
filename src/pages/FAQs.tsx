@@ -38,7 +38,7 @@ const FAQs: React.FC = () => {
       faqs: [
         {
           question: 'What are your shipping charges?',
-          answer: 'We offer FREE delivery on all orders! No minimum order value required. Enjoy free shipping across India.'
+          answer: 'We offer FREE delivery on your first order! After that, standard delivery charges of ₹40 apply. This helps us maintain quality service while giving new customers a great first experience.'
         },
         {
           question: 'How long does delivery take?',

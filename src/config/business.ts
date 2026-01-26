@@ -31,24 +31,25 @@ export const BUSINESS_CONFIG = {
   
   // Delivery Settings
   delivery: {
-    freeDeliveryAbove: 0, // Free delivery on all orders
-    standardDeliveryCharge: 0, // No standard delivery charge
-    expressDeliveryCharge: 0, // No express delivery charge
+    freeDeliveryAbove: 0, // Free delivery only on first order
+    standardDeliveryCharge: 40, // Standard delivery charge for subsequent orders
+    expressDeliveryCharge: 60, // Express delivery charge
+    firstOrderFreeDelivery: true, // Free delivery on first order only
     deliveryAreas: [
-      { pincode: "394510", area: "Kavas, Limla", charge: 0 }, // Local area - free delivery
-      { pincode: "394511", area: "Kavas GIDC", charge: 0 },
-      { pincode: "394512", area: "Kavas Industrial", charge: 0 },
-      { pincode: "395001", area: "Surat City", charge: 0 },
-      { pincode: "395002", area: "Surat Railway Station", charge: 0 },
-      { pincode: "395003", area: "Surat Textile Market", charge: 0 },
-      { pincode: "395004", area: "Surat Diamond Market", charge: 0 },
-      { pincode: "395005", area: "Surat Hazira", charge: 0 },
-      { pincode: "395006", area: "Surat Udhna", charge: 0 },
-      { pincode: "395007", area: "Surat Katargam", charge: 0 },
-      { pincode: "395008", area: "Surat Varachha", charge: 0 },
-      { pincode: "395009", area: "Surat Adajan", charge: 0 },
-      { pincode: "395010", area: "Surat Vesu", charge: 0 },
-      // Add more Gujarat pincodes as needed - all with 0 charge
+      { pincode: "394510", area: "Kavas, Limla", charge: 40 }, // Local area
+      { pincode: "394511", area: "Kavas GIDC", charge: 40 },
+      { pincode: "394512", area: "Kavas Industrial", charge: 40 },
+      { pincode: "395001", area: "Surat City", charge: 40 },
+      { pincode: "395002", area: "Surat Railway Station", charge: 40 },
+      { pincode: "395003", area: "Surat Textile Market", charge: 40 },
+      { pincode: "395004", area: "Surat Diamond Market", charge: 40 },
+      { pincode: "395005", area: "Surat Hazira", charge: 40 },
+      { pincode: "395006", area: "Surat Udhna", charge: 40 },
+      { pincode: "395007", area: "Surat Katargam", charge: 40 },
+      { pincode: "395008", area: "Surat Varachha", charge: 40 },
+      { pincode: "395009", area: "Surat Adajan", charge: 40 },
+      { pincode: "395010", area: "Surat Vesu", charge: 40 },
+      // Add more Gujarat pincodes as needed - all with standard charge
     ]
   },
   

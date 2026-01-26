@@ -134,7 +134,7 @@ const CartDrawer: React.FC = () => {
                 
                 <div className="flex justify-between text-xs text-gray-500">
                   <span>Delivery charges</span>
-                  <span className="text-green-600 font-medium">FREE 🎉</span>
+                  <span className="text-green-600 font-medium">FREE on 1st order 🎉</span>
                 </div>
                 
                 <div className="border-t border-gray-300 pt-2 flex justify-between font-semibold">
@@ -144,7 +144,7 @@ const CartDrawer: React.FC = () => {
               </div>
 
               <div className="text-xs text-green-600 bg-green-50 p-2 rounded">
-                🎉 FREE delivery on all orders!
+                🎉 FREE delivery on your first order!
               </div>
 
               <Button
