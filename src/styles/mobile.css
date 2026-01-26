@@ -422,6 +422,39 @@
     padding: 1rem;
   }
 
+  /* Cart drawer mobile fixes */
+  .cart-drawer-footer {
+    padding-bottom: 5rem !important; /* Space for mobile nav */
+  }
+
+  .cart-drawer-button {
+    min-height: 48px !important;
+    font-size: 16px !important;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  /* Ensure cart drawer doesn't get cut off */
+  .cart-drawer {
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-drawer-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 1rem;
+  }
+
+  .cart-drawer-summary {
+    flex-shrink: 0;
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    padding: 1rem;
+    padding-bottom: 5rem; /* Extra space for mobile nav */
+  }
+
   /* Better error states */
   .error-message {
     color: #ef4444;

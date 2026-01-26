@@ -24,7 +24,7 @@ const CartDrawer: React.FC = () => {
       
       {/* Cart Drawer */}
       <div className={cn(
-        "fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col",
+        "fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col cart-drawer",
         "sm:max-w-md md:max-w-lg",
         isCartOpen ? "translate-x-0" : "translate-x-full"
       )}>
@@ -70,7 +70,7 @@ const CartDrawer: React.FC = () => {
         ) : (
           <>
             {/* Cart Items */}
-            <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
+            <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 cart-drawer-content">
               {items.map((item) => (
                 <div key={item.id} className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
                   <img
@@ -125,7 +125,7 @@ const CartDrawer: React.FC = () => {
             </div>
 
             {/* Order Summary */}
-            <div className="border-t border-gray-200 p-3 sm:p-4 space-y-2 sm:space-y-3 bg-gray-50 flex-shrink-0">
+            <div className="border-t border-gray-200 p-3 sm:p-4 space-y-2 sm:space-y-3 bg-gray-50 flex-shrink-0 pb-20 md:pb-4 cart-drawer-summary">
               <div className="space-y-1 sm:space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span>Subtotal ({totalItems} items)</span>
@@ -149,7 +149,7 @@ const CartDrawer: React.FC = () => {
 
               <Button
                 asChild
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2.5 sm:py-3 text-sm sm:text-base"
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 sm:py-3 text-base font-semibold min-h-[48px] cart-drawer-button"
                 onClick={() => setIsCartOpen(false)}
               >
                 <Link to="/checkout" className="flex items-center justify-center gap-2">
