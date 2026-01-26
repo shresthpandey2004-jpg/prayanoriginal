@@ -273,9 +273,9 @@ const Header: React.FC = () => {
             className="absolute inset-0 bg-foreground/20 backdrop-blur-sm"
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          <div className="absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-background shadow-xl animate-slide-in-right">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-8">
+          <div className="absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-background shadow-xl animate-slide-in-right overflow-y-auto">
+            <div className="p-4 sm:p-6">
+              <div className="flex items-center justify-between mb-6 sm:mb-8">
                   <div className="flex items-center gap-3">
                     <div className="relative p-1 rounded-full bg-gradient-to-br from-orange-100 to-yellow-100 shadow-sm">
                       <img 
@@ -285,22 +285,25 @@ const Header: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <div className="font-display text-xl font-bold text-foreground">PRAYAN</div>
+                      <div className="font-display text-lg sm:text-xl font-bold text-foreground">PRAYAN</div>
                       <div className="text-xs text-muted-foreground">Swad Ki Nayi Yatra</div>
                     </div>
                   </div>
-                <button onClick={() => setIsMobileMenuOpen(false)}>
+                <button 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 hover:bg-secondary rounded-full transition-colors"
+                >
                   <X size={24} />
                 </button>
               </div>
 
-              <nav className="space-y-2">
+              <nav className="space-y-1 sm:space-y-2">
                 {navigation.map((item) => (
                   <div key={item.name}>
                     <Link
                       to={item.href}
                       className={cn(
-                        'block px-4 py-3 rounded-lg font-medium transition-colors',
+                        'block px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-medium transition-colors text-sm sm:text-base',
                         location.pathname === item.href
                           ? 'bg-secondary text-primary'
                           : 'hover:bg-secondary'
@@ -309,12 +312,12 @@ const Header: React.FC = () => {
                       {item.name}
                     </Link>
                     {item.submenu && (
-                      <div className="ml-4 mt-1 space-y-1">
+                      <div className="ml-3 sm:ml-4 mt-1 space-y-1">
                         {item.submenu.map((subItem) => (
                           <Link
                             key={subItem.name}
                             to={subItem.href}
-                            className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            className="block px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
                           >
                             {subItem.name}
                           </Link>
@@ -325,28 +328,28 @@ const Header: React.FC = () => {
                 ))}
               </nav>
 
-              <div className="mt-8 pt-8 border-t border-border space-y-3">
+              <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-border space-y-2 sm:space-y-3">
                 {isAuthenticated ? (
                   <>
-                    <Button variant="outline" className="w-full" asChild>
+                    <Button variant="outline" className="w-full text-sm sm:text-base" asChild>
                       <Link to="/account">My Account</Link>
                     </Button>
-                    <Button variant="outline" className="w-full" asChild>
+                    <Button variant="outline" className="w-full text-sm sm:text-base" asChild>
                       <Link to="/my-orders">My Orders</Link>
                     </Button>
-                    <Button variant="outline" className="w-full" asChild>
+                    <Button variant="outline" className="w-full text-sm sm:text-base" asChild>
                       <Link to="/loyalty">Loyalty Points</Link>
                     </Button>
-                    <Button variant="destructive" className="w-full" onClick={logout}>
+                    <Button variant="destructive" className="w-full text-sm sm:text-base" onClick={logout}>
                       Logout
                     </Button>
                   </>
                 ) : (
                   <>
-                    <Button variant="outline" className="w-full" asChild>
+                    <Button variant="outline" className="w-full text-sm sm:text-base" asChild>
                       <Link to="/my-orders">Track Order</Link>
                     </Button>
-                    <Button variant="premium" className="w-full" asChild>
+                    <Button variant="premium" className="w-full text-sm sm:text-base" asChild>
                       <Link to="/auth">Login / Sign Up</Link>
                     </Button>
                   </>
@@ -359,23 +362,23 @@ const Header: React.FC = () => {
 
       {/* Search Modal */}
       {isSearchOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20">
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-4 sm:pt-20 px-4">
           <div
             className="absolute inset-0 bg-foreground/20 backdrop-blur-sm"
             onClick={() => setIsSearchOpen(false)}
           />
-          <div className="relative w-full max-w-2xl mx-4 animate-fade-in">
-            <div className="bg-background rounded-2xl shadow-xl overflow-hidden">
+          <div className="relative w-full max-w-2xl animate-fade-in">
+            <div className="bg-background rounded-2xl shadow-xl overflow-hidden max-h-[90vh] flex flex-col">
               {/* Search Input */}
-              <form onSubmit={handleSearchSubmit} className="p-4">
-                <div className="flex items-center gap-4">
-                  <Search size={24} className="text-muted-foreground" />
+              <form onSubmit={handleSearchSubmit} className="p-3 sm:p-4 flex-shrink-0">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <Search size={20} className="text-muted-foreground flex-shrink-0" />
                   <input
                     type="text"
                     placeholder="Search for spices, recipes..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 bg-transparent text-lg outline-none placeholder:text-muted-foreground"
+                    className="flex-1 bg-transparent text-base sm:text-lg outline-none placeholder:text-muted-foreground min-w-0"
                     autoFocus
                   />
                   <button
@@ -384,16 +387,16 @@ const Header: React.FC = () => {
                       setIsSearchOpen(false);
                       setSearchQuery('');
                     }}
-                    className="p-2 hover:bg-secondary rounded-full"
+                    className="p-2 hover:bg-secondary rounded-full flex-shrink-0"
                   >
-                    <X size={20} />
+                    <X size={18} />
                   </button>
                 </div>
               </form>
 
               {/* Search Results */}
               {searchQuery.trim() && (
-                <div className="border-t border-border max-h-96 overflow-y-auto">
+                <div className="border-t border-border flex-1 overflow-y-auto">
                   {searchResults.length > 0 ? (
                     <div className="p-2">
                       <div className="text-sm text-muted-foreground px-3 py-2 font-medium">
@@ -408,7 +411,7 @@ const Header: React.FC = () => {
                           <img
                             src={product.image}
                             alt={product.name}
-                            className="w-12 h-12 object-cover rounded-lg"
+                            className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-lg flex-shrink-0"
                           />
                           <div className="flex-1 min-w-0">
                             <div className="font-medium text-sm truncate">{product.name}</div>
@@ -429,10 +432,10 @@ const Header: React.FC = () => {
                     </div>
                   ) : (
                     <div className="p-6 text-center">
-                      <div className="text-muted-foreground">
+                      <div className="text-muted-foreground text-sm sm:text-base">
                         No products found for "{searchQuery}"
                       </div>
-                      <div className="text-sm text-muted-foreground mt-1">
+                      <div className="text-xs sm:text-sm text-muted-foreground mt-1">
                         Try searching for spices, masalas, or ingredients
                       </div>
                     </div>
@@ -442,14 +445,14 @@ const Header: React.FC = () => {
 
               {/* Quick Suggestions */}
               {!searchQuery.trim() && (
-                <div className="border-t border-border p-4">
+                <div className="border-t border-border p-3 sm:p-4 flex-shrink-0">
                   <div className="text-sm text-muted-foreground mb-3 font-medium">Popular Searches</div>
                   <div className="flex flex-wrap gap-2">
                     {['Garam Masala', 'Turmeric', 'Red Chili', 'Cumin', 'Coriander', 'Black Pepper'].map((suggestion) => (
                       <button
                         key={suggestion}
                         onClick={() => setSearchQuery(suggestion)}
-                        className="px-3 py-1.5 text-sm bg-secondary hover:bg-secondary/80 rounded-full transition-colors"
+                        className="px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm bg-secondary hover:bg-secondary/80 rounded-full transition-colors"
                       >
                         {suggestion}
                       </button>

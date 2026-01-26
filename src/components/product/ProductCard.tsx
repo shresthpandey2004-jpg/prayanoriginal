@@ -37,11 +37,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
       <Link
         to={`/product/${product.id}`}
         className={cn(
-          'group flex bg-card rounded-xl overflow-hidden border border-border transition-all duration-300 hover:shadow-md',
+          'group flex flex-col sm:flex-row bg-card rounded-xl overflow-hidden border border-border transition-all duration-300 hover:shadow-md',
           className
         )}
       >
-        <div className="relative w-48 h-32 flex-shrink-0">
+        <div className="relative w-full sm:w-48 h-48 sm:h-32 flex-shrink-0">
           <img
             src={product.image}
             alt={product.name}
@@ -57,15 +57,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
           )}
         </div>
         
-        <div className="flex-1 p-4 flex flex-col justify-between">
+        <div className="flex-1 p-3 sm:p-4 flex flex-col justify-between">
           <div>
-            <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
+            <h3 className="font-semibold text-base sm:text-lg mb-1">{product.name}</h3>
             {product.nameHindi && (
               <p className="text-sm text-muted-foreground mb-2">{product.nameHindi}</p>
             )}
             <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{product.description}</p>
             
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex flex-wrap items-center gap-2 mb-2">
               <div className="flex items-center gap-1">
                 <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                 <span className="text-sm font-medium">{product.rating}</span>
@@ -78,9 +78,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
             </div>
           </div>
           
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
             <div className="flex items-center gap-2">
-              <span className="text-xl font-bold text-primary">₹{product.price}</span>
+              <span className="text-lg sm:text-xl font-bold text-primary">₹{product.price}</span>
               {product.originalPrice && (
                 <span className="text-sm text-muted-foreground line-through">₹{product.originalPrice}</span>
               )}
@@ -88,7 +88,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
             <Button
               onClick={handleAddToCart}
               size="sm"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 w-full sm:w-auto justify-center"
             >
               <ShoppingBag className="w-4 h-4" />
               Add to Cart
@@ -161,18 +161,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
       </div>
 
       {/* Content */}
-      <div className="p-5 relative z-10">
+      <div className="p-4 sm:p-5 relative z-10">
         {/* Category */}
         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
           {product.category}
         </p>
 
         {/* Name */}
-        <h3 className="font-display text-lg font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">
+        <h3 className="font-display text-base sm:text-lg font-semibold text-foreground mb-1 group-hover:text-primary transition-colors line-clamp-2">
           {product.name}
         </h3>
         {product.nameHindi && (
-          <p className="text-sm text-muted-foreground mb-2">{product.nameHindi}</p>
+          <p className="text-sm text-muted-foreground mb-2 line-clamp-1">{product.nameHindi}</p>
         )}
 
         {/* Rating */}
@@ -181,7 +181,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
-                size={14}
+                size={12}
                 className={cn(
                   'transition-colors',
                   i < Math.floor(product.rating)
@@ -192,14 +192,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
             ))}
           </div>
           <span className="text-xs text-muted-foreground">
-            ({product.reviews.toLocaleString()})
+            ({product.reviews > 999 ? `${Math.floor(product.reviews/1000)}k` : product.reviews})
           </span>
         </div>
 
         {/* Price & Weight */}
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-bold text-primary">₹{product.price}</span>
+            <span className="text-lg sm:text-xl font-bold text-primary">₹{product.price}</span>
             {product.originalPrice && (
               <span className="text-sm text-muted-foreground line-through">
                 ₹{product.originalPrice}
@@ -212,7 +212,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
             </span>
             {product.weightOptions && product.weightOptions.length > 1 && (
               <span className="text-xs text-primary mt-1 block">
-                +{product.weightOptions.length - 1} more sizes
+                +{product.weightOptions.length - 1} more
               </span>
             )}
           </div>
@@ -221,11 +221,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
         {/* Add to Cart */}
         <Button
           variant="premium"
-          className="w-full gap-2 opacity-100 visible relative z-20"
+          className="w-full gap-2 opacity-100 visible relative z-20 text-sm sm:text-base py-2 sm:py-2.5"
           onClick={handleAddToCart}
           disabled={product.isInStock === false}
         >
-          <ShoppingBag size={16} />
+          <ShoppingBag size={14} />
           {product.isInStock === false ? 'Out of Stock' : 'Add to Cart'}
         </Button>
       </div>

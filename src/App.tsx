@@ -9,8 +9,12 @@ import { OrderProvider } from "@/context/OrderContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { CouponProvider } from "@/context/CouponContext";
-import { LoyaltyProvider } from "@/context/LoyaltyContext";
+import { LoyaltyProvider } from "@/context/LoyaltyProvider";
 import { ReviewProvider } from "@/context/ReviewContext";
+
+// Import mobile styles
+import "@/styles/mobile.css";
+
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
 import ShopAll from "./pages/ShopAll";

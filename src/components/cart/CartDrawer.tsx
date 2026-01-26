@@ -24,18 +24,18 @@ const CartDrawer: React.FC = () => {
       
       {/* Cart Drawer */}
       <div className={cn(
-        "fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col",
-        "md:max-w-lg",
+        "fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col",
+        "sm:max-w-md md:max-w-lg",
         isCartOpen ? "translate-x-0" : "translate-x-full"
       )}>
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
-          <div className="flex items-center gap-3">
-            <ShoppingBag size={20} className="text-orange-500" />
-            <h2 className="text-lg font-semibold">
+        <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 bg-white flex-shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <ShoppingBag size={18} className="text-orange-500" />
+            <h2 className="text-base sm:text-lg font-semibold">
               Shopping Cart
               {totalItems > 0 && (
-                <Badge className="ml-2 bg-orange-500 text-white">
+                <Badge className="ml-2 bg-orange-500 text-white text-xs">
                   {totalItems}
                 </Badge>
               )}
@@ -45,21 +45,21 @@ const CartDrawer: React.FC = () => {
             onClick={() => setIsCartOpen(false)}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
         {/* Cart Content */}
         {items.length === 0 ? (
-          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-              <ShoppingBag size={32} className="text-gray-400" />
+          <div className="flex-1 flex flex-col items-center justify-center p-6 sm:p-8 text-center">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+              <ShoppingBag size={28} className="text-gray-400" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">Your cart is empty</h3>
-            <p className="text-gray-500 mb-6">Add some delicious spices to get started!</p>
+            <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">Your cart is empty</h3>
+            <p className="text-sm sm:text-base text-gray-500 mb-6">Add some delicious spices to get started!</p>
             <Button 
               onClick={() => setIsCartOpen(false)}
-              className="bg-orange-500 hover:bg-orange-600"
+              className="bg-orange-500 hover:bg-orange-600 w-full sm:w-auto"
             >
               <Link to="/shop" className="flex items-center gap-2">
                 Continue Shopping
@@ -70,32 +70,32 @@ const CartDrawer: React.FC = () => {
         ) : (
           <>
             {/* Cart Items */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
               {items.map((item) => (
-                <div key={item.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div key={item.id} className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-16 h-16 object-cover rounded-md flex-shrink-0"
+                    className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded-md flex-shrink-0"
                   />
                   
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-medium text-sm text-gray-900 truncate">
+                    <h4 className="font-medium text-xs sm:text-sm text-gray-900 truncate">
                       {item.name}
                     </h4>
-                    <p className="text-xs text-gray-500 mb-2">{item.weight}</p>
+                    <p className="text-xs text-gray-500 mb-1 sm:mb-2">{item.weight}</p>
                     
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1 sm:gap-2">
                         <button
                           onClick={() => updateQuantity(item.id, Math.max(0, item.quantity - 1))}
                           className="p-1 hover:bg-gray-200 rounded-full transition-colors"
                           disabled={item.quantity <= 1}
                         >
-                          <Minus size={14} />
+                          <Minus size={12} />
                         </button>
                         
-                        <span className="w-8 text-center text-sm font-medium">
+                        <span className="w-6 sm:w-8 text-center text-xs sm:text-sm font-medium">
                           {item.quantity}
                         </span>
                         
@@ -103,19 +103,19 @@ const CartDrawer: React.FC = () => {
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
                           className="p-1 hover:bg-gray-200 rounded-full transition-colors"
                         >
-                          <Plus size={14} />
+                          <Plus size={12} />
                         </button>
                       </div>
                       
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold text-sm">
+                      <div className="flex items-center gap-1 sm:gap-2">
+                        <span className="font-semibold text-xs sm:text-sm">
                           ₹{(item.price * item.quantity).toFixed(2)}
                         </span>
                         <button
                           onClick={() => removeFromCart(item.id)}
                           className="p-1 text-red-500 hover:bg-red-50 rounded-full transition-colors"
                         >
-                          <Trash2 size={14} />
+                          <Trash2 size={12} />
                         </button>
                       </div>
                     </div>
@@ -125,8 +125,8 @@ const CartDrawer: React.FC = () => {
             </div>
 
             {/* Order Summary */}
-            <div className="border-t border-gray-200 p-4 space-y-3 bg-gray-50">
-              <div className="space-y-2 text-sm">
+            <div className="border-t border-gray-200 p-3 sm:p-4 space-y-2 sm:space-y-3 bg-gray-50 flex-shrink-0">
+              <div className="space-y-1 sm:space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span>Subtotal ({totalItems} items)</span>
                   <span>₹{totalPrice.toFixed(2)}</span>
@@ -149,7 +149,7 @@ const CartDrawer: React.FC = () => {
 
               <Button
                 asChild
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3"
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2.5 sm:py-3 text-sm sm:text-base"
                 onClick={() => setIsCartOpen(false)}
               >
                 <Link to="/checkout" className="flex items-center justify-center gap-2">

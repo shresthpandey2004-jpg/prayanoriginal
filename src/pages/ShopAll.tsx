@@ -67,27 +67,27 @@ const ShopAll: React.FC = () => {
       </motion.section>
 
       {/* Search and Filter Section */}
-      <section className="py-12 bg-white">
+      <section className="py-8 sm:py-12 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-4 mb-8">
+            <div className="flex flex-col gap-3 sm:gap-4 mb-6 sm:mb-8">
               {/* Search Bar */}
               <div className="relative flex-1">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
                 <Input
-                  placeholder="Search for spices, ingredients, or recipes..."
+                  placeholder="Search for spices, ingredients..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-12 h-14 text-lg border-2 border-orange-200 focus:border-orange-500 rounded-xl"
+                  className="pl-10 sm:pl-12 h-12 sm:h-14 text-base sm:text-lg border-2 border-orange-200 focus:border-orange-500 rounded-xl"
                 />
               </div>
               
               {/* Category Filter */}
-              <div className="md:w-64">
+              <div className="w-full sm:w-64">
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full h-14 px-4 text-lg border-2 border-orange-200 focus:border-orange-500 rounded-xl bg-white"
+                  className="w-full h-12 sm:h-14 px-3 sm:px-4 text-base sm:text-lg border-2 border-orange-200 focus:border-orange-500 rounded-xl bg-white"
                 >
                   {categories.map(category => (
                     <option key={category} value={category}>
