@@ -53,12 +53,21 @@ const Account = () => {
             <User className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-4">Please Login</h2>
             <p className="text-gray-600 mb-6">You need to login to access your account.</p>
-            <div className="space-y-3">
-              <Button onClick={() => navigate('/auth')} className="w-full">
+            <div className="space-y-4">
+              <Button 
+                onClick={() => navigate('/auth')} 
+                className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-3 px-6 rounded-xl font-semibold text-base min-h-[48px] shadow-lg hover:shadow-xl transition-all duration-300"
+                style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', border: 'none' }}
+              >
                 Login / Register
               </Button>
-              <Button variant="outline" onClick={() => navigate('/')} className="w-full">
-                Continue as Guest
+              <Button 
+                variant="outline" 
+                onClick={() => navigate('/')} 
+                className="w-full py-3 px-6 rounded-xl font-semibold text-base min-h-[48px] bg-white hover:bg-gray-50 text-gray-700 shadow-md hover:shadow-lg transition-all duration-300"
+                style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', border: 'none' }}
+              >
+                Continue Shopping
               </Button>
             </div>
           </CardContent>
@@ -93,7 +102,7 @@ const Account = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 py-8 account-page">
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
@@ -322,9 +331,13 @@ const Account = () => {
                       <div className="text-center py-8">
                         <ShoppingBag className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                         <h3 className="text-lg font-semibold mb-2">No orders yet</h3>
-                        <p className="text-gray-600 mb-4">Start shopping to see your orders here!</p>
-                        <Button onClick={() => navigate('/shop')}>
-                          Start Shopping
+                        <p className="text-gray-600 mb-6 px-4">Start shopping to see your orders here!</p>
+                        <Button 
+                          onClick={() => navigate('/shop')}
+                          className="w-full max-w-xs mx-auto bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-3 px-6 rounded-xl font-semibold text-base min-h-[48px] shadow-lg hover:shadow-xl transition-all duration-300"
+                          style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', border: 'none' }}
+                        >
+                          Continue Shopping
                         </Button>
                       </div>
                     ) : (

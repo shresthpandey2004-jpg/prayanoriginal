@@ -676,6 +676,165 @@ button:hover,
     display: block;
   }
 
+  /* Account page mobile improvements */
+  .account-page .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .account-page .grid.lg\\:grid-cols-3 {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .account-page .card {
+    margin-bottom: 1rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .account-page .card-header {
+    padding: 1.5rem 1rem 1rem 1rem;
+  }
+
+  .account-page .card-content {
+    padding: 1rem;
+  }
+
+  .account-page .tabs-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25rem;
+    background: #f3f4f6;
+    padding: 0.25rem;
+    border-radius: 12px;
+  }
+
+  .account-page .tabs-trigger {
+    border-radius: 8px;
+    padding: 0.75rem 0.5rem;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .account-page .profile-avatar {
+    width: 4rem;
+    height: 4rem;
+    font-size: 1.5rem;
+  }
+
+  .account-page .profile-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .account-page .profile-stats .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .account-page .profile-stats .stat-label {
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  .account-page .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .account-page .address-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .account-page .order-card {
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .account-page .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+  }
+
+  .account-page .order-details {
+    margin-bottom: 0.75rem;
+  }
+
+  .account-page .order-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .account-page .preference-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .account-page .preference-badge {
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    background: #f3f4f6;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .account-page .preference-badge:hover {
+    background: #e5e7eb;
+  }
+
+  /* Better button spacing in account page */
+  .account-page .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .account-page .button-group button {
+    min-height: 48px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+  }
+
+  /* Profile summary improvements */
+  .account-page .profile-summary {
+    background: linear-gradient(135deg, #fff7ed, #fef3f2);
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+
+  .account-page .profile-info {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .account-page .profile-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .account-page .profile-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 14px;
+    color: #6b7280;
+  }
+
   /* Loading spinner */
   .loading-spinner {
     width: 16px;
