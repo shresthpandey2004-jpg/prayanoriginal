@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Search, ShoppingBag, User, Heart } from 'lucide-react';
+import { Home, Search, ShoppingBag, User } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
@@ -32,12 +32,6 @@ const MobileBottomNav: React.FC = () => {
       onClick: () => setIsCartOpen(true)
     },
     {
-      name: 'Wishlist',
-      href: '/wishlist',
-      icon: Heart,
-      active: location.pathname === '/wishlist'
-    },
-    {
       name: 'Account',
       href: isAuthenticated ? '/account' : '/auth',
       icon: User,
@@ -47,7 +41,7 @@ const MobileBottomNav: React.FC = () => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 md:hidden">
-      <div className="grid grid-cols-5 h-16">
+      <div className="grid grid-cols-4 h-16">
         {navItems.map((item) => {
           const Icon = item.icon;
           
