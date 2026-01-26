@@ -100,27 +100,27 @@ const Header: React.FC = () => {
         )}
       >
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Mobile Menu Button */}
             <button
-              className="lg:hidden p-2 -ml-2"
+              className="lg:hidden p-2 -ml-2 flex-shrink-0"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
 
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-3">
+            {/* Logo - Centered on mobile */}
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 flex-1 justify-center lg:justify-start lg:flex-initial">
               <div className="relative p-1 rounded-full bg-gradient-to-br from-orange-100 to-yellow-100 shadow-sm">
                 <img 
                   src="/prayan-new-logo.png" 
                   alt="PRAYAN Logo" 
-                  className="w-10 h-10 object-contain rounded-full"
+                  className="w-8 h-8 sm:w-10 sm:h-10 object-contain rounded-full"
                 />
               </div>
               <div className="hidden sm:block">
-                <h1 className="font-display text-2xl font-bold text-foreground tracking-wide">PRAYAN</h1>
+                <h1 className="font-display text-xl sm:text-2xl font-bold text-foreground tracking-wide">PRAYAN</h1>
                 <p className="text-xs text-muted-foreground -mt-1">Swad Ki Nayi Yatra</p>
               </div>
             </Link>
@@ -168,13 +168,13 @@ const Header: React.FC = () => {
             </nav>
 
             {/* Right Actions */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2.5 rounded-full hover:bg-secondary transition-colors"
+                className="p-2 sm:p-2.5 rounded-full hover:bg-secondary transition-colors"
                 aria-label="Search"
               >
-                <Search size={20} />
+                <Search size={18} className="sm:w-5 sm:h-5" />
               </button>
 
               {/* User Account */}
@@ -183,14 +183,14 @@ const Header: React.FC = () => {
                   <div>
                     <button
                       onClick={() => setShowUserMenu(!showUserMenu)}
-                      className="flex items-center gap-2 p-2.5 rounded-full hover:bg-secondary transition-colors"
+                      className="flex items-center gap-2 p-2 sm:p-2.5 rounded-full hover:bg-secondary transition-colors"
                     >
-                      <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
-                        <span className="text-white text-sm font-bold">
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs sm:text-sm font-bold">
                           {user?.name?.charAt(0).toUpperCase()}
                         </span>
                       </div>
-                      <ChevronDown className="w-4 h-4 hidden sm:block" />
+                      <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 hidden sm:block" />
                     </button>
                     
                     {showUserMenu && (
@@ -251,12 +251,12 @@ const Header: React.FC = () => {
 
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2.5 rounded-full hover:bg-secondary transition-colors"
+                className="relative p-2 sm:p-2.5 rounded-full hover:bg-secondary transition-colors"
                 aria-label="Cart"
               >
-                <ShoppingBag size={20} />
+                <ShoppingBag size={18} className="sm:w-5 sm:h-5" />
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-accent-foreground text-xs font-bold rounded-full flex items-center justify-center animate-scale-in">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-accent text-accent-foreground text-xs font-bold rounded-full flex items-center justify-center animate-scale-in">
                     {totalItems}
                   </span>
                 )}

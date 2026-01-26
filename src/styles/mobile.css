@@ -2,6 +2,11 @@
 
 /* Ensure proper touch targets */
 @media (max-width: 768px) {
+  /* Add bottom padding to body to account for mobile nav */
+  body {
+    padding-bottom: 4rem; /* 64px for mobile bottom nav */
+  }
+
   /* Minimum touch target size */
   button, 
   .btn, 
@@ -89,6 +94,31 @@
     position: sticky;
   }
 
+  /* Header fixes */
+  .h-20 {
+    height: 4rem; /* 64px */
+  }
+
+  /* Logo centering on mobile */
+  .flex-1.justify-center {
+    justify-content: center;
+  }
+
+  /* Better header layout */
+  .justify-between {
+    justify-content: space-between;
+  }
+
+  /* Fix WhatsApp button positioning - above mobile nav */
+  .fixed.bottom-20 {
+    bottom: 5rem; /* Above mobile navigation (64px + 16px margin) */
+  }
+
+  /* Mobile bottom nav styling */
+  .fixed.bottom-0 {
+    bottom: 0;
+  }
+
   /* Improve animations on mobile */
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -174,6 +204,43 @@
     }
   }
 
+  /* Fix header layout specifically */
+  .flex.items-center.justify-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Ensure logo stays centered */
+  .flex-1.justify-center.lg\:justify-start {
+    flex: 1;
+    justify-content: center;
+  }
+
+  @media (min-width: 1024px) {
+    .flex-1.justify-center.lg\:justify-start {
+      flex: initial;
+      justify-content: flex-start;
+    }
+  }
+
+  /* Fix mobile menu button */
+  .lg\:hidden {
+    display: block;
+  }
+
+  @media (min-width: 1024px) {
+    .lg\:hidden {
+      display: none;
+    }
+  }
+
+  /* Better product grid */
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
   /* Improve cart drawer on very small screens */
   @media (max-width: 375px) {
     .max-w-sm {
@@ -191,17 +258,22 @@
     .text-xl {
       font-size: 1.125rem;
     }
+
+    /* Smaller WhatsApp button on very small screens */
+    .w-12.h-12 {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .w-6.h-6 {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
   }
 
   /* Better hero section on mobile */
-  .min-h-\[90vh\] {
-    min-height: 80vh;
-  }
-
-  /* Improve product grid */
-  .grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem;
+  .min-h-\[80vh\] {
+    min-height: 70vh;
   }
 
   /* Better form layouts */
@@ -217,15 +289,6 @@
   /* Better recipe cards */
   .aspect-square {
     aspect-ratio: 1 / 1;
-  }
-
-  /* Improve navigation */
-  .lg\:hidden {
-    display: block;
-  }
-
-  .hidden.lg\:flex {
-    display: none;
   }
 
   /* Better search modal */
@@ -250,6 +313,38 @@
   .space-y-4 > * + * {
     margin-top: 0.75rem;
   }
+
+  /* Fix flex-shrink issues */
+  .flex-shrink-0 {
+    flex-shrink: 0;
+  }
+
+  /* Better button sizing */
+  .p-2 {
+    padding: 0.5rem;
+  }
+
+  .p-2\.5 {
+    padding: 0.625rem;
+  }
+
+  /* Fix icon sizes */
+  .w-4.h-4 {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .w-5.h-5 {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+/* Desktop - remove mobile nav padding */
+@media (min-width: 769px) {
+  body {
+    padding-bottom: 0;
+  }
 }
 
 /* Landscape phone optimizations */
@@ -261,6 +356,16 @@
   .py-20 {
     padding-top: 2rem;
     padding-bottom: 2rem;
+  }
+
+  /* Lower WhatsApp button in landscape */
+  .fixed.bottom-20 {
+    bottom: 1rem;
+  }
+
+  /* Reduce body padding in landscape */
+  body {
+    padding-bottom: 3rem;
   }
 }
 
@@ -289,5 +394,21 @@
   
   .gap-6 {
     gap: 0.75rem;
+  }
+
+  /* Even smaller header on tiny screens */
+  .h-16 {
+    height: 3.5rem;
+  }
+
+  /* Smaller logo */
+  .w-8.h-8 {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  /* Smaller text */
+  .text-xl {
+    font-size: 1rem;
   }
 }
