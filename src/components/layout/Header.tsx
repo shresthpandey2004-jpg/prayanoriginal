@@ -281,8 +281,8 @@ const Header: React.FC = () => {
             className="absolute inset-0 bg-foreground/20 backdrop-blur-sm"
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          <div className="absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-background shadow-xl animate-slide-in-right overflow-y-auto pt-20">
-            <div className="p-4 sm:p-6">
+          <div className="absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-background shadow-xl animate-slide-in-right overflow-y-auto">
+            <div className="p-4 sm:p-6 mt-16">
               <div className="flex items-center justify-between mb-6 sm:mb-8">
                   <div className="flex items-center gap-3">
                     <div className="relative p-1 rounded-full bg-gradient-to-br from-orange-100 to-yellow-100 shadow-sm">
