@@ -358,111 +358,120 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 py-8">
-      <div className="container mx-auto px-4 max-w-6xl">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 py-4 sm:py-8 pb-20 md:pb-8 checkout-page">
+      <div className="container mx-auto px-3 sm:px-4 max-w-6xl checkout-form">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-8">
           <Button 
             variant="ghost" 
             size="sm" 
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 p-3 min-h-[44px] min-w-[44px]"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back
+            <span className="hidden sm:inline">Back</span>
           </Button>
-          <h1 className="text-3xl font-bold text-gray-800">Checkout</h1>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800">Checkout</h1>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
           {/* Customer Details Form */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <User className="w-5 h-5" />
+              <CardHeader className="pb-3 sm:pb-6">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <User className="w-4 h-4 sm:w-5 sm:h-5" />
                   Customer Information
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+              <CardContent className="space-y-4 sm:space-y-4">
+                <div className="grid grid-cols-1 gap-4">
                   <div>
-                    <Label htmlFor="name">Full Name *</Label>
+                    <Label htmlFor="name" className="text-sm font-medium mb-2 block">Full Name *</Label>
                     <Input
                       id="name"
                       value={customerDetails.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
                       placeholder="Enter your full name"
-                      className={errors.name ? 'border-red-500' : ''}
+                      className={`h-12 text-base px-4 ${errors.name ? 'border-red-500' : ''}`}
+                      style={{ fontSize: '16px' }} // Prevents zoom on iOS
                     />
                     {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                   </div>
                   <div>
-                    <Label htmlFor="phone">Phone Number *</Label>
+                    <Label htmlFor="phone" className="text-sm font-medium mb-2 block">Phone Number *</Label>
                     <Input
                       id="phone"
+                      type="tel"
                       value={customerDetails.phone}
                       onChange={(e) => handleInputChange('phone', e.target.value)}
                       placeholder="10-digit mobile number"
-                      className={errors.phone ? 'border-red-500' : ''}
+                      className={`h-12 text-base px-4 ${errors.phone ? 'border-red-500' : ''}`}
+                      style={{ fontSize: '16px' }}
                     />
                     {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
                   </div>
-                </div>
-                
-                <div>
-                  <Label htmlFor="email">Email (Optional)</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={customerDetails.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    placeholder="your.email@example.com"
-                  />
+                  <div>
+                    <Label htmlFor="email" className="text-sm font-medium mb-2 block">Email (Optional)</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={customerDetails.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      placeholder="your.email@example.com"
+                      className="h-12 text-base px-4"
+                      style={{ fontSize: '16px' }}
+                    />
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MapPin className="w-5 h-5" />
+              <CardHeader className="pb-3 sm:pb-6">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
                   Delivery Address
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="address">Full Address *</Label>
+                  <Label htmlFor="address" className="text-sm font-medium mb-2 block">Full Address *</Label>
                   <Textarea
                     id="address"
                     value={customerDetails.address}
                     onChange={(e) => handleInputChange('address', e.target.value)}
                     placeholder="House/Flat No., Street, Landmark"
-                    className={errors.address ? 'border-red-500' : ''}
+                    className={`min-h-[100px] text-base px-4 py-3 ${errors.address ? 'border-red-500' : ''}`}
+                    style={{ fontSize: '16px' }}
+                    rows={3}
                   />
                   {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="city">City *</Label>
+                    <Label htmlFor="city" className="text-sm font-medium mb-2 block">City *</Label>
                     <Input
                       id="city"
                       value={customerDetails.city}
                       onChange={(e) => handleInputChange('city', e.target.value)}
                       placeholder="Your city"
-                      className={errors.city ? 'border-red-500' : ''}
+                      className={`h-12 text-base px-4 ${errors.city ? 'border-red-500' : ''}`}
+                      style={{ fontSize: '16px' }}
                     />
                     {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
                   </div>
                   <div>
-                    <Label htmlFor="pincode">Pincode *</Label>
+                    <Label htmlFor="pincode" className="text-sm font-medium mb-2 block">Pincode *</Label>
                     <Input
                       id="pincode"
+                      type="tel"
                       value={customerDetails.pincode}
                       onChange={(e) => handleInputChange('pincode', e.target.value)}
                       placeholder="6-digit pincode"
-                      className={errors.pincode ? 'border-red-500' : ''}
+                      className={`h-12 text-base px-4 ${errors.pincode ? 'border-red-500' : ''}`}
+                      style={{ fontSize: '16px' }}
                     />
                     {errors.pincode && <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>}
                   </div>
@@ -471,9 +480,9 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
             </Card>
 
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CreditCard className="w-5 h-5" />
+              <CardHeader className="pb-3 sm:pb-6">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <CreditCard className="w-4 h-4 sm:w-5 sm:h-5" />
                   Payment Method
                 </CardTitle>
               </CardHeader>
@@ -481,36 +490,40 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                 <RadioGroup
                   value={customerDetails.paymentMethod}
                   onValueChange={(value) => handleInputChange('paymentMethod', value as 'cod' | 'online')}
+                  className="space-y-3"
                 >
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50">
-                    <RadioGroupItem value="online" id="online" />
-                    <Label htmlFor="online" className="flex items-center gap-2 cursor-pointer flex-1">
-                      <Wallet className="w-4 h-4 text-blue-600" />
-                      <div>
-                        <p className="font-medium">Online Payment</p>
-                        <p className="text-sm text-gray-600">UPI, Cards, Net Banking via Razorpay</p>
+                  <div className="flex items-center space-x-3 p-4 border rounded-lg hover:bg-gray-50 cursor-pointer min-h-[60px]">
+                    <RadioGroupItem value="online" id="online" className="flex-shrink-0" />
+                    <Label htmlFor="online" className="flex items-center gap-3 cursor-pointer flex-1">
+                      <Wallet className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                      <div className="min-w-0">
+                        <p className="font-medium text-base">Online Payment</p>
+                        <p className="text-sm text-gray-600">UPI, Cards, Net Banking</p>
                       </div>
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-gray-50">
-                    <RadioGroupItem value="cod" id="cod" />
-                    <Label htmlFor="cod" className="flex items-center gap-2 cursor-pointer flex-1">
-                      <CreditCard className="w-4 h-4 text-green-600" />
-                      <div>
-                        <p className="font-medium">Cash on Delivery (COD)</p>
-                        <p className="text-sm text-gray-600">Pay when your order arrives</p>
+                  <div className="flex items-center space-x-3 p-4 border rounded-lg hover:bg-gray-50 cursor-pointer min-h-[60px]">
+                    <RadioGroupItem value="cod" id="cod" className="flex-shrink-0" />
+                    <Label htmlFor="cod" className="flex items-center gap-3 cursor-pointer flex-1">
+                      <CreditCard className="w-5 h-5 text-green-600 flex-shrink-0" />
+                      <div className="min-w-0">
+                        <p className="font-medium text-base">Cash on Delivery</p>
+                        <p className="text-sm text-gray-600">Pay when order arrives</p>
                       </div>
                     </Label>
                   </div>
                 </RadioGroup>
                 
                 <div className="mt-4">
-                  <Label htmlFor="notes">Special Instructions (Optional)</Label>
+                  <Label htmlFor="notes" className="text-sm font-medium mb-2 block">Special Instructions (Optional)</Label>
                   <Textarea
                     id="notes"
                     value={customerDetails.notes}
                     onChange={(e) => handleInputChange('notes', e.target.value)}
                     placeholder="Any special instructions for delivery..."
+                    className="text-base px-4 py-3"
+                    style={{ fontSize: '16px' }}
+                    rows={2}
                   />
                 </div>
               </CardContent>
@@ -519,7 +532,7 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
 
           {/* Order Summary */}
           <div>
-            <Card className="sticky top-8">
+            <Card className="lg:sticky lg:top-8">
               <CardHeader>
                 <CardTitle>Order Summary</CardTitle>
               </CardHeader>
@@ -555,18 +568,18 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                   
                   {/* Loyalty Points Section */}
                   {user && userPoints > 0 && (
-                    <div className="border rounded-lg p-3 bg-gradient-to-r from-purple-50 to-pink-50">
-                      <div className="flex items-center justify-between mb-2">
+                    <div className="border rounded-lg p-4 bg-gradient-to-r from-purple-50 to-pink-50">
+                      <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2">
                           <Coins className="w-4 h-4 text-purple-600" />
-                          <span className="font-medium text-purple-800">Use Loyalty Points</span>
+                          <span className="font-medium text-purple-800 text-sm sm:text-base">Use Loyalty Points</span>
                         </div>
-                        <div className="text-sm text-purple-600">
+                        <div className="text-xs sm:text-sm text-purple-600">
                           {userPoints} points available (₹{getPointsValue(userPoints)})
                         </div>
                       </div>
                       
-                      <div className="flex items-center space-x-2 mb-2">
+                      <div className="flex items-center space-x-3 mb-3">
                         <Checkbox
                           id="use-loyalty-points"
                           checked={useLoyaltyPoints}
@@ -581,15 +594,16 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                               setLoyaltyPointsToUse(Math.max(100, roundedPoints)); // Minimum 100 points
                             }
                           }}
+                          className="w-5 h-5"
                         />
-                        <Label htmlFor="use-loyalty-points" className="text-sm">
+                        <Label htmlFor="use-loyalty-points" className="text-sm flex-1">
                           Apply loyalty points discount
                         </Label>
                       </div>
                       
                       {useLoyaltyPoints && (
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
+                        <div className="space-y-3">
+                          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                             <Input
                               type="number"
                               min="100"
@@ -601,8 +615,9 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                                 const maxPoints = Math.min(userPoints, Math.floor(finalPrice * 10));
                                 setLoyaltyPointsToUse(Math.min(points, maxPoints));
                               }}
-                              className="flex-1 text-sm"
+                              className="flex-1 text-sm h-10"
                               placeholder="Points to use"
+                              style={{ fontSize: '16px' }}
                             />
                             <Button
                               type="button"
@@ -613,6 +628,7 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                                 const roundedPoints = Math.floor(maxPoints / 100) * 100;
                                 setLoyaltyPointsToUse(Math.max(100, roundedPoints));
                               }}
+                              className="h-10 px-4 min-w-[60px]"
                             >
                               Max
                             </Button>
@@ -629,10 +645,10 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                             </div>
                           )}
                           
-                          <div className="text-xs text-gray-600">
-                            • Minimum 100 points required
-                            • 1 point = ₹0.10 discount
-                            • Maximum {Math.floor(finalPrice * 10)} points can be used
+                          <div className="text-xs text-gray-600 space-y-1">
+                            <div>• Minimum 100 points required</div>
+                            <div>• 1 point = ₹0.10 discount</div>
+                            <div>• Maximum {Math.floor(finalPrice * 10)} points can be used</div>
                           </div>
                         </div>
                       )}
@@ -686,7 +702,7 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                           <Tag className="w-4 h-4" />
                           Have a promo code?
                         </Label>
-                        <div className="flex gap-2">
+                        <div className="flex flex-col sm:flex-row gap-2">
                           <Input
                             placeholder="Enter code (e.g., PRAYAN10)"
                             value={promoCode}
@@ -694,18 +710,20 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                               setPromoCode(e.target.value.toUpperCase());
                               setPromoError('');
                             }}
-                            className="flex-1"
+                            className="flex-1 h-12 text-base px-4"
+                            style={{ fontSize: '16px' }}
                           />
                           <Button 
                             variant="outline" 
                             onClick={handleApplyPromoCode}
                             disabled={!promoCode.trim()}
+                            className="h-12 px-6 min-w-[100px]"
                           >
                             Apply
                           </Button>
                         </div>
                         {promoError && (
-                          <p className="text-red-500 text-sm">{promoError}</p>
+                          <p className="text-red-500 text-sm error-message">{promoError}</p>
                         )}
                         <div className="text-xs text-gray-500">
                           💡 Try: PRAYAN10 for 10% off
@@ -721,7 +739,7 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                           variant="ghost" 
                           size="sm" 
                           onClick={handleRemovePromoCode}
-                          className="text-green-700 hover:text-green-800"
+                          className="text-green-700 hover:text-green-800 h-8"
                         >
                           Remove
                         </Button>
@@ -733,19 +751,22 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
                 <Button 
                   onClick={handlePlaceOrder}
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600"
+                  className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 h-12 text-base font-semibold"
                   size="lg"
                 >
                   {isLoading ? (
-                    customerDetails.paymentMethod === 'online' ? 'Processing Payment...' : 'Placing Order...'
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      {customerDetails.paymentMethod === 'online' ? 'Processing Payment...' : 'Placing Order...'}
+                    </div>
                   ) : (
                     customerDetails.paymentMethod === 'online' 
-                      ? `Pay ₹${finalPrice + deliveryInfo.charge} - Razorpay`
-                      : `Place Order - ₹${finalPrice + deliveryInfo.charge}`
+                      ? `Pay ₹${finalPrice + deliveryInfo.charge - (useLoyaltyPoints ? getPointsValue(loyaltyPointsToUse) : 0)} - Razorpay`
+                      : `Place Order - ₹${finalPrice + deliveryInfo.charge - (useLoyaltyPoints ? getPointsValue(loyaltyPointsToUse) : 0)}`
                   )}
                 </Button>
 
-                <p className="text-xs text-gray-500 text-center">
+                <p className="text-xs text-gray-500 text-center px-4">
                   By placing this order, you agree to our terms and conditions.
                 </p>
               </CardContent>

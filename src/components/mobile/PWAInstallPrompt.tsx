@@ -101,7 +101,7 @@ const PWAInstallPrompt: React.FC = () => {
   }
 
   return (
-    <div className="fixed bottom-20 left-4 right-4 z-40 md:hidden">
+    <div className="fixed bottom-24 left-4 right-4 z-30 md:hidden">
       <Card className="bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg">
         <CardContent className="p-4">
           <div className="flex items-start gap-3">

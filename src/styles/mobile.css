@@ -32,9 +32,67 @@
   input, 
   textarea, 
   select {
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px !important; /* Prevents zoom on iOS */
     -webkit-appearance: none;
     border-radius: 8px;
+    padding: 12px 16px;
+    min-height: 48px;
+  }
+
+  /* Better form labels */
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  /* Checkout page specific improvements */
+  .checkout-form input,
+  .checkout-form textarea {
+    font-size: 16px !important;
+    padding: 12px 16px !important;
+    min-height: 48px !important;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    transition: border-color 0.2s;
+  }
+
+  .checkout-form input:focus,
+  .checkout-form textarea:focus {
+    border-color: #f97316;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+  }
+
+  .checkout-form .error {
+    border-color: #ef4444 !important;
+  }
+
+  /* Better radio button styling */
+  .checkout-form [role="radiogroup"] > div {
+    min-height: 60px;
+    padding: 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+
+  .checkout-form [role="radiogroup"] > div:hover {
+    background-color: #f9fafb;
+    border-color: #f97316;
+  }
+
+  /* Better button styling */
+  .checkout-form button[type="submit"],
+  .checkout-form .place-order-btn {
+    min-height: 48px !important;
+    font-size: 16px !important;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 16px;
   }
 
   /* Better spacing for mobile */
@@ -337,6 +395,54 @@
   .w-5.h-5 {
     width: 1.25rem;
     height: 1.25rem;
+  }
+
+  /* Checkout page specific mobile fixes */
+  .checkout-page {
+    padding-bottom: 5rem; /* Extra space for mobile nav */
+  }
+
+  .checkout-page .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .checkout-page .card {
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .checkout-page .card-header {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .checkout-page .card-content {
+    padding: 1rem;
+  }
+
+  /* Better error states */
+  .error-message {
+    color: #ef4444;
+    font-size: 14px;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* Loading spinner */
+  .loading-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 }
 
