@@ -456,10 +456,17 @@
   }
 
   .cart-drawer-button {
-    min-height: 48px !important;
+    min-height: 56px !important;
     font-size: 16px !important;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 1rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
+  }
+
+  .cart-drawer-button:hover {
+    box-shadow: 0 12px 35px rgba(249, 115, 22, 0.4);
+    transform: translateY(-2px);
   }
 
   /* Ensure cart drawer doesn't get cut off */
@@ -467,6 +474,7 @@
     max-height: 100vh;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(to bottom, #fff7ed, #ffffff);
   }
 
   .cart-drawer-content {
@@ -477,10 +485,81 @@
 
   .cart-drawer-summary {
     flex-shrink: 0;
-    background: #f9fafb;
-    border-top: 1px solid #e5e7eb;
+    background: linear-gradient(135deg, #fff7ed, #fef3f2);
+    border-top: 1px solid #fed7aa;
     padding: 1rem;
     padding-bottom: 5rem; /* Extra space for mobile nav */
+  }
+
+  /* Fix red border/outline issues on mobile */
+  button:focus,
+  button:active,
+  .cart-drawer button:focus,
+  .cart-drawer button:active,
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none !important;
+    border-color: #f97316 !important;
+    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2) !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  /* Remove webkit tap highlight */
+  * {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Allow text selection for inputs and text areas */
+  input, textarea, [contenteditable] {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+
+  /* Better cart item styling */
+  .cart-item-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #fed7aa;
+    transition: all 0.3s ease;
+  }
+
+  .cart-item-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+
+  /* Better quantity controls */
+  .quantity-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .quantity-btn:hover {
+    background: #ffedd5;
+    border-color: #fb923c;
+  }
+
+  .quantity-btn:active {
+    transform: scale(0.95);
   }
 
   /* Order tracking mobile fixes */
