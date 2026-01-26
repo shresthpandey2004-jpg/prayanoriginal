@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/cart/CartDrawer';
-import WhatsAppChatWidget from '@/components/common/WhatsAppChatWidget';
+import WhatsAppButton from '@/components/common/WhatsAppButton';
 import HeroSection from '@/components/home/HeroSection';
 import NewLaunchSection from '@/components/home/NewLaunchSection';
 import BestSellersSection from '@/components/home/BestSellersSection';
@@ -31,8 +31,8 @@ const Index: React.FC = () => {
 
       <Footer />
       
-      {/* Only WhatsApp Chat Widget - no duplicate */}
-      <WhatsAppChatWidget />
+      {/* Simple WhatsApp Button */}
+      <WhatsAppButton />
     </div>
   );
 };

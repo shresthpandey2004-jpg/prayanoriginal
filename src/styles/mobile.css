@@ -269,17 +269,45 @@
     justify-content: space-between;
   }
 
-  /* Ensure logo stays centered */
+  /* Ensure logo stays centered on mobile */
   .flex-1.justify-center.lg\:justify-start {
     flex: 1;
-    justify-content: center;
+    justify-content: center !important;
   }
 
+  /* Only on desktop should it be left-aligned */
   @media (min-width: 1024px) {
     .flex-1.justify-center.lg\:justify-start {
       flex: initial;
-      justify-content: flex-start;
+      justify-content: flex-start !important;
     }
+  }
+
+  /* Better mobile header layout */
+  .header-mobile-layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .header-mobile-menu {
+    flex-shrink: 0;
+    width: 44px;
+  }
+
+  .header-mobile-logo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .header-mobile-actions {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
   }
 
   /* Fix mobile menu button */

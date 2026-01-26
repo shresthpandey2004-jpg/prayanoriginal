@@ -100,30 +100,34 @@ const Header: React.FC = () => {
         )}
       >
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16 sm:h-20">
+          <div className="flex items-center justify-between h-16 sm:h-20 header-mobile-layout lg:justify-between">
             {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden p-2 -ml-2 flex-shrink-0"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
+            <div className="header-mobile-menu lg:flex-shrink-0">
+              <button
+                className="lg:hidden p-2 -ml-2 flex-shrink-0"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
 
             {/* Logo - Centered on mobile */}
-            <Link to="/" className="flex items-center gap-2 sm:gap-3 flex-1 justify-center lg:justify-start lg:flex-initial">
-              <div className="relative p-1 rounded-full bg-gradient-to-br from-orange-100 to-yellow-100 shadow-sm">
-                <img 
-                  src="/prayan-new-logo.png" 
-                  alt="PRAYAN Logo" 
-                  className="w-8 h-8 sm:w-10 sm:h-10 object-contain rounded-full"
-                />
-              </div>
-              <div className="hidden sm:block">
-                <h1 className="font-display text-xl sm:text-2xl font-bold text-foreground tracking-wide">PRAYAN</h1>
-                <p className="text-xs text-muted-foreground -mt-1">Swad Ki Nayi Yatra</p>
-              </div>
-            </Link>
+            <div className="header-mobile-logo lg:flex lg:items-center lg:gap-3">
+              <Link to="/" className="flex items-center gap-2 sm:gap-3">
+                <div className="relative p-1 rounded-full bg-gradient-to-br from-orange-100 to-yellow-100 shadow-sm">
+                  <img 
+                    src="/prayan-new-logo.png" 
+                    alt="PRAYAN Logo" 
+                    className="w-8 h-8 sm:w-10 sm:h-10 object-contain rounded-full"
+                  />
+                </div>
+                <div className="hidden sm:block">
+                  <h1 className="font-display text-xl sm:text-2xl font-bold text-foreground tracking-wide">PRAYAN</h1>
+                  <p className="text-xs text-muted-foreground -mt-1">Swad Ki Nayi Yatra</p>
+                </div>
+              </Link>
+            </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
@@ -168,7 +172,7 @@ const Header: React.FC = () => {
             </nav>
 
             {/* Right Actions */}
-            <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+            <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 header-mobile-actions">
               <button
                 onClick={() => setIsSearchOpen(true)}
                 className="p-2 sm:p-2.5 rounded-full hover:bg-secondary transition-colors"
