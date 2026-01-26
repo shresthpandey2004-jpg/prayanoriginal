@@ -933,31 +933,70 @@ button:hover,
     font-weight: 500;
   }
 
-  /* Header mobile improvements */
+  /* Header mobile improvements - PERFECT LOGO CENTERING */
   .header-mobile-layout {
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
+    height: 4rem; /* 64px */
   }
 
-  .header-mobile-menu {
-    flex-shrink: 0;
-    width: 44px;
+  /* Mobile menu button - fixed left */
+  .header-mobile-layout .absolute.left-0 {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
   }
 
-  .header-mobile-logo {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  /* Logo - perfectly centered */
+  .header-mobile-layout .flex-1.flex.justify-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
   }
 
-  .header-mobile-actions {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
+  /* Right actions - fixed right */
+  .header-mobile-layout .absolute.right-0 {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+
+  /* Logo centering on mobile - CRITICAL */
+  @media (max-width: 1023px) {
+    .header-mobile-layout {
+      position: relative !important;
+    }
+    
+    /* Hide desktop navigation on mobile */
+    .lg\\:flex.items-center.gap-1 {
+      display: none;
+    }
+    
+    /* Perfect logo centering */
+    .header-mobile-layout .flex-1 {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: auto;
+      flex: none;
+    }
+    
+    /* Ensure buttons don't interfere with logo */
+    .header-mobile-layout .absolute {
+      z-index: 20;
+    }
+    
+    .header-mobile-layout .flex-1 {
+      z-index: 10;
+    }
   }
 
   /* Remove all button borders and focus states in header */

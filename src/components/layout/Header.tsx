@@ -101,11 +101,11 @@ const Header: React.FC = () => {
         )}
       >
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16 sm:h-20 header-mobile-layout lg:justify-between">
-            {/* Mobile Menu Button */}
-            <div className="header-mobile-menu lg:flex-shrink-0">
+          <div className="flex items-center h-16 sm:h-20 relative">
+            {/* Mobile Menu Button - Fixed Position Left */}
+            <div className="absolute left-0 lg:relative lg:left-auto">
               <button
-                className="lg:hidden p-2 -ml-2 flex-shrink-0"
+                className="lg:hidden p-2 flex-shrink-0"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
                 style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', border: 'none' }}
@@ -114,8 +114,8 @@ const Header: React.FC = () => {
               </button>
             </div>
 
-            {/* Logo - Centered on mobile */}
-            <div className="header-mobile-logo lg:flex lg:items-center lg:gap-3">
+            {/* Logo - Absolutely Centered on Mobile */}
+            <div className="flex-1 flex justify-center lg:flex-none lg:justify-start lg:flex lg:items-center lg:gap-3">
               <Link to="/" className="flex items-center gap-2 sm:gap-3">
                 <div className="relative p-1 rounded-full bg-gradient-to-br from-orange-100 to-yellow-100 shadow-sm">
                   <img 
@@ -173,8 +173,8 @@ const Header: React.FC = () => {
               ))}
             </nav>
 
-            {/* Right Actions */}
-            <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 header-mobile-actions">
+            {/* Right Actions - Fixed Position Right */}
+            <div className="absolute right-0 flex items-center gap-1 sm:gap-2 flex-shrink-0 lg:relative lg:right-auto">
               <button
                 onClick={() => setIsSearchOpen(true)}
                 className="p-2 sm:p-2.5 rounded-full hover:bg-secondary transition-colors"
