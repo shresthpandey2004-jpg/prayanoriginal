@@ -101,11 +101,11 @@ const Header: React.FC = () => {
         )}
       >
         <div className="container mx-auto px-4">
-          <div className="flex items-center h-16 sm:h-20 relative">
-            {/* Mobile Menu Button - Fixed Position Left */}
-            <div className="absolute left-0 lg:relative lg:left-auto">
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            {/* Mobile Menu Button */}
+            <div className="lg:hidden">
               <button
-                className="lg:hidden p-2 flex-shrink-0"
+                className="p-2 flex-shrink-0"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
                 style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', border: 'none' }}
@@ -114,8 +114,8 @@ const Header: React.FC = () => {
               </button>
             </div>
 
-            {/* Logo - Absolutely Centered on Mobile */}
-            <div className="flex-1 flex justify-center lg:flex-none lg:justify-start lg:flex lg:items-center lg:gap-3">
+            {/* Logo - Centered on Mobile */}
+            <div className="flex-1 flex justify-center lg:flex-none lg:justify-start">
               <Link to="/" className="flex items-center gap-2 sm:gap-3">
                 <div className="relative p-1 rounded-full bg-gradient-to-br from-orange-100 to-yellow-100 shadow-sm">
                   <img 
@@ -173,8 +173,50 @@ const Header: React.FC = () => {
               ))}
             </nav>
 
-            {/* Right Actions - Fixed Position Right */}
-            <div className="absolute right-0 flex items-center gap-1 sm:gap-2 flex-shrink-0 lg:relative lg:right-auto">
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-1">
+              {navigation.map((item) => (
+                <div
+                  key={item.name}
+                  className="relative"
+                  onMouseEnter={() => item.submenu && setActiveSubmenu(item.name)}
+                  onMouseLeave={() => setActiveSubmenu(null)}
+                >
+                  <Link
+                    to={item.href}
+                    className={cn(
+                      'flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors rounded-lg',
+                      location.pathname === item.href
+                        ? 'text-primary bg-secondary'
+                        : 'text-foreground hover:text-primary hover:bg-secondary/50'
+                    )}
+                  >
+                    {item.name}
+                    {item.submenu && <ChevronDown size={14} className="mt-0.5" />}
+                  </Link>
+
+                  {/* Dropdown */}
+                  {item.submenu && activeSubmenu === item.name && (
+                    <div className="absolute top-full left-0 pt-2 animate-fade-in">
+                      <div className="bg-popover rounded-xl shadow-medium border border-border p-2 min-w-[200px]">
+                        {item.submenu.map((subItem) => (
+                          <Link
+                            key={subItem.name}
+                            to={subItem.href}
+                            className="block px-4 py-2 text-sm text-foreground hover:bg-secondary rounded-lg transition-colors"
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </nav>
+
+            {/* Right Actions */}
+            <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
               <button
                 onClick={() => setIsSearchOpen(true)}
                 className="p-2 sm:p-2.5 rounded-full hover:bg-secondary transition-colors"

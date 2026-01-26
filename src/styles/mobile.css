@@ -933,69 +933,44 @@ button:hover,
     font-weight: 500;
   }
 
-  /* Header mobile improvements - PERFECT LOGO CENTERING */
-  .header-mobile-layout {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 4rem; /* 64px */
-  }
-
-  /* Mobile menu button - fixed left */
-  .header-mobile-layout .absolute.left-0 {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-  }
-
-  /* Logo - perfectly centered */
-  .header-mobile-layout .flex-1.flex.justify-center {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-  }
-
-  /* Right actions - fixed right */
-  .header-mobile-layout .absolute.right-0 {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-  }
-
-  /* Logo centering on mobile - CRITICAL */
+  /* Header mobile improvements - SIMPLE & CLEAN */
   @media (max-width: 1023px) {
-    .header-mobile-layout {
-      position: relative !important;
+    /* Mobile header layout */
+    .flex.items-center.justify-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
     }
     
-    /* Hide desktop navigation on mobile */
-    .lg\\:flex.items-center.gap-1 {
-      display: none;
+    /* Logo centering on mobile */
+    .flex-1.flex.justify-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     
-    /* Perfect logo centering */
-    .header-mobile-layout .flex-1 {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: auto;
+    /* Menu button */
+    .lg\\:hidden {
+      flex-shrink: 0;
+      width: 44px;
+    }
+    
+    /* Right actions */
+    .flex.items-center.gap-1 {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+  }
+
+  /* Desktop - normal layout */
+  @media (min-width: 1024px) {
+    .flex-1.flex.justify-center {
       flex: none;
-    }
-    
-    /* Ensure buttons don't interfere with logo */
-    .header-mobile-layout .absolute {
-      z-index: 20;
-    }
-    
-    .header-mobile-layout .flex-1 {
-      z-index: 10;
+      justify-content: flex-start;
     }
   }
 
