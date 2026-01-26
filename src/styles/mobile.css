@@ -455,6 +455,63 @@
     padding-bottom: 5rem; /* Extra space for mobile nav */
   }
 
+  /* Order tracking mobile fixes */
+  .order-total-section {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #f0fdf4;
+    border-radius: 8px;
+    border: 1px solid #bbf7d0;
+  }
+
+  .order-total-amount {
+    font-size: 1.5rem !important;
+    font-weight: 700;
+    color: #16a34a;
+    margin-top: 0.25rem;
+  }
+
+  .order-action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .order-action-buttons button {
+    width: 100%;
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  /* Better spacing for order cards */
+  .order-card {
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .order-card-content {
+    padding: 1rem;
+  }
+
+  /* Ensure text doesn't get cut off */
+  .order-details-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Better button styling */
+  .mobile-button {
+    min-height: 44px !important;
+    font-size: 16px !important;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+
   /* Better error states */
   .error-message {
     color: #ef4444;

@@ -222,7 +222,7 @@ const MyOrders = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <Card className="hover:shadow-lg transition-all duration-300">
+                  <Card className="hover:shadow-lg transition-all duration-300 order-card">
                     <CardHeader className="pb-3">
                       <div className="flex justify-between items-start">
                         <div>
@@ -268,8 +268,8 @@ const MyOrders = () => {
                       </div>
                     </CardHeader>
                     
-                    <CardContent>
-                      <div className="grid lg:grid-cols-3 gap-6">
+                    <CardContent className="order-card-content">
+                      <div className="grid lg:grid-cols-3 gap-6 order-details-grid lg:order-details-grid-desktop">
                         {/* Order Items */}
                         <div>
                           <h4 className="font-medium mb-2">Items ({order.items.length})</h4>
@@ -348,16 +348,22 @@ const MyOrders = () => {
                         )}
                       </AnimatePresence>
                       
-                      <div className="flex justify-between items-center mt-6 pt-4 border-t">
-                        <div>
-                          <p className="text-sm text-gray-600">Total Amount</p>
-                          <p className="text-xl font-bold text-green-600">₹{order.totalPrice}</p>
+                      <div className="mt-6 pt-4 border-t space-y-4">
+                        {/* Total Amount - Full width on mobile */}
+                        <div className="flex justify-between items-center sm:justify-start">
+                          <div className="flex-1">
+                            <p className="text-sm text-gray-600">Total Amount</p>
+                            <p className="text-xl sm:text-2xl font-bold text-green-600">₹{order.totalPrice}</p>
+                          </div>
                         </div>
-                        <div className="flex gap-2">
+                        
+                        {/* Action Buttons - Stack on mobile, inline on desktop */}
+                        <div className="flex flex-col sm:flex-row gap-2 sm:gap-2">
                           <Button 
                             variant="outline" 
                             size="sm"
                             onClick={() => setSelectedOrder(selectedOrder === order.id ? null : order.id)}
+                            className="w-full sm:w-auto"
                           >
                             {selectedOrder === order.id ? 'Hide Timeline' : 'View Timeline'}
                           </Button>
@@ -365,6 +371,7 @@ const MyOrders = () => {
                             variant="outline" 
                             size="sm"
                             onClick={() => navigate(`/order-confirmation/${order.id}`)}
+                            className="w-full sm:w-auto"
                           >
                             Full Details
                           </Button>
@@ -375,6 +382,7 @@ const MyOrders = () => {
                               const whatsappUrl = `https://wa.me/918866658919?text=${encodeURIComponent(message)}`;
                               window.open(whatsappUrl, '_blank');
                             }}
+                            className="w-full sm:w-auto"
                           >
                             <Phone className="w-4 h-4 mr-1" />
                             Contact Us
