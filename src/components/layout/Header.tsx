@@ -94,6 +94,7 @@ const Header: React.FC = () => {
       <header
         className={cn(
           'sticky top-0 z-50 transition-all duration-300',
+          isMobileMenuOpen ? 'z-40' : 'z-50',
           isScrolled
             ? 'bg-background/95 backdrop-blur-md shadow-soft'
             : 'bg-background'
@@ -276,12 +277,12 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden">
+        <div className="fixed inset-0 z-[60] lg:hidden">
           <div
             className="absolute inset-0 bg-foreground/20 backdrop-blur-sm"
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          <div className="absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-background shadow-xl animate-slide-in-right overflow-y-auto">
+          <div className="absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-background shadow-xl animate-slide-in-right overflow-y-auto z-[70]">
             <div className="p-4 sm:p-6 mt-16">
               <div className="flex items-center justify-between mb-6 sm:mb-8">
                   <div className="flex items-center gap-3">
@@ -371,7 +372,7 @@ const Header: React.FC = () => {
 
       {/* Search Modal */}
       {isSearchOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-4 sm:pt-20 px-4">
+        <div className="fixed inset-0 z-[80] flex items-start justify-center pt-4 sm:pt-20 px-4">
           <div
             className="absolute inset-0 bg-foreground/20 backdrop-blur-sm"
             onClick={() => setIsSearchOpen(false)}

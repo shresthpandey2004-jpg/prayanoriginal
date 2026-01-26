@@ -845,9 +845,26 @@ button:hover,
     max-width: 85vw;
     background: white;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    z-index: 50;
+    z-index: 70; /* Higher than header */
     overflow-y: auto;
-    padding-top: 5rem; /* Space for header */
+    padding-top: 1rem;
+  }
+
+  /* Mobile sidebar backdrop */
+  .mobile-sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 60;
+  }
+
+  /* Header z-index management */
+  .header-with-sidebar {
+    z-index: 40 !important; /* Lower when sidebar is open */
+  }
+
+  .header-normal {
+    z-index: 50 !important; /* Normal z-index */
   }
 
   .mobile-sidebar-header {
