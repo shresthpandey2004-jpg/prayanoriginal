@@ -9,7 +9,7 @@ import { OrderProvider } from "@/context/OrderContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { CouponProvider } from "@/context/CouponContext";
-import { LoyaltyProvider } from "@/context/LoyaltyProvider";
+import { LoyaltyProvider } from "@/context/LoyaltyContext";
 import { ReviewProvider } from "@/context/ReviewContext";
 
 // Import mobile styles
