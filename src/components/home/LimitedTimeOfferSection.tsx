@@ -1,68 +1,67 @@
 import React from 'react';
-import { Award, Gift, ArrowRight } from 'lucide-react';
+import { Gift, ArrowRight, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 const LimitedTimeOfferSection: React.FC = () => {
   return (
-    <section className="py-12 sm:py-16 bg-accent relative overflow-hidden">
+    <section className="py-12 sm:py-16 bg-gradient-to-r from-orange-600 to-red-600 text-white relative overflow-hidden">
       {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-gold" />
-      <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-gold/10 blur-3xl" />
-      <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-saffron/10 blur-3xl" />
+      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-yellow-400 to-orange-400" />
+      <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-yellow-400/10 blur-3xl" />
+      <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-orange-400/10 blur-3xl" />
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Mobile-First Layout */}
-        <div className="text-center lg:text-left space-y-6 lg:space-y-0">
-          
-          {/* Header Section */}
-          <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-6 lg:gap-8">
-            {/* Left Content */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-              <div className="flex w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-gold/20 items-center justify-center flex-shrink-0">
-                <Gift className="text-gold" size={24} />
-              </div>
-              <div className="text-center sm:text-left">
-                <div className="flex items-center justify-center sm:justify-start gap-2 mb-2">
-                  <Award className="text-gold" size={16} />
-                  <span className="text-xs sm:text-sm font-semibold text-accent-foreground uppercase tracking-wider">
-                    Why Choose Us
-                  </span>
-                </div>
-                <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-accent-foreground leading-tight">
-                  Authentic Spices: <span className="text-gold">Taste the Difference</span>
-                </h3>
-              </div>
-            </div>
+        <div className="text-center">
+          {/* Special Offer Badge */}
+          <div className="inline-flex items-center gap-2 bg-yellow-400 text-orange-900 px-4 py-2 rounded-full font-bold text-sm mb-6">
+            <Gift className="w-4 h-4" />
+            <span>SPECIAL LAUNCH OFFER</span>
+          </div>
 
-            {/* CTA Button - Top right on desktop, bottom on mobile */}
-            <div className="order-3 lg:order-2">
-              <Button variant="hero" asChild className="px-6 py-3">
-                <Link to="/shop" className="gap-2">
-                  Shop Now <ArrowRight size={18} />
-                </Link>
-              </Button>
+          {/* Main Heading */}
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+            Get <span className="text-yellow-300">FREE Delivery</span> on Your First Order!
+          </h2>
+
+          {/* Description */}
+          <p className="text-lg sm:text-xl text-orange-100 max-w-3xl mx-auto mb-8">
+            Experience the authentic taste of India with our premium spices. 
+            Start your culinary journey with us and enjoy complimentary delivery on your first purchase.
+          </p>
+
+          {/* Features */}
+          <div className="flex flex-wrap items-center justify-center gap-6 mb-8">
+            <div className="flex items-center gap-2">
+              <Star className="w-5 h-5 text-yellow-300" />
+              <span className="font-semibold">Premium Quality</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Star className="w-5 h-5 text-yellow-300" />
+              <span className="font-semibold">Fresh Ground</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Star className="w-5 h-5 text-yellow-300" />
+              <span className="font-semibold">100% Pure</span>
             </div>
           </div>
 
-          {/* Quality Features - Better mobile layout */}
-          <div className="order-2 lg:order-3 mt-6 lg:mt-8">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-md sm:max-w-none mx-auto">
-              {[
-                { value: 'Fresh', label: 'Ground' },
-                { value: '100%', label: 'Pure' },
-                { value: 'Lab', label: 'Tested' },
-                { value: 'Best', label: 'Quality' },
-              ].map((item) => (
-                <div key={item.label} className="bg-background rounded-xl p-3 sm:p-4 text-center shadow-soft">
-                  <p className="font-display text-base sm:text-lg lg:text-xl font-bold text-foreground">
-                    {item.value}
-                  </p>
-                  <p className="text-xs text-muted-foreground uppercase mt-1">{item.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* CTA Button */}
+          <Button 
+            variant="secondary" 
+            size="xl" 
+            asChild 
+            className="bg-yellow-400 hover:bg-yellow-300 text-orange-900 font-bold px-8 py-4 text-lg"
+          >
+            <Link to="/shop" className="gap-3">
+              Shop Now & Save <ArrowRight size={20} />
+            </Link>
+          </Button>
+
+          {/* Small Print */}
+          <p className="text-sm text-orange-200 mt-4">
+            *Free delivery applies to first order only. Standard delivery charges apply thereafter.
+          </p>
         </div>
       </div>
     </section>
