@@ -159,62 +159,64 @@ const OurStory = () => {
       </motion.section>
 
       {/* Our Journey Timeline */}
-      <section className="py-20 px-4">
+      <section className="py-12 sm:py-20 px-4">
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
               Our <span className="text-orange-600">Journey</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
               From humble beginnings to becoming India's trusted spice brand, 
               every milestone tells a story of passion, quality, and dedication.
             </p>
-            <div className="mt-8 text-center">
-              <span className="inline-block px-4 py-2 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
+            <div className="mt-6 sm:mt-8 text-center">
+              <span className="inline-block px-3 sm:px-4 py-2 bg-orange-100 text-orange-800 rounded-full text-xs sm:text-sm font-medium">
                 🌟 Fresh & Authentic • Quality Promise • Premium Spices 🌟
               </span>
             </div>
           </motion.div>
 
           <div className="relative">
-            {/* Timeline Line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-orange-400 to-red-400 rounded-full" />
+            {/* Timeline Line - Hidden on mobile, visible on desktop */}
+            <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-orange-400 to-red-400 rounded-full" />
             
             {milestones.map((milestone, index) => (
               <motion.div
                 key={milestone.year}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 viewport={{ once: true }}
-                className={`relative flex items-center mb-16 ${
-                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
+                className={`relative mb-8 sm:mb-12 lg:mb-16 ${
+                  // Mobile: simple stacked layout, Desktop: alternating sides
+                  'lg:flex lg:items-center ' + (index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse')
                 }`}
               >
-                <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8'}`}>
-                  <Card className="bg-white/80 backdrop-blur-sm border-orange-200 hover:shadow-xl transition-all duration-300">
-                    <CardContent className="p-6">
+                {/* Mobile Layout: Full width cards */}
+                <div className="lg:w-1/2 lg:px-8">
+                  <Card className="bg-white/90 backdrop-blur-sm border-orange-200 hover:shadow-xl transition-all duration-300 mx-auto max-w-md lg:max-w-none">
+                    <CardContent className="p-4 sm:p-6">
                       <div className="flex items-center gap-3 mb-3">
-                        <div className="p-2 bg-orange-100 rounded-full text-orange-600">
+                        <div className="p-2 bg-orange-100 rounded-full text-orange-600 flex-shrink-0">
                           {milestone.icon}
                         </div>
-                        <span className="text-2xl font-bold text-orange-600">{milestone.year}</span>
+                        <span className="text-xl sm:text-2xl font-bold text-orange-600">{milestone.year}</span>
                       </div>
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">{milestone.title}</h3>
-                      <p className="text-gray-600">{milestone.description}</p>
+                      <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">{milestone.title}</h3>
+                      <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{milestone.description}</p>
                     </CardContent>
                   </Card>
                 </div>
                 
-                {/* Timeline Dot */}
+                {/* Timeline Dot - Only visible on desktop */}
                 <motion.div
-                  className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-orange-500 rounded-full border-4 border-white shadow-lg"
+                  className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-orange-500 rounded-full border-4 border-white shadow-lg"
                   whileInView={{ scale: [1, 1.3, 1] }}
                   transition={{ duration: 0.6, delay: index * 0.2 + 0.4 }}
                   viewport={{ once: true }}
