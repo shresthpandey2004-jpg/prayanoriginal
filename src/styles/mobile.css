@@ -1330,3 +1330,271 @@ button:hover,
     font-size: 1rem;
   }
 }
+
+  /* Loyalty page mobile improvements - SUPER CLEAN & SIMPLE */
+  .loyalty-page {
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  .loyalty-page .max-w-md {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .loyalty-page .card {
+    margin-bottom: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+
+  .loyalty-page .card-header {
+    padding: 1rem;
+  }
+
+  .loyalty-page .card-content {
+    padding: 1rem;
+  }
+
+  /* Text overflow fixes - CRITICAL */
+  .loyalty-page h1,
+  .loyalty-page h2,
+  .loyalty-page h3,
+  .loyalty-page h4 {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.3;
+  }
+
+  .loyalty-page p,
+  .loyalty-page span {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
+  }
+
+  /* Prevent text overflow in all containers */
+  .loyalty-page .bg-gray-50,
+  .loyalty-page .bg-green-50,
+  .loyalty-page .reward-card,
+  .loyalty-page .benefit-card {
+    overflow: hidden;
+    word-wrap: break-word;
+  }
+
+  /* Status card improvements */
+  .loyalty-page .status-card {
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .loyalty-page .status-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .loyalty-page .status-stat {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  /* Reward items - FIXED LAYOUT */
+  .loyalty-page .reward-card {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .loyalty-page .reward-content {
+    flex: 1;
+    min-width: 0; /* CRITICAL - allows text to wrap */
+    overflow: hidden;
+  }
+
+  .loyalty-page .reward-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .loyalty-page .reward-description {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .loyalty-page .reward-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .loyalty-page .reward-button {
+    flex-shrink: 0;
+    min-width: 80px;
+    font-size: 12px;
+    padding: 0.5rem 0.75rem;
+    white-space: nowrap;
+    border-radius: 8px;
+    min-height: 36px;
+  }
+
+  /* Benefit items - CLEAN */
+  .loyalty-page .benefit-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    background: #f0fdf4;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+  }
+
+  .loyalty-page .benefit-icon {
+    width: 1rem;
+    height: 1rem;
+    color: #16a34a;
+    flex-shrink: 0;
+  }
+
+  .loyalty-page .benefit-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: #166534;
+    line-height: 1.3;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Earn methods - SIMPLE */
+  .loyalty-page .earn-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .loyalty-page .earn-icon-wrapper {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .loyalty-page .earn-content h4 {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+  }
+
+  .loyalty-page .earn-content p {
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1.3;
+  }
+
+  /* Empty states */
+  .loyalty-page .empty-state {
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .loyalty-page .empty-state-icon {
+    width: 3rem;
+    height: 3rem;
+    color: #9ca3af;
+    margin: 0 auto 1rem;
+  }
+
+  .loyalty-page .empty-state h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .loyalty-page .empty-state p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+  }
+
+  /* Button improvements - NO BORDERS */
+  .loyalty-page button {
+    outline: none !important;
+    border: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .loyalty-page button:focus,
+  .loyalty-page button:active {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Very small screens */
+  @media (max-width: 375px) {
+    .loyalty-page {
+      padding: 0.75rem;
+    }
+    
+    .loyalty-page h1 {
+      font-size: 1.25rem;
+    }
+    
+    .loyalty-page .card-header,
+    .loyalty-page .card-content {
+      padding: 0.75rem;
+    }
+    
+    .loyalty-page .reward-title {
+      font-size: 13px;
+    }
+    
+    .loyalty-page .reward-description {
+      font-size: 11px;
+    }
+    
+    .loyalty-page .benefit-text {
+      font-size: 11px;
+    }
+    
+    .loyalty-page .earn-content h4 {
+      font-size: 13px;
+    }
+    
+    .loyalty-page .earn-content p {
+      font-size: 11px;
+    }
+    
+    .loyalty-page .reward-button {
+      font-size: 11px;
+      padding: 0.5rem;
+      min-width: 70px;
+    }
+  }
