@@ -835,6 +835,132 @@ button:hover,
     color: #6b7280;
   }
 
+  /* Mobile sidebar improvements */
+  .mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 320px;
+    max-width: 85vw;
+    background: white;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    z-index: 50;
+    overflow-y: auto;
+    padding-top: 5rem; /* Space for header */
+  }
+
+  .mobile-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .mobile-sidebar-close {
+    padding: 0.5rem;
+    border-radius: 50%;
+    background: transparent;
+    transition: background-color 0.2s ease;
+  }
+
+  .mobile-sidebar-close:hover {
+    background: #f3f4f6;
+  }
+
+  .mobile-sidebar-nav {
+    padding: 0 1.5rem;
+  }
+
+  .mobile-sidebar-nav a {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    margin-bottom: 0.25rem;
+  }
+
+  .mobile-sidebar-nav a:hover {
+    background: #f3f4f6;
+  }
+
+  .mobile-sidebar-nav a.active {
+    background: #fef3f2;
+    color: #ea580c;
+  }
+
+  .mobile-sidebar-submenu {
+    margin-left: 1rem;
+    margin-top: 0.25rem;
+  }
+
+  .mobile-sidebar-submenu a {
+    font-size: 14px;
+    color: #6b7280;
+    padding: 0.5rem 1rem;
+  }
+
+  .mobile-sidebar-footer {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .mobile-sidebar-footer button {
+    width: 100%;
+    margin-bottom: 0.75rem;
+    min-height: 44px;
+    border-radius: 12px;
+    font-weight: 500;
+  }
+
+  /* Header mobile improvements */
+  .header-mobile-layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .header-mobile-menu {
+    flex-shrink: 0;
+    width: 44px;
+  }
+
+  .header-mobile-logo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .header-mobile-actions {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  /* Remove all button borders and focus states in header */
+  .header-mobile-layout button,
+  .mobile-sidebar button {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  .header-mobile-layout button:focus,
+  .header-mobile-layout button:active,
+  .mobile-sidebar button:focus,
+  .mobile-sidebar button:active {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
   /* Loading spinner */
   .loading-spinner {
     width: 16px;

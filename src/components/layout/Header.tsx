@@ -107,6 +107,7 @@ const Header: React.FC = () => {
                 className="lg:hidden p-2 -ml-2 flex-shrink-0"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
+                style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', border: 'none' }}
               >
                 {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
@@ -177,6 +178,7 @@ const Header: React.FC = () => {
                 onClick={() => setIsSearchOpen(true)}
                 className="p-2 sm:p-2.5 rounded-full hover:bg-secondary transition-colors"
                 aria-label="Search"
+                style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', border: 'none' }}
               >
                 <Search size={18} className="sm:w-5 sm:h-5" />
               </button>
@@ -188,6 +190,7 @@ const Header: React.FC = () => {
                     <button
                       onClick={() => setShowUserMenu(!showUserMenu)}
                       className="flex items-center gap-2 p-2 sm:p-2.5 rounded-full hover:bg-secondary transition-colors"
+                      style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', border: 'none' }}
                     >
                       <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xs sm:text-sm font-bold">
@@ -257,6 +260,7 @@ const Header: React.FC = () => {
                 onClick={() => setIsCartOpen(true)}
                 className="relative p-2 sm:p-2.5 rounded-full hover:bg-secondary transition-colors"
                 aria-label="Cart"
+                style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', border: 'none' }}
               >
                 <ShoppingBag size={18} className="sm:w-5 sm:h-5" />
                 {totalItems > 0 && (
@@ -277,7 +281,7 @@ const Header: React.FC = () => {
             className="absolute inset-0 bg-foreground/20 backdrop-blur-sm"
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          <div className="absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-background shadow-xl animate-slide-in-right overflow-y-auto">
+          <div className="absolute left-0 top-0 h-full w-80 max-w-[85vw] bg-background shadow-xl animate-slide-in-right overflow-y-auto pt-20">
             <div className="p-4 sm:p-6">
               <div className="flex items-center justify-between mb-6 sm:mb-8">
                   <div className="flex items-center gap-3">
@@ -296,6 +300,7 @@ const Header: React.FC = () => {
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="p-2 hover:bg-secondary rounded-full transition-colors"
+                  style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', border: 'none' }}
                 >
                   <X size={24} />
                 </button>
@@ -392,6 +397,7 @@ const Header: React.FC = () => {
                       setSearchQuery('');
                     }}
                     className="p-2 hover:bg-secondary rounded-full flex-shrink-0"
+                    style={{ WebkitTapHighlightColor: 'transparent', outline: 'none', border: 'none' }}
                   >
                     <X size={18} />
                   </button>
