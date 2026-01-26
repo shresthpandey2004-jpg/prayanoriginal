@@ -115,7 +115,7 @@ const Header: React.FC = () => {
             </div>
 
             {/* Logo */}
-            <div className="flex-1 flex justify-center lg:flex-none lg:justify-start lg:flex lg:items-center lg:gap-3">
+            <div className="flex-1 flex justify-center lg:flex-none lg:justify-start">
               <Link to="/" className="flex items-center gap-2 sm:gap-3">
                 <div className="relative p-1 rounded-full bg-gradient-to-br from-orange-100 to-yellow-100 shadow-sm">
                   <img 
@@ -130,103 +130,6 @@ const Header: React.FC = () => {
                 </div>
               </Link>
             </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-1">
-              {navigation.map((item) => (
-                <div
-                  key={item.name}
-                  className="relative"
-                  onMouseEnter={() => item.submenu && setActiveSubmenu(item.name)}
-                  onMouseLeave={() => setActiveSubmenu(null)}
-                >
-                  <Link
-                    to={item.href}
-                    className={cn(
-                      'flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors rounded-lg',
-                      location.pathname === item.href
-                        ? 'text-primary bg-secondary'
-                        : 'text-foreground hover:text-primary hover:bg-secondary/50'
-                    )}
-                  >
-                    {item.name}
-                    {item.submenu && <ChevronDown size={14} className="mt-0.5" />}
-                  </Link>
-
-                  {/* Dropdown */}
-                  {item.submenu && activeSubmenu === item.name && (
-                    <div className="absolute top-full left-0 pt-2 animate-fade-in">
-                      <div className="bg-popover rounded-xl shadow-medium border border-border p-2 min-w-[200px]">
-                        {item.submenu.map((subItem) => (
-                          <Link
-                            key={subItem.name}
-                            to={subItem.href}
-                            className="block px-4 py-2 text-sm text-foreground hover:bg-secondary rounded-lg transition-colors"
-                          >
-                            {subItem.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </nav>
-                <div className="relative p-1 rounded-full bg-gradient-to-br from-orange-100 to-yellow-100 shadow-sm">
-                  <img 
-                    src="/prayan-new-logo.png" 
-                    alt="PRAYAN Logo" 
-                    className="w-8 h-8 sm:w-10 sm:h-10 object-contain rounded-full"
-                  />
-                </div>
-                <div className="hidden sm:block">
-                  <h1 className="font-display text-xl sm:text-2xl font-bold text-foreground tracking-wide">PRAYAN</h1>
-                  <p className="text-xs text-muted-foreground -mt-1">Swad Ki Nayi Yatra</p>
-                </div>
-              </Link>
-            </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-1">
-              {navigation.map((item) => (
-                <div
-                  key={item.name}
-                  className="relative"
-                  onMouseEnter={() => item.submenu && setActiveSubmenu(item.name)}
-                  onMouseLeave={() => setActiveSubmenu(null)}
-                >
-                  <Link
-                    to={item.href}
-                    className={cn(
-                      'flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors rounded-lg',
-                      location.pathname === item.href
-                        ? 'text-primary bg-secondary'
-                        : 'text-foreground hover:text-primary hover:bg-secondary/50'
-                    )}
-                  >
-                    {item.name}
-                    {item.submenu && <ChevronDown size={14} className="mt-0.5" />}
-                  </Link>
-
-                  {/* Dropdown */}
-                  {item.submenu && activeSubmenu === item.name && (
-                    <div className="absolute top-full left-0 pt-2 animate-fade-in">
-                      <div className="bg-popover rounded-xl shadow-medium border border-border p-2 min-w-[200px]">
-                        {item.submenu.map((subItem) => (
-                          <Link
-                            key={subItem.name}
-                            to={subItem.href}
-                            className="block px-4 py-2 text-sm text-foreground hover:bg-secondary rounded-lg transition-colors"
-                          >
-                            {subItem.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </nav>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">

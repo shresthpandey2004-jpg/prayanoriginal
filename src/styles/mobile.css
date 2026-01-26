@@ -176,11 +176,6 @@ button:hover,
     height: 4rem; /* 64px */
   }
 
-  /* Logo centering on mobile */
-  .flex-1.justify-center {
-    justify-content: center;
-  }
-
   /* Better header layout */
   .justify-between {
     justify-content: space-between;
@@ -289,15 +284,15 @@ button:hover,
     justify-content: space-between;
   }
 
-  /* Ensure logo stays centered on mobile */
-  .flex-1.justify-center.lg\:justify-start {
+  /* Ensure logo stays centered on mobile - SIMPLIFIED */
+  .flex-1.flex.justify-center.lg\\:flex-none.lg\\:justify-start {
     flex: 1;
     justify-content: center !important;
   }
 
   /* Only on desktop should it be left-aligned */
   @media (min-width: 1024px) {
-    .flex-1.justify-center.lg\:justify-start {
+    .flex-1.flex.justify-center.lg\\:flex-none.lg\\:justify-start {
       flex: initial;
       justify-content: flex-start !important;
     }
@@ -943,11 +938,11 @@ button:hover,
       width: 100%;
     }
     
-    /* Logo centering ONLY on mobile */
+    /* Logo centering ONLY on mobile - SIMPLIFIED */
     .flex-1.flex.justify-center.lg\\:flex-none.lg\\:justify-start {
       flex: 1;
       display: flex;
-      justify-content: center;
+      justify-content: center !important;
       align-items: center;
     }
     
@@ -971,7 +966,7 @@ button:hover,
     /* Reset to normal desktop layout */
     .flex-1.flex.justify-center.lg\\:flex-none.lg\\:justify-start {
       flex: none;
-      justify-content: flex-start;
+      justify-content: flex-start !important;
     }
     
     /* Desktop navigation visible */
