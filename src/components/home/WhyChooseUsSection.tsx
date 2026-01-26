@@ -1,71 +1,103 @@
 import React from 'react';
-import { Shield, Leaf, Award, Heart } from 'lucide-react';
+import { Shield, Leaf, Award, Heart, Truck, Clock } from 'lucide-react';
+
+const features = [
+  {
+    icon: Leaf,
+    title: '100% Pure & Natural',
+    description: 'No additives, no preservatives. Just pure, unadulterated spices from nature.',
+    color: 'text-cardamom',
+    bgColor: 'bg-cardamom/10',
+  },
+  {
+    icon: Shield,
+    title: 'Authenticity Guaranteed',
+    description: 'Every batch is tested and certified for purity and quality standards.',
+    color: 'text-gold',
+    bgColor: 'bg-gold/10',
+  },
+  {
+    icon: Award,
+    title: 'Premium Quality',
+    description: 'Hand-picked from the finest farms and processed with traditional methods.',
+    color: 'text-saffron',
+    bgColor: 'bg-saffron/10',
+  },
+  {
+    icon: Heart,
+    title: 'Made with Love',
+    description: 'Every spice carries the warmth of Indian tradition and generations of expertise.',
+    color: 'text-chili',
+    bgColor: 'bg-chili/10',
+  },
+  {
+    icon: Truck,
+    title: 'Free First Order',
+    description: 'FREE delivery on your first order, then just ₹40!',
+    color: 'text-cinnamon',
+    bgColor: 'bg-cinnamon/10',
+  },
+  {
+    icon: Clock,
+    title: 'Fresh Always',
+    description: 'Ground fresh in small batches to ensure maximum flavor and aroma.',
+    color: 'text-turmeric',
+    bgColor: 'bg-turmeric/10',
+  },
+];
 
 const WhyChooseUsSection: React.FC = () => {
   return (
-    <section className="py-20 bg-gradient-to-r from-red-600 to-red-700">
+    <section className="py-24">
       <div className="container mx-auto px-4">
-        {/* Header */}
+        {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Shield className="w-6 h-6 text-yellow-300" />
-            <span className="text-yellow-300 font-bold uppercase tracking-wider">
-              WHY CHOOSE US
-            </span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Authentic Spices: <span className="text-yellow-300">Taste the Difference</span>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
+            Why Choose <span className="text-gradient-gold">PRAYAN</span>?
           </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            For over 70 years, we have been the trusted choice for millions of Indian families.
+          </p>
         </div>
 
-        {/* 4 Cards Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
-          {/* Fresh Card */}
-          <div className="bg-white rounded-2xl p-8 text-center shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-2">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Leaf size={32} className="text-green-600" />
-            </div>
-            <h3 className="text-3xl font-bold text-gray-800 mb-2">Fresh</h3>
-            <p className="text-green-600 font-bold text-sm uppercase tracking-wider mb-4">GROUND</p>
-            <p className="text-gray-600 text-sm">Stone-ground weekly for maximum flavor and aroma retention.</p>
-          </div>
+        {/* Features Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feature, index) => (
+            <div
+              key={feature.title}
+              className="group relative bg-card rounded-2xl p-8 border border-border hover:border-primary/20 transition-all duration-500 hover:shadow-glow hover:-translate-y-2"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              {/* Icon */}
+              <div className={`w-16 h-16 rounded-2xl ${feature.bgColor} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <feature.icon size={28} className={feature.color} />
+              </div>
 
-          {/* 100% Pure Card */}
-          <div className="bg-white rounded-2xl p-8 text-center shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-2">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Shield size={32} className="text-blue-600" />
-            </div>
-            <h3 className="text-3xl font-bold text-gray-800 mb-2">100%</h3>
-            <p className="text-blue-600 font-bold text-sm uppercase tracking-wider mb-4">PURE</p>
-            <p className="text-gray-600 text-sm">No additives, no preservatives. Just pure, authentic spices.</p>
-          </div>
+              {/* Content */}
+              <h3 className="font-display text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
+                {feature.title}
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {feature.description}
+              </p>
 
-          {/* Lab Tested Card */}
-          <div className="bg-white rounded-2xl p-8 text-center shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-2">
-            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Award size={32} className="text-purple-600" />
+              {/* Decorative Corner */}
+              <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-gold/20 rounded-tr-xl opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-            <h3 className="text-3xl font-bold text-gray-800 mb-2">Lab</h3>
-            <p className="text-purple-600 font-bold text-sm uppercase tracking-wider mb-4">TESTED</p>
-            <p className="text-gray-600 text-sm">Every batch is tested and certified for purity and quality.</p>
-          </div>
-
-          {/* Best Quality Card */}
-          <div className="bg-white rounded-2xl p-8 text-center shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-2">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Heart size={32} className="text-red-600" />
-            </div>
-            <h3 className="text-3xl font-bold text-gray-800 mb-2">Best</h3>
-            <p className="text-red-600 font-bold text-sm uppercase tracking-wider mb-4">QUALITY</p>
-            <p className="text-gray-600 text-sm">Hand-picked from the finest farms across India.</p>
-          </div>
+          ))}
         </div>
 
-        {/* Shop Now Button */}
-        <div className="text-center mt-16">
-          <button className="bg-yellow-400 hover:bg-yellow-300 text-red-800 px-10 py-4 rounded-full font-bold text-xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105">
-            Shop Now →
-          </button>
+        {/* Trust Badges */}
+        <div className="mt-16 flex flex-wrap items-center justify-center gap-8">
+          {['FSSAI Certified', 'ISO 22000:2018', 'HACCP Certified', 'Organic Certified'].map((badge) => (
+            <div
+              key={badge}
+              className="flex items-center gap-2 bg-secondary px-4 py-2 rounded-full"
+            >
+              <Shield size={16} className="text-gold" />
+              <span className="text-sm font-medium text-foreground">{badge}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
