@@ -60,6 +60,29 @@ const AdminDashboard = () => {
       console.log(`✅ Loaded ${users.length} users from Firebase:`, users);
       console.log('📊 User stats:', stats);
       
+      // Debug: Check orders for guest customers
+      console.log(`📦 Total orders available: ${orders.length}`);
+      if (orders.length > 0) {
+        const uniqueCustomers = new Map();
+        orders.forEach(order => {
+          const key = order.customerDetails.email || order.customerDetails.phone;
+          if (!uniqueCustomers.has(key)) {
+            uniqueCustomers.set(key, {
+              name: order.customerDetails.name,
+              email: order.customerDetails.email,
+              phone: order.customerDetails.phone,
+              city: order.customerDetails.city,
+              orders: 0,
+              totalSpent: 0
+            });
+          }
+          const customer = uniqueCustomers.get(key);
+          customer.orders += 1;
+          customer.totalSpent += order.totalPrice;
+        });
+        console.log(`🛒 Found ${uniqueCustomers.size} unique guest customers:`, Array.from(uniqueCustomers.values()));
+      }
+      
       // If no users in Firebase, check localStorage for migration
       if (users.length === 0) {
         const localUsers = JSON.parse(localStorage.getItem('prayan-users') || '[]');
@@ -412,6 +435,37 @@ const AdminDashboard = () => {
                 <div className="flex justify-between items-center">
                   <CardTitle>Customer Management</CardTitle>
                   <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => {
+                        console.log('🔍 ADMIN PANEL DEBUG INFO:');
+                        console.log('Orders:', orders);
+                        console.log('All Users:', allUsers);
+                        console.log('User Stats:', userStats);
+                        
+                        // Check localStorage
+                        const localOrders = JSON.parse(localStorage.getItem('prayan-orders') || '[]');
+                        const localUsers = JSON.parse(localStorage.getItem('prayan-users-database') || '[]');
+                        console.log('LocalStorage Orders:', localOrders.length);
+                        console.log('LocalStorage Users:', localUsers.length);
+                        
+                        // Calculate guest customers
+                        const uniqueCustomers = new Map();
+                        orders.forEach(order => {
+                          const key = order.customerDetails.email || order.customerDetails.phone;
+                          uniqueCustomers.set(key, order.customerDetails);
+                        });
+                        console.log('Unique Guest Customers:', uniqueCustomers.size);
+                        
+                        toast({
+                          title: "Debug Info Logged",
+                          description: "Check browser console for detailed information",
+                        });
+                      }}
+                    >
+                      🔍 Debug Info
+                    </Button>
                     <Button 
                       variant="outline" 
                       size="sm" 
