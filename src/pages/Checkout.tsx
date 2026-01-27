@@ -30,6 +30,8 @@ interface CustomerDetails {
 }
 
 const Checkout = () => {
+  // Guest checkout system - allows orders without mandatory login
+  // This provides optimal user experience and higher conversion rates
   const { 
     items, 
     totalPrice, 
