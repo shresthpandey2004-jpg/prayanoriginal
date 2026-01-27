@@ -410,7 +410,7 @@ const AdminDashboard = () => {
             <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
-                  <CardTitle>User Management</CardTitle>
+                  <CardTitle>Customer Management</CardTitle>
                   <div className="flex gap-2">
                     <Button 
                       variant="outline" 
@@ -474,119 +474,232 @@ const AdminDashboard = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                {isLoadingUsers ? (
-                  <div className="flex items-center justify-center py-8">
-                    <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
-                    <span className="ml-2 text-gray-600">Loading users from Firebase...</span>
-                  </div>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="text-left p-4 font-medium">Name</th>
-                          <th className="text-left p-4 font-medium">Email</th>
-                          <th className="text-left p-4 font-medium">Phone</th>
-                          <th className="text-left p-4 font-medium">Orders</th>
-                          <th className="text-left p-4 font-medium">Status</th>
-                          <th className="text-left p-4 font-medium">Joined</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {allUsers.map((user) => {
-                          const userOrders = orders.filter(order => order.customerDetails.email === user.email);
-                          return (
-                            <tr key={user.id} className="border-b hover:bg-gray-50">
-                              <td className="p-4">
-                                <div className="flex items-center gap-3">
-                                  <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
-                                    <span className="text-white text-sm font-bold">
-                                      {user.name?.charAt(0).toUpperCase()}
-                                    </span>
-                                  </div>
-                                  <p className="font-medium">{user.name}</p>
-                                </div>
-                              </td>
-                              <td className="p-4 text-sm">{user.email}</td>
-                              <td className="p-4 text-sm">{user.phone || 'N/A'}</td>
-                              <td className="p-4">
-                                <Badge variant="outline">{userOrders.length} orders</Badge>
-                              </td>
-                              <td className="p-4">
-                                <Badge 
-                                  variant={user.isActive ? "default" : "secondary"}
-                                  className={user.isActive ? "bg-green-100 text-green-800" : ""}
-                                >
-                                  {user.isActive ? 'Active' : 'Inactive'}
-                                </Badge>
-                              </td>
-                              <td className="p-4 text-sm">
-                                {new Date(user.createdAt || Date.now()).toLocaleDateString('en-IN')}
-                              </td>
+                {/* Show both registered users and guest customers */}
+                <div className="space-y-6">
+                  
+                  {/* Registered Users Section */}
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                      👤 Registered Users ({allUsers.length})
+                    </h3>
+                    {isLoadingUsers ? (
+                      <div className="flex items-center justify-center py-8">
+                        <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+                        <span className="ml-2 text-gray-600">Loading users from Firebase...</span>
+                      </div>
+                    ) : allUsers.length > 0 ? (
+                      <div className="overflow-x-auto">
+                        <table className="w-full border rounded-lg">
+                          <thead className="bg-gray-50">
+                            <tr>
+                              <th className="text-left p-4 font-medium">Name</th>
+                              <th className="text-left p-4 font-medium">Email</th>
+                              <th className="text-left p-4 font-medium">Phone</th>
+                              <th className="text-left p-4 font-medium">Orders</th>
+                              <th className="text-left p-4 font-medium">Status</th>
+                              <th className="text-left p-4 font-medium">Joined</th>
                             </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                          </thead>
+                          <tbody>
+                            {allUsers.map((user) => {
+                              const userOrders = orders.filter(order => order.customerDetails.email === user.email);
+                              return (
+                                <tr key={user.id} className="border-b hover:bg-gray-50">
+                                  <td className="p-4">
+                                    <div className="font-medium">{user.name}</div>
+                                  </td>
+                                  <td className="p-4 text-gray-600">{user.email}</td>
+                                  <td className="p-4 text-gray-600">{user.phone}</td>
+                                  <td className="p-4">
+                                    <Badge variant="outline">{userOrders.length} orders</Badge>
+                                  </td>
+                                  <td className="p-4">
+                                    <Badge variant={user.isActive ? "default" : "secondary"}>
+                                      {user.isActive ? "Active" : "Inactive"}
+                                    </Badge>
+                                  </td>
+                                  <td className="p-4 text-gray-600">
+                                    {new Date(user.createdAt).toLocaleDateString('en-IN')}
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    ) : (
+                      <div className="text-center py-8 bg-gray-50 rounded-lg">
+                        <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                        <p className="text-gray-600">No registered users yet</p>
+                        <p className="text-sm text-gray-500 mt-2">Users will appear here when they create accounts</p>
+                      </div>
+                    )}
                   </div>
-                )}
 
-                {!isLoadingUsers && allUsers.length === 0 && (
-                  <div className="text-center py-8">
-                    <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">No users in Firebase yet</h3>
-                    <p className="text-gray-600 mb-4">Users will appear here after Firebase migration.</p>
-                    
-                    <div className="space-y-3">
-                      <Button 
-                        variant="default" 
-                        className="w-full"
-                        onClick={async () => {
-                          try {
-                            console.log('🔄 Starting migration...');
-                            const success = await UserService.migrateLocalStorageToFirebase();
-                            if (success) {
-                              toast({
-                                title: "Migration Successful",
-                                description: "Users migrated to Firebase successfully!",
-                              });
-                              loadUsers(); // Reload users after migration
-                            } else {
-                              toast({
-                                title: "Migration Error",
-                                description: "Some users failed to migrate. Check console.",
-                                variant: "destructive"
-                              });
-                            }
-                          } catch (error) {
-                            console.error('Migration error:', error);
-                            toast({
-                              title: "Migration Failed",
-                              description: "Error migrating users. Check console for details.",
-                              variant: "destructive"
+                  {/* Guest Customers Section */}
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                      🛒 Guest Customers ({(() => {
+                        const uniqueCustomers = new Map();
+                        orders.forEach(order => {
+                          const key = order.customerDetails.email || order.customerDetails.phone;
+                          if (!uniqueCustomers.has(key)) {
+                            uniqueCustomers.set(key, {
+                              name: order.customerDetails.name,
+                              email: order.customerDetails.email,
+                              phone: order.customerDetails.phone,
+                              city: order.customerDetails.city,
+                              orders: 0,
+                              totalSpent: 0,
+                              lastOrder: order.timestamp
                             });
                           }
-                        }}
-                      >
-                        🔄 Migrate LocalStorage Users to Firebase
-                      </Button>
-                      
-                      <Button 
-                        variant="outline" 
-                        className="w-full"
-                        onClick={() => {
-                          const oldUsers = JSON.parse(localStorage.getItem('prayan-users') || '[]');
-                          const newUsers = JSON.parse(localStorage.getItem('prayan-users-database') || '[]');
-                          console.log('📦 Old localStorage users:', oldUsers);
-                          console.log('📦 New localStorage users:', newUsers);
-                          alert(`Found ${oldUsers.length} old users and ${newUsers.length} new users in localStorage. Check console for details.`);
-                        }}
-                      >
-                        🔍 Check LocalStorage Users
-                      </Button>
+                          const customer = uniqueCustomers.get(key);
+                          customer.orders += 1;
+                          customer.totalSpent += order.totalPrice;
+                          if (new Date(order.timestamp) > new Date(customer.lastOrder)) {
+                            customer.lastOrder = order.timestamp;
+                          }
+                        });
+                        return uniqueCustomers.size;
+                      })()})
+                    </h3>
+                    {orders.length > 0 ? (
+                      <div className="overflow-x-auto">
+                        <table className="w-full border rounded-lg">
+                          <thead className="bg-blue-50">
+                            <tr>
+                              <th className="text-left p-4 font-medium">Name</th>
+                              <th className="text-left p-4 font-medium">Contact</th>
+                              <th className="text-left p-4 font-medium">Location</th>
+                              <th className="text-left p-4 font-medium">Orders</th>
+                              <th className="text-left p-4 font-medium">Total Spent</th>
+                              <th className="text-left p-4 font-medium">Last Order</th>
+                              <th className="text-left p-4 font-medium">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {(() => {
+                              const uniqueCustomers = new Map();
+                              orders.forEach(order => {
+                                const key = order.customerDetails.email || order.customerDetails.phone;
+                                if (!uniqueCustomers.has(key)) {
+                                  uniqueCustomers.set(key, {
+                                    name: order.customerDetails.name,
+                                    email: order.customerDetails.email,
+                                    phone: order.customerDetails.phone,
+                                    city: order.customerDetails.city,
+                                    orders: 0,
+                                    totalSpent: 0,
+                                    lastOrder: order.timestamp
+                                  });
+                                }
+                                const customer = uniqueCustomers.get(key);
+                                customer.orders += 1;
+                                customer.totalSpent += order.totalPrice;
+                                if (new Date(order.timestamp) > new Date(customer.lastOrder)) {
+                                  customer.lastOrder = order.timestamp;
+                                }
+                              });
+                              return Array.from(uniqueCustomers.values());
+                            })().map((customer, index) => (
+                              <tr key={index} className="border-b hover:bg-gray-50">
+                                <td className="p-4">
+                                  <div className="font-medium">{customer.name}</div>
+                                </td>
+                                <td className="p-4">
+                                  <div className="text-sm">
+                                    {customer.email && <div className="text-gray-600">{customer.email}</div>}
+                                    <div className="text-gray-600">{customer.phone}</div>
+                                  </div>
+                                </td>
+                                <td className="p-4 text-gray-600">{customer.city}</td>
+                                <td className="p-4">
+                                  <Badge variant="outline">{customer.orders} orders</Badge>
+                                </td>
+                                <td className="p-4">
+                                  <div className="font-semibold text-green-600">₹{customer.totalSpent}</div>
+                                </td>
+                                <td className="p-4 text-gray-600">
+                                  {new Date(customer.lastOrder).toLocaleDateString('en-IN')}
+                                </td>
+                                <td className="p-4">
+                                  <div className="flex gap-2">
+                                    <Button
+                                      size="sm"
+                                      variant="outline"
+                                      onClick={() => {
+                                        const whatsappUrl = `https://wa.me/${customer.phone.replace(/\D/g, '')}?text=Hello ${customer.name}, thank you for choosing Prayan Masale! 🌶️`;
+                                        window.open(whatsappUrl, '_blank');
+                                      }}
+                                    >
+                                      <MessageCircle className="w-4 h-4" />
+                                    </Button>
+                                    <Button
+                                      size="sm"
+                                      variant="outline"
+                                      onClick={() => {
+                                        const customerOrders = orders.filter(order => 
+                                          order.customerDetails.email === customer.email || 
+                                          order.customerDetails.phone === customer.phone
+                                        );
+                                        console.log(`Orders for ${customer.name}:`, customerOrders);
+                                        toast({
+                                          title: `${customer.name}'s Orders`,
+                                          description: `Found ${customerOrders.length} orders. Check console for details.`,
+                                        });
+                                      }}
+                                    >
+                                      <Eye className="w-4 h-4" />
+                                    </Button>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    ) : (
+                      <div className="text-center py-8 bg-gray-50 rounded-lg">
+                        <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                        <p className="text-gray-600">No guest customers yet</p>
+                        <p className="text-sm text-gray-500 mt-2">Customer data will appear here from orders</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Summary Stats */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-blue-600">{allUsers.length}</div>
+                      <div className="text-sm text-gray-600">Registered Users</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-green-600">
+                        {(() => {
+                          const uniqueCustomers = new Set();
+                          orders.forEach(order => {
+                            uniqueCustomers.add(order.customerDetails.email || order.customerDetails.phone);
+                          });
+                          return uniqueCustomers.size;
+                        })()}
+                      </div>
+                      <div className="text-sm text-gray-600">Guest Customers</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-purple-600">
+                        {allUsers.length + (() => {
+                          const uniqueCustomers = new Set();
+                          orders.forEach(order => {
+                            uniqueCustomers.add(order.customerDetails.email || order.customerDetails.phone);
+                          });
+                          return uniqueCustomers.size;
+                        })()}
+                      </div>
+                      <div className="text-sm text-gray-600">Total Customers</div>
                     </div>
                   </div>
-                )}
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
