@@ -37,9 +37,12 @@ export const useSearch = (products: Product[]) => {
 
     // Filter by category
     if (filters.category !== 'all') {
-      filtered = filtered.filter(product => 
-        product.category.toLowerCase() === filters.category.toLowerCase()
-      );
+      filtered = filtered.filter(product => {
+        // Direct match first
+        if (product.category === filters.category) return true;
+        // Case-insensitive match as fallback
+        return product.category.toLowerCase().replace(/\s+/g, '-') === filters.category.toLowerCase().replace(/\s+/g, '-');
+      });
     }
 
     // Filter by price range

@@ -402,10 +402,10 @@ export const products: Product[] = [
 
 export const categories = [
   { id: 'all', name: 'All Spices', count: products.length },
-  { id: 'pure-spices', name: 'Pure Spices', count: products.filter(p => p.category === 'Pure Spices').length },
-  { id: 'blended-spices', name: 'Blended Spices', count: products.filter(p => p.category === 'Blended Spices').length },
-  { id: 'whole-spices', name: 'Whole Spices', count: products.filter(p => p.category === 'Whole Spices').length },
-  { id: 'combo-packs', name: 'Combo Packs', count: products.filter(p => p.category === 'Combo Packs').length },
+  { id: 'Pure Spices', name: 'Pure Spices', count: products.filter(p => p.category === 'Pure Spices').length },
+  { id: 'Blended Spices', name: 'Blended Spices', count: products.filter(p => p.category === 'Blended Spices').length },
+  { id: 'Whole Spices', name: 'Whole Spices', count: products.filter(p => p.category === 'Whole Spices').length },
+  { id: 'Combo Packs', name: 'Combo Packs', count: products.filter(p => p.category === 'Combo Packs').length },
 ];
 
 export const recipes = [
