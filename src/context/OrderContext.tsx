@@ -116,25 +116,44 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     loadInitialOrders();
   }, [user?.phone]);
 
-  // Real-time order status listener - USER-SPECIFIC ORDERS ONLY!
+  // Real-time order status listener - USER-SPECIFIC ORDERS ONLY! - HARDCORE FIX
   useEffect(() => {
     if (!user?.phone) {
-      console.log('🔒 No user phone - not loading orders');
+      console.log('🔒 No user phone - clearing orders for security');
       setOrders([]);
       return;
     }
 
-    console.log('🔄 Setting up real-time order sync for user:', user.phone);
+    console.log('🔄 HARDCORE FIX: Setting up user-specific orders for:', user.phone);
     
+    // IMMEDIATE FIX: Filter orders by current user's phone
+    const filterUserOrders = (allOrders: any[]) => {
+      const userSpecificOrders = allOrders.filter(order => {
+        const orderPhone = order.customerDetails?.phone;
+        const currentUserPhone = user.phone;
+        
+        console.log('🔍 Filtering order:', order.id, 'Order phone:', orderPhone, 'User phone:', currentUserPhone);
+        
+        // Strict phone number matching
+        return orderPhone === currentUserPhone;
+      });
+      
+      console.log(`🔒 SECURITY: Filtered ${allOrders.length} orders to ${userSpecificOrders.length} for user ${user.phone}`);
+      return userSpecificOrders;
+    };
+
     // Set up real-time listener for USER'S ORDERS ONLY
     const unsubscribe = orderService.subscribeToUserOrders(user.phone, (updatedOrders) => {
       console.log('📱 User-specific real-time orders update received:', updatedOrders.length);
       
       const convertedOrders = updatedOrders.map(convertFirebaseOrder);
       
+      // DOUBLE SECURITY CHECK: Filter again to be 100% sure
+      const secureOrders = filterUserOrders(convertedOrders);
+      
       // Check for status changes and notify
       const currentOrders = orders;
-      convertedOrders.forEach(newOrder => {
+      secureOrders.forEach(newOrder => {
         const existingOrder = currentOrders.find(o => o.id === newOrder.id);
         if (existingOrder && existingOrder.status !== newOrder.status) {
           toast({
@@ -144,12 +163,12 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         }
       });
       
-      setOrders(convertedOrders);
+      setOrders(secureOrders);
       
       // Update localStorage with user-specific key
-      localStorage.setItem(`prayan-orders-${user.phone}`, JSON.stringify(convertedOrders));
+      localStorage.setItem(`prayan-orders-${user.phone}`, JSON.stringify(secureOrders));
       
-      console.log('✅ User-specific orders synced in real-time!');
+      console.log('✅ SECURE: User-specific orders synced in real-time!');
     });
 
     // Cleanup listener on unmount
@@ -443,24 +462,40 @@ Thank you for choosing Prayan Masale! 🙏`;
     }
   };
 
-  // Refresh orders from Firebase - USER-SPECIFIC
+  // Refresh orders from Firebase - USER-SPECIFIC - HARDCORE SECURITY
   const refreshOrders = async () => {
     if (!user?.phone) {
-      console.log('🔒 No user phone - cannot refresh orders');
+      console.log('🔒 SECURITY: No user phone - cannot refresh orders');
       setOrders([]);
       return;
     }
 
     setLoading(true);
     try {
+      console.log('🔄 HARDCORE REFRESH: Getting orders for user:', user.phone);
+      
       const result = await orderService.getOrdersByPhone(user.phone);
       
       if (result.success) {
         const convertedOrders = result.orders.map(convertFirebaseOrder);
         
+        // TRIPLE SECURITY CHECK: Ensure only user's orders
+        const secureOrders = convertedOrders.filter(order => {
+          const orderPhone = order.customerDetails?.phone;
+          const match = orderPhone === user.phone;
+          
+          if (!match) {
+            console.warn('🚨 SECURITY ALERT: Blocked order from different user:', order.id, orderPhone);
+          }
+          
+          return match;
+        });
+        
+        console.log(`🔒 SECURITY REFRESH: ${convertedOrders.length} total → ${secureOrders.length} secure orders for ${user.phone}`);
+        
         // Check for status changes and notify
         const currentOrders = orders;
-        convertedOrders.forEach(newOrder => {
+        secureOrders.forEach(newOrder => {
           const existingOrder = currentOrders.find(o => o.id === newOrder.id);
           if (existingOrder && existingOrder.status !== newOrder.status) {
             toast({
@@ -470,13 +505,13 @@ Thank you for choosing Prayan Masale! 🙏`;
           }
         });
         
-        setOrders(convertedOrders);
+        setOrders(secureOrders);
         
         // Update localStorage with user-specific key
         const userSpecificKey = `prayan-orders-${user.phone}`;
-        localStorage.setItem(userSpecificKey, JSON.stringify(convertedOrders));
+        localStorage.setItem(userSpecificKey, JSON.stringify(secureOrders));
         
-        console.log(`✅ Refreshed ${convertedOrders.length} orders for user:`, user.phone);
+        console.log(`✅ SECURE REFRESH: ${secureOrders.length} orders loaded for user:`, user.phone);
       }
     } catch (error) {
       console.error('Error refreshing user orders:', error);
