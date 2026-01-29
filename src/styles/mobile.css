@@ -1685,3 +1685,797 @@ button:hover,
       min-width: 70px;
     }
   }
+
+/* ===== ENHANCED MOBILE OPTIMIZATIONS 2024 ===== */
+
+/* Performance optimizations */
+@media (max-width: 768px) {
+  /* GPU acceleration for smooth animations */
+  .transform-gpu {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Better image loading */
+  img {
+    content-visibility: auto;
+    contain-intrinsic-size: 200px 200px;
+  }
+
+  /* Tap highlight removal - COMPREHENSIVE */
+  .tap-highlight-transparent,
+  .tap-highlight-transparent * {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+
+  /* Allow text selection for specific elements */
+  input, textarea, [contenteditable], p, span, h1, h2, h3, h4, h5, h6 {
+    -webkit-user-select: text !important;
+    -khtml-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+  }
+
+  /* Enhanced touch targets */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* Better button feedback */
+  .mobile-button-feedback {
+    transition: all 0.15s ease;
+    transform-origin: center;
+  }
+
+  .mobile-button-feedback:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+
+  /* Swipe gesture support */
+  .swipeable {
+    touch-action: pan-x;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Loading states */
+  .skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+
+  @keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Better form controls */
+  .mobile-input {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 2px solid #e5e7eb;
+    transition: border-color 0.2s ease;
+    background: white;
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .mobile-input:focus {
+    border-color: #f97316;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+  }
+
+  /* Enhanced product grid */
+  .mobile-product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 16px;
+  }
+
+  /* Better cart drawer */
+  .mobile-cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+    max-width: 400px;
+    background: white;
+    z-index: 60;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .mobile-cart-drawer.open {
+    transform: translateX(0);
+  }
+
+  /* Enhanced checkout form */
+  .mobile-checkout-form {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .mobile-checkout-form .form-section {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-checkout-form .form-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #1f2937;
+  }
+
+  .mobile-checkout-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .mobile-checkout-form .form-row.two-columns {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Better payment methods */
+  .mobile-payment-methods {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .mobile-payment-method {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+  }
+
+  .mobile-payment-method:hover {
+    border-color: #f97316;
+    background: #fff7ed;
+  }
+
+  .mobile-payment-method.selected {
+    border-color: #f97316;
+    background: #fff7ed;
+  }
+
+  .mobile-payment-method .method-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .mobile-payment-method .method-icon {
+    width: 24px;
+    height: 24px;
+    color: #f97316;
+  }
+
+  .mobile-payment-method .method-title {
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .mobile-payment-method .method-description {
+    font-size: 14px;
+    color: #6b7280;
+    margin-left: 36px;
+  }
+
+  /* Enhanced order summary */
+  .mobile-order-summary {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    bottom: 16px;
+    margin: 16px;
+  }
+
+  .mobile-order-summary .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .mobile-order-summary .summary-row:last-child {
+    border-bottom: none;
+    font-weight: 600;
+    font-size: 18px;
+    color: #1f2937;
+    padding-top: 12px;
+  }
+
+  .mobile-order-summary .place-order-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 56px;
+  }
+
+  .mobile-order-summary .place-order-btn:hover {
+    background: linear-gradient(135deg, #ea580c, #dc2626);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+  }
+
+  .mobile-order-summary .place-order-btn:active {
+    transform: translateY(0);
+  }
+
+  /* Better search interface */
+  .mobile-search {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    z-index: 70;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-search .search-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-top: 8px;
+  }
+
+  .mobile-search .search-input {
+    flex: 1;
+    font-size: 16px;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    background: #f9fafb;
+  }
+
+  .mobile-search .search-input:focus {
+    border-color: #f97316;
+    background: white;
+    outline: none;
+  }
+
+  .mobile-search .search-results {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Enhanced product detail page */
+  .mobile-product-detail {
+    padding-bottom: 80px; /* Space for bottom nav */
+  }
+
+  .mobile-product-detail .product-image {
+    aspect-ratio: 1;
+    border-radius: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .mobile-product-detail .product-info {
+    padding: 20px 16px;
+    background: white;
+    margin-top: -20px;
+    border-radius: 20px 20px 0 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .mobile-product-detail .weight-selector {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin: 16px 0;
+  }
+
+  .mobile-product-detail .weight-option {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+  }
+
+  .mobile-product-detail .weight-option.selected {
+    border-color: #f97316;
+    background: #fff7ed;
+  }
+
+  .mobile-product-detail .weight-option .weight {
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .mobile-product-detail .weight-option .price {
+    font-size: 14px;
+    color: #f97316;
+    font-weight: 600;
+  }
+
+  .mobile-product-detail .quantity-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .mobile-product-detail .quantity-btn {
+    width: 44px;
+    height: 44px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-product-detail .quantity-btn:hover {
+    border-color: #f97316;
+    background: #fff7ed;
+  }
+
+  .mobile-product-detail .quantity-display {
+    font-size: 18px;
+    font-weight: 600;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  .mobile-product-detail .add-to-cart-section {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 16px;
+    border-top: 1px solid #e5e7eb;
+    z-index: 50;
+  }
+
+  .mobile-product-detail .add-to-cart-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  /* Better recipe cards */
+  .mobile-recipe-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+  }
+
+  .mobile-recipe-card .recipe-image {
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .mobile-recipe-card .recipe-content {
+    padding: 16px;
+  }
+
+  .mobile-recipe-card .recipe-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .mobile-recipe-card .recipe-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #6b7280;
+  }
+
+  .mobile-recipe-card .recipe-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .mobile-recipe-card .recipe-description {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+
+  .mobile-recipe-card .recipe-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .mobile-recipe-card .recipe-btn {
+    flex: 1;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    min-height: 40px;
+  }
+
+  .mobile-recipe-card .recipe-btn.primary {
+    background: #f97316;
+    color: white;
+  }
+
+  .mobile-recipe-card .recipe-btn.secondary {
+    background: #f3f4f6;
+    color: #374151;
+  }
+
+  /* Enhanced account page */
+  .mobile-account-page {
+    padding: 16px;
+    padding-bottom: 80px;
+  }
+
+  .mobile-account-page .profile-header {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .mobile-account-page .profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 32px;
+    font-weight: 600;
+  }
+
+  .mobile-account-page .profile-name {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .mobile-account-page .profile-email {
+    opacity: 0.8;
+    font-size: 14px;
+  }
+
+  .mobile-account-page .account-section {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-account-page .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 16px;
+  }
+
+  .mobile-account-page .account-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-account-page .account-menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f4f6;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-account-page .account-menu-item:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-account-page .account-menu-item:hover {
+    background: #f9fafb;
+    margin: 0 -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 8px;
+  }
+
+  .mobile-account-page .menu-item-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .mobile-account-page .menu-item-icon {
+    width: 20px;
+    height: 20px;
+    color: #6b7280;
+  }
+
+  .mobile-account-page .menu-item-text {
+    font-weight: 500;
+    color: #1f2937;
+  }
+
+  .mobile-account-page .menu-item-arrow {
+    width: 16px;
+    height: 16px;
+    color: #9ca3af;
+  }
+
+  /* Better error states */
+  .mobile-error-state {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .mobile-error-state .error-icon {
+    width: 64px;
+    height: 64px;
+    color: #ef4444;
+    margin: 0 auto 16px;
+  }
+
+  .mobile-error-state .error-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+  }
+
+  .mobile-error-state .error-message {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  .mobile-error-state .error-action {
+    background: #f97316;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  /* Better loading states */
+  .mobile-loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .mobile-loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #f3f4f6;
+    border-top: 3px solid #f97316;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+  }
+
+  .mobile-loading-text {
+    font-size: 14px;
+    color: #6b7280;
+    text-align: center;
+  }
+
+  /* Enhanced animations */
+  .fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .slide-up {
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .scale-in {
+    animation: scaleIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { 
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from { 
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to { 
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .mobile-button-feedback {
+      border: 2px solid currentColor;
+    }
+    
+    .mobile-input {
+      border-width: 2px;
+    }
+    
+    .mobile-payment-method {
+      border-width: 2px;
+    }
+  }
+
+  /* Dark mode support (if needed) */
+  @media (prefers-color-scheme: dark) {
+    .mobile-cart-drawer,
+    .mobile-checkout-form .form-section,
+    .mobile-order-summary,
+    .mobile-recipe-card,
+    .mobile-account-page .account-section {
+      background: #1f2937;
+      color: white;
+    }
+    
+    .mobile-input {
+      background: #374151;
+      border-color: #4b5563;
+      color: white;
+    }
+    
+    .mobile-payment-method {
+      background: #374151;
+      border-color: #4b5563;
+    }
+  }
+}
+
+/* Very small screens (iPhone SE, older Android) */
+@media (max-width: 375px) {
+  .mobile-product-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .mobile-checkout-form .form-row.two-columns {
+    grid-template-columns: 1fr;
+  }
+  
+  .mobile-product-detail .weight-selector {
+    grid-template-columns: 1fr;
+  }
+  
+  .mobile-recipe-card .recipe-actions {
+    flex-direction: column;
+  }
+}
+
+/* Large phones (iPhone Pro Max, etc.) */
+@media (min-width: 414px) and (max-width: 768px) {
+  .mobile-product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .mobile-checkout-form {
+    padding: 20px;
+  }
+  
+  .mobile-product-detail .weight-selector {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
