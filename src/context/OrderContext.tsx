@@ -92,30 +92,43 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Load orders from localStorage initially (for backward compatibility)
+  // Load orders from localStorage initially (USER-SPECIFIC)
   useEffect(() => {
+    if (!user?.phone) {
+      setOrders([]);
+      return;
+    }
+
     const loadInitialOrders = () => {
-      const saved = localStorage.getItem('prayan-orders');
+      const userSpecificKey = `prayan-orders-${user.phone}`;
+      const saved = localStorage.getItem(userSpecificKey);
       if (saved) {
         try {
           const localOrders = JSON.parse(saved);
           setOrders(localOrders);
+          console.log(`📱 Loaded ${localOrders.length} orders for user:`, user.phone);
         } catch (error) {
-          console.error('Error loading local orders:', error);
+          console.error('Error loading user orders:', error);
         }
       }
     };
 
     loadInitialOrders();
-  }, []);
+  }, [user?.phone]);
 
-  // Real-time order status listener - THIS FIXES THE SYNC ISSUE!
+  // Real-time order status listener - USER-SPECIFIC ORDERS ONLY!
   useEffect(() => {
-    console.log('🔄 Setting up real-time order sync for customers...');
+    if (!user?.phone) {
+      console.log('🔒 No user phone - not loading orders');
+      setOrders([]);
+      return;
+    }
+
+    console.log('🔄 Setting up real-time order sync for user:', user.phone);
     
-    // Set up real-time listener for order updates
-    const unsubscribe = orderService.subscribeToOrders((updatedOrders) => {
-      console.log('📱 Customer real-time orders update received:', updatedOrders.length);
+    // Set up real-time listener for USER'S ORDERS ONLY
+    const unsubscribe = orderService.subscribeToUserOrders(user.phone, (updatedOrders) => {
+      console.log('📱 User-specific real-time orders update received:', updatedOrders.length);
       
       const convertedOrders = updatedOrders.map(convertFirebaseOrder);
       
@@ -133,18 +146,18 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       
       setOrders(convertedOrders);
       
-      // Update localStorage
-      localStorage.setItem('prayan-orders', JSON.stringify(convertedOrders));
+      // Update localStorage with user-specific key
+      localStorage.setItem(`prayan-orders-${user.phone}`, JSON.stringify(convertedOrders));
       
-      console.log('✅ Customer orders synced in real-time!');
+      console.log('✅ User-specific orders synced in real-time!');
     });
 
     // Cleanup listener on unmount
     return () => {
-      console.log('🧹 Cleaning up customer real-time listener...');
+      console.log('🧹 Cleaning up user-specific real-time listener...');
       unsubscribe();
     };
-  }, []);
+  }, [user?.phone]); // Depend on user phone
 
   // Convert Firebase order to local order format
   const convertFirebaseOrder = (fbOrder: FirebaseOrder): Order => ({
@@ -253,9 +266,10 @@ Thank you for choosing Prayan Masale! 🙏`;
         // Add to local state for immediate UI update
         setOrders(prev => [enhancedOrder, ...prev]);
         
-        // Also save to localStorage as backup only
+        // Also save to localStorage as backup with user-specific key
+        const userSpecificKey = user?.phone ? `prayan-orders-${user.phone}` : 'prayan-orders-guest';
         const updatedOrders = [enhancedOrder, ...orders];
-        localStorage.setItem('prayan-orders', JSON.stringify(updatedOrders));
+        localStorage.setItem(userSpecificKey, JSON.stringify(updatedOrders));
         
         // Send welcome notification
         await sendNotification(enhancedOrder.id, 'whatsapp', `Your order has been placed successfully! Estimated delivery: ${new Date(estimatedDelivery).toLocaleDateString('en-IN')}`);
@@ -282,9 +296,10 @@ Thank you for choosing Prayan Masale! 🙏`;
       } else {
         console.error('Firebase save failed:', result.error);
         
-        // If Firebase fails, still save locally as fallback
+        // If Firebase fails, still save locally as fallback with user-specific key
         setOrders(prev => [enhancedOrder, ...prev]);
-        localStorage.setItem('prayan-orders', JSON.stringify([enhancedOrder, ...orders]));
+        const userSpecificKey = user?.phone ? `prayan-orders-${user.phone}` : 'prayan-orders-guest';
+        localStorage.setItem(userSpecificKey, JSON.stringify([enhancedOrder, ...orders]));
         
         // Award loyalty points even for offline orders
         if (user?.id) {
@@ -324,7 +339,8 @@ Thank you for choosing Prayan Masale! 🙏`;
       };
       
       setOrders(prev => [enhancedOrder, ...prev]);
-      localStorage.setItem('prayan-orders', JSON.stringify([enhancedOrder, ...orders]));
+      const userSpecificKey = user?.phone ? `prayan-orders-${user.phone}` : 'prayan-orders-guest';
+      localStorage.setItem(userSpecificKey, JSON.stringify([enhancedOrder, ...orders]));
       
       // Award loyalty points for fallback orders too
       if (user?.id) {
@@ -427,11 +443,17 @@ Thank you for choosing Prayan Masale! 🙏`;
     }
   };
 
-  // Refresh orders from Firebase
+  // Refresh orders from Firebase - USER-SPECIFIC
   const refreshOrders = async () => {
+    if (!user?.phone) {
+      console.log('🔒 No user phone - cannot refresh orders');
+      setOrders([]);
+      return;
+    }
+
     setLoading(true);
     try {
-      const result = await orderService.getAllOrders();
+      const result = await orderService.getOrdersByPhone(user.phone);
       
       if (result.success) {
         const convertedOrders = result.orders.map(convertFirebaseOrder);
@@ -450,11 +472,14 @@ Thank you for choosing Prayan Masale! 🙏`;
         
         setOrders(convertedOrders);
         
-        // Update localStorage
-        localStorage.setItem('prayan-orders', JSON.stringify(convertedOrders));
+        // Update localStorage with user-specific key
+        const userSpecificKey = `prayan-orders-${user.phone}`;
+        localStorage.setItem(userSpecificKey, JSON.stringify(convertedOrders));
+        
+        console.log(`✅ Refreshed ${convertedOrders.length} orders for user:`, user.phone);
       }
     } catch (error) {
-      console.error('Error refreshing orders:', error);
+      console.error('Error refreshing user orders:', error);
     } finally {
       setLoading(false);
     }

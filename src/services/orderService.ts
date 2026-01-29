@@ -54,36 +54,43 @@ class OrderService {
   private retryDelay = 1000;
   private listeners: Array<() => void> = [];
 
-  // Real-time listener for orders - THIS FIXES THE SYNC ISSUE!
-  subscribeToOrders(callback: (orders: FirebaseOrder[]) => void): () => void {
-    console.log('🔄 Setting up real-time Firebase listener...');
+  // Real-time listener for USER-SPECIFIC orders - SECURITY FIX!
+  subscribeToUserOrders(userPhone: string, callback: (orders: FirebaseOrder[]) => void): () => void {
+    console.log('🔄 Setting up user-specific real-time Firebase listener for:', userPhone);
     
     try {
-      // Try with orderBy first
-      const q = query(this.ordersCollection, orderBy('createdAt', 'desc'));
+      // Query only orders for this specific user's phone number
+      const q = query(
+        this.ordersCollection, 
+        where('customerDetails.phone', '==', userPhone),
+        orderBy('createdAt', 'desc')
+      );
       
       const unsubscribe = onSnapshot(q, 
         (snapshot: QuerySnapshot<DocumentData>) => {
-          console.log('🔥 Real-time update received from Firebase!');
+          console.log('🔥 User-specific real-time update received from Firebase!');
           const orders: FirebaseOrder[] = [];
           
           snapshot.forEach((doc) => {
             orders.push({ id: doc.id, ...doc.data() } as FirebaseOrder);
           });
           
-          console.log(`📊 Real-time sync: ${orders.length} orders loaded`);
+          console.log(`📊 User-specific real-time sync: ${orders.length} orders for ${userPhone}`);
           callback(orders);
         },
         (error) => {
-          console.error('❌ Real-time listener error:', error);
+          console.error('❌ User-specific real-time listener error:', error);
           
           // Fallback to simple query without orderBy
-          console.log('🔄 Trying fallback real-time listener...');
-          const fallbackQuery = query(this.ordersCollection);
+          console.log('🔄 Trying fallback user-specific listener...');
+          const fallbackQuery = query(
+            this.ordersCollection,
+            where('customerDetails.phone', '==', userPhone)
+          );
           
           const fallbackUnsubscribe = onSnapshot(fallbackQuery,
             (snapshot: QuerySnapshot<DocumentData>) => {
-              console.log('🔥 Fallback real-time update received!');
+              console.log('🔥 Fallback user-specific update received!');
               const orders: FirebaseOrder[] = [];
               
               snapshot.forEach((doc) => {
@@ -97,13 +104,13 @@ class OrderService {
                 return bTime - aTime;
               });
               
-              console.log(`📊 Fallback real-time sync: ${orders.length} orders loaded`);
+              console.log(`📊 Fallback user-specific sync: ${orders.length} orders for ${userPhone}`);
               callback(orders);
             },
             (fallbackError) => {
-              console.error('❌ Fallback listener also failed:', fallbackError);
+              console.error('❌ Fallback user-specific listener also failed:', fallbackError);
               // Use manual refresh as last resort
-              this.getAllOrders().then(result => {
+              this.getOrdersByPhone(userPhone).then(result => {
                 if (result.success) {
                   callback(result.orders);
                 }
@@ -119,16 +126,16 @@ class OrderService {
       return unsubscribe;
       
     } catch (error) {
-      console.error('❌ Failed to set up real-time listener:', error);
+      console.error('❌ Failed to set up user-specific real-time listener:', error);
       
-      // Fallback to polling every 5 seconds
-      console.log('🔄 Setting up polling fallback...');
+      // Fallback to polling every 10 seconds for this user
+      console.log('🔄 Setting up user-specific polling fallback...');
       const interval = setInterval(async () => {
-        const result = await this.getAllOrders();
+        const result = await this.getOrdersByPhone(userPhone);
         if (result.success) {
           callback(result.orders);
         }
-      }, 5000);
+      }, 10000);
       
       const cleanup = () => {
         clearInterval(interval);
