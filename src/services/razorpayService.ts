@@ -1,4 +1,5 @@
-// Razorpay Payment Service - Simplified Version
+// Razorpay Payment Service - LIVE PRODUCTION VERSION
+// ⚠️ REAL PAYMENTS ENABLED - MONEY WILL BE CHARGED ⚠️
 declare global {
   interface Window {
     Razorpay: any;
@@ -52,8 +53,8 @@ class RazorpayService {
   private keyId: string;
 
   constructor() {
-    // Using working demo test keys
-    this.keyId = 'rzp_test_1DP5mmOlF5G5ag';
+    // Using LIVE production keys - REAL PAYMENTS ENABLED!
+    this.keyId = 'rzp_live_S9YzsBurtPax5w';
   }
 
   // Load Razorpay script with better error handling
