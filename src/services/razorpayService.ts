@@ -53,18 +53,19 @@ class RazorpayService {
   private keyId: string;
 
   constructor() {
-    // 🔥 FORCE LIVE MODE - BYPASSING RAZORPAY DASHBOARD ISSUES
-    // Using hardcoded live keys to bypass test mode issues
+    // 🔥 LIVE MODE CONFIGURATION - WAITING FOR RAZORPAY ACCOUNT ACTIVATION
+    // Using live keys - test mode banner will disappear after KYC verification
     this.keyId = 'rzp_live_S9YzsBurtPax5w';
     
-    console.log('🔥 FORCE LIVE MODE ACTIVATED:', this.keyId);
-    console.log('⚠️ Bypassing environment variables due to Razorpay dashboard issues');
+    console.log('🔥 RAZORPAY LIVE KEYS CONFIGURED:', this.keyId);
+    console.log('⚠️ If test mode banner shows, complete KYC verification in Razorpay dashboard');
     
-    // Verify live mode
+    // Verify live mode configuration
     if (this.keyId.startsWith('rzp_live_')) {
-      console.log('✅ CONFIRMED: RAZORPAY LIVE MODE ACTIVE');
+      console.log('✅ LIVE KEYS INTEGRATED - Waiting for Razorpay account activation');
+      console.log('📋 Next step: Complete KYC verification at https://dashboard.razorpay.com');
     } else {
-      console.error('❌ ERROR: Still in test mode');
+      console.error('❌ ERROR: Test keys detected - should use live keys');
     }
   }
 
