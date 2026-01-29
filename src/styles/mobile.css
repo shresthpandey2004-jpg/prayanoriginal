@@ -393,6 +393,16 @@ button:hover,
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    pointer-events: auto !important;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  .recipe-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
   }
 
   .recipe-card .card-header {
@@ -415,6 +425,15 @@ button:hover,
     font-size: 16px !important;
     font-weight: 600;
     border-radius: 8px;
+    pointer-events: auto !important;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .recipe-card button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
   }
 
   .aspect-square {
@@ -554,13 +573,18 @@ button:hover,
   * {
     -webkit-tap-highlight-color: transparent !important;
     -webkit-touch-callout: none;
+    outline: none !important;
+  }
+
+  /* Allow clicks and interactions for clickable elements */
+  button, .cursor-pointer, [role="button"], .recipe-card, .card {
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    outline: none !important;
-    border: none !important;
+    pointer-events: auto !important;
+    cursor: pointer;
   }
 
   /* Allow text selection for inputs and text areas but no borders */
@@ -2477,5 +2501,97 @@ button:hover,
   
   .mobile-product-detail .weight-selector {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+/* MOBILE RECIPE CLICK FIX - CRITICAL */
+@media (max-width: 768px) {
+  /* Ensure recipe cards are clickable on mobile */
+  .recipe-card, .card {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Mobile touch feedback */
+  .recipe-card:active, .card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+    background-color: rgba(255, 165, 0, 0.05);
+  }
+
+  /* Ensure buttons inside cards work */
+  .recipe-card button, .card button {
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+    min-height: 48px !important;
+    min-width: 48px !important;
+  }
+
+  /* Fix for navigation links */
+  .mobile-nav-link, [role="button"], button, .cursor-pointer {
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+  }
+
+  /* Ensure particles don't block clicks */
+  .particles-container, .particle, [class*="particle"] {
+    pointer-events: none !important;
+    z-index: -1 !important;
+  }
+
+  /* Recipe grid specific fixes */
+  .grid .recipe-card {
+    margin-bottom: 1rem;
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Card content clickable area */
+  .recipe-card .card-header,
+  .recipe-card .card-content {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  /* Image area clickable */
+  .recipe-card img {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    touch-action: manipulation !important;
+  }
+
+  /* Badge should not block clicks */
+  .recipe-card .badge, .recipe-card .absolute {
+    pointer-events: none !important;
+  }
+
+  /* Button specific fixes */
+  .recipe-card button {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    touch-action: manipulation !important;
+    z-index: 2;
+    position: relative;
+  }
+}
+
+/* Global mobile click fix */
+@media (hover: none) and (pointer: coarse) {
+  /* This targets touch devices specifically */
+  .cursor-pointer, .recipe-card, .card, button, [role="button"] {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
   }
 }

@@ -20,21 +20,46 @@ const RecipeDetail = () => {
   
   const [selectedSpices, setSelectedSpices] = useState<Set<string>>(new Set());
   const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const [isLoading, setIsLoading] = useState(true);
   
-  console.log('RecipeDetail - ID from params:', id);
-  console.log('RecipeDetail - All recipes:', recipes.map(r => r.id));
+  console.log('🔍 RecipeDetail - ID from params:', id);
+  console.log('🔍 RecipeDetail - All recipes:', recipes.map(r => r.id));
   
   const recipe = id ? getRecipeById(id) : null;
   
-  console.log('RecipeDetail - Recipe found:', recipe);
+  console.log('🔍 RecipeDetail - Recipe found:', recipe);
+
+  useEffect(() => {
+    // Simulate loading to prevent blank screen
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
   
   // Early return for debugging
   if (!id) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center p-4">
+        <Header />
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">No Recipe ID provided</h2>
+          <h2 className="text-xl font-bold text-gray-800 mb-4">No Recipe ID provided</h2>
           <Button onClick={() => navigate('/recipes')}>Back to Recipes</Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
+        <Header />
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading recipe...</p>
+          </div>
         </div>
       </div>
     );
@@ -44,14 +69,17 @@ const RecipeDetail = () => {
     console.log('Recipe not found for ID:', id);
     console.log('Available recipe IDs:', recipes.map(r => r.id));
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Recipe not found</h2>
-          <p className="mb-4">Recipe ID: {id}</p>
-          <p className="mb-4">Available IDs: {recipes.map(r => r.id).join(', ')}</p>
-          <Button onClick={() => navigate('/recipes')}>
-            Back to Recipes
-          </Button>
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
+        <Header />
+        <div className="flex items-center justify-center min-h-[50vh] p-4">
+          <div className="text-center">
+            <h2 className="text-xl font-bold text-gray-800 mb-4">Recipe not found</h2>
+            <p className="mb-4 text-sm">Recipe ID: {id}</p>
+            <p className="mb-4 text-sm">Available IDs: {recipes.map(r => r.id).join(', ')}</p>
+            <Button onClick={() => navigate('/recipes')}>
+              Back to Recipes
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -148,34 +176,17 @@ const RecipeDetail = () => {
     }
   };
 
-  if (!recipe) {
-    console.log('Recipe not found for ID:', id);
-    console.log('Available recipe IDs:', recipes.map(r => r.id));
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Recipe not found</h2>
-          <p className="mb-4">Recipe ID: {id}</p>
-          <p className="mb-4">Available IDs: {recipes.map(r => r.id).join(', ')}</p>
-          <Button onClick={() => navigate('/recipes')}>
-            Back to Recipes
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 pb-20 lg:pb-0">
       <Header />
       <CartDrawer />
       
-      <div className="container mx-auto px-4 py-4 lg:py-8">
+      <div className="container mx-auto px-4 py-4 lg:py-8 max-w-7xl">
         {/* Back Button */}
         <Button 
           variant="ghost" 
           onClick={() => navigate('/recipes')}
-          className="mb-4 lg:mb-6 flex items-center gap-2"
+          className="mb-4 lg:mb-6 flex items-center gap-2 text-sm lg:text-base"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Recipes
@@ -184,12 +195,13 @@ const RecipeDetail = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
           {/* Recipe Info */}
           <div className="lg:col-span-2 order-2 lg:order-1">
-            <Card className="mb-4 lg:mb-0">
+            <Card className="mb-4 lg:mb-0 overflow-hidden">
               <div className="relative">
                 <img 
                   src={recipe.image} 
                   alt={recipe.name}
-                  className="w-full h-48 lg:h-64 object-cover rounded-t-lg"
+                  className="w-full h-48 lg:h-64 object-cover"
+                  loading="lazy"
                 />
                 <div className="absolute top-4 right-4">
                   <Badge className={getDifficultyColor(recipe.difficulty)}>
@@ -199,13 +211,13 @@ const RecipeDetail = () => {
               </div>
               
               <CardHeader className="p-4 lg:p-6">
-                <CardTitle className="text-xl lg:text-3xl font-bold text-gray-800">
+                <CardTitle className="text-xl lg:text-3xl font-bold text-gray-800 leading-tight">
                   {recipe.name}
                 </CardTitle>
                 <p className="text-base lg:text-lg text-orange-600 font-medium">
                   {recipe.nameHindi}
                 </p>
-                <p className="text-gray-600 mt-2 text-sm lg:text-base">
+                <p className="text-gray-600 mt-2 text-sm lg:text-base leading-relaxed">
                   {recipe.description}
                 </p>
                 
@@ -235,7 +247,7 @@ const RecipeDetail = () => {
                         <span className="flex-shrink-0 w-6 h-6 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
                           {index + 1}
                         </span>
-                        <span className="text-gray-700 text-sm lg:text-base">{instruction}</span>
+                        <span className="text-gray-700 text-sm lg:text-base leading-relaxed">{instruction}</span>
                       </li>
                     ))}
                   </ol>
@@ -249,7 +261,7 @@ const RecipeDetail = () => {
                       {recipe.tips.map((tip, index) => (
                         <li key={index} className="flex gap-2">
                           <span className="text-orange-600">•</span>
-                          <span className="text-gray-700 text-sm lg:text-base">{tip}</span>
+                          <span className="text-gray-700 text-sm lg:text-base leading-relaxed">{tip}</span>
                         </li>
                       ))}
                     </ul>
@@ -307,7 +319,7 @@ const RecipeDetail = () => {
                     return (
                       <div 
                         key={ingredient.id}
-                        className={`p-3 border rounded-lg cursor-pointer transition-all ${
+                        className={`p-3 border rounded-lg cursor-pointer transition-all touch-manipulation ${
                           isSelected 
                             ? 'border-orange-500 bg-orange-50' 
                             : 'border-gray-200 hover:border-gray-300'
@@ -345,7 +357,7 @@ const RecipeDetail = () => {
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  className="h-8 w-8 p-0"
+                                  className="h-8 w-8 p-0 touch-manipulation"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     updateQuantity(ingredient.id, -1);
@@ -360,7 +372,7 @@ const RecipeDetail = () => {
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  className="h-8 w-8 p-0"
+                                  className="h-8 w-8 p-0 touch-manipulation"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     updateQuantity(ingredient.id, 1);
@@ -394,7 +406,7 @@ const RecipeDetail = () => {
                   
                   <Button 
                     onClick={addSelectedSpicesToCart}
-                    className="w-full bg-orange-600 hover:bg-orange-700 text-sm lg:text-base"
+                    className="w-full bg-orange-600 hover:bg-orange-700 text-sm lg:text-base touch-manipulation min-h-[44px]"
                     disabled={selectedSpices.size === 0}
                   >
                     Add {selectedSpices.size} Spices to Cart
@@ -403,7 +415,7 @@ const RecipeDetail = () => {
                   <Button 
                     onClick={() => navigate('/checkout')}
                     variant="outline"
-                    className="w-full text-sm lg:text-base"
+                    className="w-full text-sm lg:text-base touch-manipulation min-h-[44px]"
                     disabled={selectedSpices.size === 0}
                   >
                     Buy Now

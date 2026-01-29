@@ -66,8 +66,16 @@ const SimpleRecipes = () => {
           {filteredRecipes.map(recipe => (
             <Card 
               key={recipe.id} 
-              className="hover:shadow-lg transition-shadow cursor-pointer group"
-              onClick={() => navigate(`/simple-recipe/${recipe.id}`)}
+              className="hover:shadow-lg transition-shadow cursor-pointer group recipe-card"
+              onClick={(e) => {
+                console.log('🔥 Simple recipe card clicked:', recipe.id, recipe.name);
+                navigate(`/simple-recipe/${recipe.id}`);
+              }}
+              style={{
+                cursor: 'pointer',
+                pointerEvents: 'auto',
+                touchAction: 'manipulation'
+              }}
             >
               <div className="relative overflow-hidden rounded-t-lg">
                 <img 
@@ -120,8 +128,15 @@ const SimpleRecipes = () => {
                 <Button 
                   className="w-full bg-orange-600 hover:bg-orange-700"
                   onClick={(e) => {
+                    console.log('🔥 Simple recipe button clicked:', recipe.id);
                     e.stopPropagation();
                     navigate(`/simple-recipe/${recipe.id}`);
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                    pointerEvents: 'auto',
+                    touchAction: 'manipulation',
+                    minHeight: '48px'
                   }}
                 >
                   View Recipe

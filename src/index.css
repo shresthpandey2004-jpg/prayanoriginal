@@ -237,9 +237,17 @@
     ) 1;
   }
 
-  /* Particle Container */
+  /* Particle Container - ensure it doesn't block clicks */
   .particles-container {
     @apply pointer-events-none absolute inset-0 overflow-hidden;
+    z-index: -1;
+  }
+
+  /* Ensure recipe cards are above particles */
+  .recipe-card, .card {
+    position: relative;
+    z-index: 1;
+    pointer-events: auto !important;
   }
 }
 

@@ -107,7 +107,17 @@ const Recipes = () => {
             <Card 
               key={recipe.id} 
               className="hover:shadow-lg transition-shadow cursor-pointer group recipe-card"
-              onClick={() => navigate(`/recipe/${recipe.id}`)}
+              onClick={(e) => {
+                console.log('🔥 Recipe card clicked:', recipe.id, recipe.name);
+                console.log('🔥 Event target:', e.target);
+                console.log('🔥 Current target:', e.currentTarget);
+                navigate(`/recipe/${recipe.id}`);
+              }}
+              style={{
+                cursor: 'pointer',
+                pointerEvents: 'auto',
+                touchAction: 'manipulation'
+              }}
             >
               <div className="relative overflow-hidden rounded-t-lg">
                 <img 
@@ -162,8 +172,15 @@ const Recipes = () => {
                 <Button 
                   className="w-full bg-orange-600 hover:bg-orange-700 h-12 text-base font-semibold"
                   onClick={(e) => {
+                    console.log('🔥 Recipe button clicked:', recipe.id);
                     e.stopPropagation();
                     navigate(`/recipe/${recipe.id}`);
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                    pointerEvents: 'auto',
+                    touchAction: 'manipulation',
+                    minHeight: '48px'
                   }}
                 >
                   View Recipe & Buy Spices
