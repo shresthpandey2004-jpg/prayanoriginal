@@ -166,30 +166,30 @@ const RecipeDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 pb-20 lg:pb-0">
       <Header />
       <CartDrawer />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-4 lg:py-8">
         {/* Back Button */}
         <Button 
           variant="ghost" 
           onClick={() => navigate('/recipes')}
-          className="mb-6 flex items-center gap-2"
+          className="mb-4 lg:mb-6 flex items-center gap-2"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Recipes
         </Button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
           {/* Recipe Info */}
-          <div className="lg:col-span-2">
-            <Card>
+          <div className="lg:col-span-2 order-2 lg:order-1">
+            <Card className="mb-4 lg:mb-0">
               <div className="relative">
                 <img 
                   src={recipe.image} 
                   alt={recipe.name}
-                  className="w-full h-64 object-cover rounded-t-lg"
+                  className="w-full h-48 lg:h-64 object-cover rounded-t-lg"
                 />
                 <div className="absolute top-4 right-4">
                   <Badge className={getDifficultyColor(recipe.difficulty)}>
@@ -198,44 +198,44 @@ const RecipeDetail = () => {
                 </div>
               </div>
               
-              <CardHeader>
-                <CardTitle className="text-3xl font-bold text-gray-800">
+              <CardHeader className="p-4 lg:p-6">
+                <CardTitle className="text-xl lg:text-3xl font-bold text-gray-800">
                   {recipe.name}
                 </CardTitle>
-                <p className="text-lg text-orange-600 font-medium">
+                <p className="text-base lg:text-lg text-orange-600 font-medium">
                   {recipe.nameHindi}
                 </p>
-                <p className="text-gray-600 mt-2">
+                <p className="text-gray-600 mt-2 text-sm lg:text-base">
                   {recipe.description}
                 </p>
                 
-                <div className="flex items-center gap-6 mt-4">
+                <div className="flex flex-wrap items-center gap-3 lg:gap-6 mt-4">
                   <div className="flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-gray-500" />
-                    <span className="text-gray-700">{recipe.cookingTime}</span>
+                    <Clock className="w-4 h-4 lg:w-5 lg:h-5 text-gray-500" />
+                    <span className="text-gray-700 text-sm lg:text-base">{recipe.cookingTime}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Users className="w-5 h-5 text-gray-500" />
-                    <span className="text-gray-700">{recipe.servings}</span>
+                    <Users className="w-4 h-4 lg:w-5 lg:h-5 text-gray-500" />
+                    <span className="text-gray-700 text-sm lg:text-base">{recipe.servings}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <ChefHat className="w-5 h-5 text-gray-500" />
-                    <span className="text-gray-700">{recipe.category}</span>
+                    <ChefHat className="w-4 h-4 lg:w-5 lg:h-5 text-gray-500" />
+                    <span className="text-gray-700 text-sm lg:text-base">{recipe.category}</span>
                   </div>
                 </div>
               </CardHeader>
               
-              <CardContent>
+              <CardContent className="p-4 lg:p-6">
                 {/* Instructions */}
                 <div className="mb-6">
-                  <h3 className="text-xl font-semibold mb-4">Instructions</h3>
+                  <h3 className="text-lg lg:text-xl font-semibold mb-4">Instructions</h3>
                   <ol className="space-y-3">
                     {recipe.instructions.map((instruction, index) => (
                       <li key={index} className="flex gap-3">
                         <span className="flex-shrink-0 w-6 h-6 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
                           {index + 1}
                         </span>
-                        <span className="text-gray-700">{instruction}</span>
+                        <span className="text-gray-700 text-sm lg:text-base">{instruction}</span>
                       </li>
                     ))}
                   </ol>
@@ -244,12 +244,12 @@ const RecipeDetail = () => {
                 {/* Tips */}
                 {recipe.tips.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="text-xl font-semibold mb-4">Chef's Tips</h3>
+                    <h3 className="text-lg lg:text-xl font-semibold mb-4">Chef's Tips</h3>
                     <ul className="space-y-2">
                       {recipe.tips.map((tip, index) => (
                         <li key={index} className="flex gap-2">
                           <span className="text-orange-600">•</span>
-                          <span className="text-gray-700">{tip}</span>
+                          <span className="text-gray-700 text-sm lg:text-base">{tip}</span>
                         </li>
                       ))}
                     </ul>
@@ -259,23 +259,23 @@ const RecipeDetail = () => {
                 {/* Nutrition Info */}
                 {recipe.nutritionInfo && (
                   <div>
-                    <h3 className="text-xl font-semibold mb-4">Nutrition Information</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <h3 className="text-lg lg:text-xl font-semibold mb-4">Nutrition Information</h3>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
                       <div className="text-center p-3 bg-gray-50 rounded-lg">
-                        <div className="font-semibold text-gray-800">{recipe.nutritionInfo.calories}</div>
-                        <div className="text-sm text-gray-600">Calories</div>
+                        <div className="font-semibold text-gray-800 text-sm lg:text-base">{recipe.nutritionInfo.calories}</div>
+                        <div className="text-xs lg:text-sm text-gray-600">Calories</div>
                       </div>
                       <div className="text-center p-3 bg-gray-50 rounded-lg">
-                        <div className="font-semibold text-gray-800">{recipe.nutritionInfo.protein}</div>
-                        <div className="text-sm text-gray-600">Protein</div>
+                        <div className="font-semibold text-gray-800 text-sm lg:text-base">{recipe.nutritionInfo.protein}</div>
+                        <div className="text-xs lg:text-sm text-gray-600">Protein</div>
                       </div>
                       <div className="text-center p-3 bg-gray-50 rounded-lg">
-                        <div className="font-semibold text-gray-800">{recipe.nutritionInfo.carbs}</div>
-                        <div className="text-sm text-gray-600">Carbs</div>
+                        <div className="font-semibold text-gray-800 text-sm lg:text-base">{recipe.nutritionInfo.carbs}</div>
+                        <div className="text-xs lg:text-sm text-gray-600">Carbs</div>
                       </div>
                       <div className="text-center p-3 bg-gray-50 rounded-lg">
-                        <div className="font-semibold text-gray-800">{recipe.nutritionInfo.fat}</div>
-                        <div className="text-sm text-gray-600">Fat</div>
+                        <div className="font-semibold text-gray-800 text-sm lg:text-base">{recipe.nutritionInfo.fat}</div>
+                        <div className="text-xs lg:text-sm text-gray-600">Fat</div>
                       </div>
                     </div>
                   </div>
@@ -285,19 +285,19 @@ const RecipeDetail = () => {
           </div>
 
           {/* Spices Shopping Cart */}
-          <div className="lg:col-span-1">
-            <Card className="sticky top-4">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <ShoppingCart className="w-5 h-5" />
+          <div className="lg:col-span-1 order-1 lg:order-2">
+            <Card className="lg:sticky lg:top-4">
+              <CardHeader className="p-4 lg:p-6">
+                <CardTitle className="flex items-center gap-2 text-lg lg:text-xl">
+                  <ShoppingCart className="w-4 h-4 lg:w-5 lg:h-5" />
                   Required Spices
                 </CardTitle>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs lg:text-sm text-gray-600">
                   Click to add/remove spices for this recipe
                 </p>
               </CardHeader>
               
-              <CardContent>
+              <CardContent className="p-4 lg:p-6">
                 <div className="space-y-3 mb-6">
                   {recipe.ingredients.map(ingredient => {
                     const product = getSpiceProduct(ingredient.id);
@@ -315,9 +315,9 @@ const RecipeDetail = () => {
                         onClick={() => toggleSpice(ingredient.id)}
                       >
                         <div className="flex items-center justify-between mb-2">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <span className="font-medium text-gray-800">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="font-medium text-gray-800 text-sm lg:text-base">
                                 {ingredient.name}
                               </span>
                               {ingredient.optional && (
@@ -329,22 +329,23 @@ const RecipeDetail = () => {
                                 <Check className="w-4 h-4 text-green-600" />
                               )}
                             </div>
-                            <div className="text-sm text-gray-600">
+                            <div className="text-xs lg:text-sm text-gray-600">
                               Recipe needs: {ingredient.quantity}
                             </div>
                             {product && (
-                              <div className="text-sm font-medium text-orange-600">
+                              <div className="text-xs lg:text-sm font-medium text-orange-600">
                                 ₹{product.price} per pack
                               </div>
                             )}
                           </div>
                           
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1 lg:gap-2 flex-shrink-0">
                             {isSelected && (
                               <>
                                 <Button
                                   size="sm"
                                   variant="outline"
+                                  className="h-8 w-8 p-0"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     updateQuantity(ingredient.id, -1);
@@ -353,12 +354,13 @@ const RecipeDetail = () => {
                                 >
                                   <Minus className="w-3 h-3" />
                                 </Button>
-                                <span className="w-8 text-center font-medium">
+                                <span className="w-6 lg:w-8 text-center font-medium text-sm">
                                   {quantities[ingredient.id] || 1}
                                 </span>
                                 <Button
                                   size="sm"
                                   variant="outline"
+                                  className="h-8 w-8 p-0"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     updateQuantity(ingredient.id, 1);
@@ -377,14 +379,14 @@ const RecipeDetail = () => {
 
                 <Separator className="my-4" />
                 
-                <div className="space-y-4">
+                <div className="space-y-3 lg:space-y-4">
                   <div className="flex justify-between items-center">
-                    <span className="font-medium">Selected Spices:</span>
-                    <span className="font-bold">{selectedSpices.size}</span>
+                    <span className="font-medium text-sm lg:text-base">Selected Spices:</span>
+                    <span className="font-bold text-sm lg:text-base">{selectedSpices.size}</span>
                   </div>
                   
                   <div className="flex justify-between items-center">
-                    <span className="font-medium">Total Price:</span>
+                    <span className="font-medium text-sm lg:text-base">Total Price:</span>
                     <span className="font-bold text-lg text-orange-600">
                       ₹{getTotalPrice()}
                     </span>
@@ -392,7 +394,7 @@ const RecipeDetail = () => {
                   
                   <Button 
                     onClick={addSelectedSpicesToCart}
-                    className="w-full bg-orange-600 hover:bg-orange-700"
+                    className="w-full bg-orange-600 hover:bg-orange-700 text-sm lg:text-base"
                     disabled={selectedSpices.size === 0}
                   >
                     Add {selectedSpices.size} Spices to Cart
@@ -401,18 +403,10 @@ const RecipeDetail = () => {
                   <Button 
                     onClick={() => navigate('/checkout')}
                     variant="outline"
-                    className="w-full"
+                    className="w-full text-sm lg:text-base"
                     disabled={selectedSpices.size === 0}
                   >
                     Buy Now
-                  </Button>
-                  
-                  <Button 
-                    onClick={() => window.open(`/recipe/${recipe.id}.html`, '_blank')}
-                    variant="secondary"
-                    className="w-full mt-2"
-                  >
-                    View Full Recipe Page
                   </Button>
                 </div>
               </CardContent>
