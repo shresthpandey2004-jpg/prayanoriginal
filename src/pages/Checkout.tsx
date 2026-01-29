@@ -267,8 +267,19 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
           timestamp: new Date().toISOString(),
           status: 'confirmed' as const,
           paymentStatus: 'completed' as const,
-          paymentId: paymentResult.paymentId || 'razorpay_payment',
-          paymentMethod: 'online'
+          paymentId: (paymentResult as any).paymentId || 'razorpay_payment',
+          paymentMethod: 'online',
+          statusHistory: [{
+            status: 'confirmed',
+            timestamp: new Date().toISOString(),
+            message: 'Order confirmed after successful payment',
+            location: 'Online'
+          }],
+          notifications: {
+            sms: true,
+            email: true,
+            whatsapp: true
+          }
         };
         
         const success = await addOrder(order);
@@ -306,7 +317,18 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
           timestamp: new Date().toISOString(),
           status: 'confirmed' as const,
           paymentStatus: 'pending' as const,
-          paymentMethod: 'cod'
+          paymentMethod: 'cod',
+          statusHistory: [{
+            status: 'confirmed',
+            timestamp: new Date().toISOString(),
+            message: 'COD order confirmed - Payment pending on delivery',
+            location: 'Online'
+          }],
+          notifications: {
+            sms: true,
+            email: true,
+            whatsapp: true
+          }
         };
         
         const success = await addOrder(order);

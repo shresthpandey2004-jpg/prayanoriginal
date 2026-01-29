@@ -92,7 +92,7 @@ class RazorpayService {
   }
 
   // Simplified payment initiation
-  async initiatePayment(orderData: OrderData): Promise<{ success: boolean; error?: string }> {
+  async initiatePayment(orderData: OrderData): Promise<{ success: boolean; error?: string; paymentId?: string; orderId?: string; signature?: string }> {
     try {
       console.log('Starting payment process...');
       
