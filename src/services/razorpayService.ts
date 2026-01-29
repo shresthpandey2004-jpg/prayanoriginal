@@ -53,8 +53,9 @@ class RazorpayService {
   private keyId: string;
 
   constructor() {
-    // Using LIVE production keys - REAL PAYMENTS ENABLED!
-    this.keyId = 'rzp_live_S9YzsBurtPax5w';
+    // Using LIVE production keys from environment variables - REAL PAYMENTS ENABLED!
+    this.keyId = import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_S9YzsBurtPax5w';
+    console.log('🔥 RAZORPAY LIVE MODE ACTIVATED:', this.keyId);
   }
 
   // Load Razorpay script with better error handling
