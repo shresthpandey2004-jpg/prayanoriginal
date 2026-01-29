@@ -124,7 +124,13 @@ class RazorpayService {
           description: `Order #${orderData.orderId}`,
           handler: (response: RazorpayResponse) => {
             console.log('Payment successful:', response);
-            resolve({ success: true });
+            // ✅ RETURN PAYMENT DETAILS FOR VERIFICATION
+            resolve({ 
+              success: true, 
+              paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id,
+              signature: response.razorpay_signature
+            });
           },
           prefill: {
             name: orderData.customerDetails.name,
@@ -136,8 +142,11 @@ class RazorpayService {
           },
           modal: {
             ondismiss: () => {
-              console.log('Payment cancelled');
-              resolve({ success: false, error: 'Payment cancelled by user' });
+              console.log('Payment cancelled by user');
+              resolve({ 
+                success: false, 
+                error: 'Payment cancelled by user. No money was charged.' 
+              });
             },
           },
         };

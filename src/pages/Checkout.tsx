@@ -227,7 +227,7 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
 
       // Handle payment based on method
       if (customerDetails.paymentMethod === 'online') {
-        // Process online payment with Razorpay
+        // Process online payment with Razorpay - ONLY CREATE ORDER AFTER SUCCESSFUL PAYMENT
         const paymentResult = await razorpayService.initiatePayment({
           orderId,
           amount: totalAmount,
@@ -248,14 +248,16 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
         if (!paymentResult.success) {
           toast({
             title: "Payment Failed",
-            description: paymentResult.error || "Payment was cancelled or failed",
+            description: paymentResult.error || "Payment was cancelled or failed. No money was charged.",
             variant: "destructive"
           });
           setIsLoading(false);
           return;
         }
 
-        // Payment successful - create order
+        // ✅ PAYMENT SUCCESSFUL - NOW CREATE ORDER
+        console.log('Payment successful, creating order...', paymentResult);
+        
         const order = {
           id: orderId,
           items: [...items],
@@ -264,7 +266,9 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
           deliveryCharge: deliveryInfo.charge,
           timestamp: new Date().toISOString(),
           status: 'confirmed' as const,
-          paymentStatus: 'completed' as const
+          paymentStatus: 'completed' as const,
+          paymentId: paymentResult.paymentId || 'razorpay_payment',
+          paymentMethod: 'online'
         };
         
         const success = await addOrder(order);
@@ -284,13 +288,15 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
 
         toast({
           title: "Payment Successful! 🎉",
-          description: `Order ID: ${orderId}. Payment completed successfully.`,
+          description: `Order ID: ${orderId}. Payment of ₹${totalAmount} completed successfully.`,
         });
 
         navigate(`/order-confirmation/${orderId}`);
 
       } else {
-        // Handle COD order
+        // ✅ HANDLE COD ORDER - CREATE IMMEDIATELY (NO PAYMENT REQUIRED)
+        console.log('Creating COD order...');
+        
         const order = {
           id: orderId,
           items: [...items],
@@ -299,7 +305,8 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
           deliveryCharge: deliveryInfo.charge,
           timestamp: new Date().toISOString(),
           status: 'confirmed' as const,
-          paymentStatus: 'pending' as const
+          paymentStatus: 'pending' as const,
+          paymentMethod: 'cod'
         };
         
         const success = await addOrder(order);
