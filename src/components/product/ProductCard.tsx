@@ -17,13 +17,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className, viewMode 
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
+    // Use the first weight option as default, or the base weight
+    const defaultWeight = product.weightOptions?.[0] || { weight: product.weight, price: product.price, originalPrice: product.originalPrice };
+    
     addToCart({
       id: product.id,
-      name: product.name,
-      price: product.price,
-      originalPrice: product.originalPrice,
+      name: `${product.name} (${defaultWeight.weight})`,
+      price: defaultWeight.price,
+      originalPrice: defaultWeight.originalPrice,
       image: product.image,
-      weight: product.weight,
+      weight: defaultWeight.weight,
     });
   };
 

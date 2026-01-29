@@ -34,8 +34,9 @@ const ProductDetail: React.FC = () => {
     for (let i = 0; i < quantity; i++) {
       addToCart({
         id: product.id,
-        name: product.name,
+        name: `${product.name} (${currentWeight})`,
         price: currentPrice,
+        originalPrice: currentOriginalPrice,
         image: product.image,
         weight: currentWeight,
       });

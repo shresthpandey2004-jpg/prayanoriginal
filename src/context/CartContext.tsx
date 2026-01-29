@@ -136,13 +136,18 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const addToCart = (item: Omit<CartItem, 'quantity'>) => {
     setItems(prev => {
-      const existing = prev.find(i => i.id === item.id);
+      // Create unique ID combining product ID and weight for different variants
+      const uniqueId = `${item.id}-${item.weight}`;
+      const existing = prev.find(i => i.id === item.id && i.weight === item.weight);
+      
       if (existing) {
         return prev.map(i =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+          (i.id === item.id && i.weight === item.weight) ? { ...i, quantity: i.quantity + 1 } : i
         );
       }
-      return [...prev, { ...item, quantity: 1 }];
+      
+      // Create new item with unique identifier
+      return [...prev, { ...item, id: uniqueId, quantity: 1 }];
     });
     setIsCartOpen(true);
   };

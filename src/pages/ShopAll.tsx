@@ -236,13 +236,16 @@ const ShopAll: React.FC = () => {
                     <Button 
                       className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white py-3 rounded-xl font-semibold"
                       onClick={() => {
+                        // Use the first weight option as default, or the base weight
+                        const defaultWeight = product.weightOptions?.[0] || { weight: product.weight, price: product.price, originalPrice: product.originalPrice };
+                        
                         addToCart({
                           id: product.id,
-                          name: product.name,
-                          price: product.price,
-                          originalPrice: product.originalPrice,
+                          name: `${product.name} (${defaultWeight.weight})`,
+                          price: defaultWeight.price,
+                          originalPrice: defaultWeight.originalPrice,
                           image: product.image,
-                          weight: product.weight,
+                          weight: defaultWeight.weight,
                         });
                       }}
                     >
