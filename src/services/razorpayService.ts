@@ -12,6 +12,7 @@ export interface RazorpayOptions {
   currency: string;
   name: string;
   description: string;
+  image?: string;
   handler: (response: RazorpayResponse) => void;
   prefill: {
     name: string;
@@ -23,6 +24,22 @@ export interface RazorpayOptions {
   };
   modal: {
     ondismiss: () => void;
+  };
+  config?: {
+    display: {
+      blocks: {
+        banks: {
+          name: string;
+          instruments: Array<{
+            method: string;
+          }>;
+        };
+      };
+      sequence: string[];
+      preferences: {
+        show_default_blocks: boolean;
+      };
+    };
   };
 }
 
@@ -147,7 +164,8 @@ class RazorpayService {
           amount: orderData.amount * 100, // Convert to paise
           currency: orderData.currency,
           name: 'PRAYAN Masale',
-          description: `Order #${orderData.orderId}`,
+          description: `Order #${orderData.orderId} - Premium Spices`,
+          image: 'https://prayan.shop/prayan-logo.png', // Company logo
           handler: (response: RazorpayResponse) => {
             console.log('Payment successful:', response);
             // ✅ RETURN PAYMENT DETAILS FOR VERIFICATION
@@ -175,6 +193,27 @@ class RazorpayService {
               });
             },
           },
+          config: {
+            display: {
+              blocks: {
+                banks: {
+                  name: 'Pay using Bank Account',
+                  instruments: [
+                    {
+                      method: 'upi'
+                    },
+                    {
+                      method: 'netbanking'
+                    }
+                  ]
+                }
+              },
+              sequence: ['block.banks'],
+              preferences: {
+                show_default_blocks: true
+              }
+            }
+          }
         };
 
         try {
