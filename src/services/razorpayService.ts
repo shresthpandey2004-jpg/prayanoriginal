@@ -54,8 +54,24 @@ class RazorpayService {
 
   constructor() {
     // Using LIVE production keys from environment variables - REAL PAYMENTS ENABLED!
-    this.keyId = import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_S9YzsBurtPax5w';
-    console.log('🔥 RAZORPAY LIVE MODE ACTIVATED:', this.keyId);
+    const envKeyId = import.meta.env.VITE_RAZORPAY_KEY_ID;
+    const fallbackKeyId = 'rzp_live_S9YzsBurtPax5w';
+    
+    this.keyId = envKeyId || fallbackKeyId;
+    
+    console.log('🔍 RAZORPAY DEBUG INFO:');
+    console.log('Environment Key ID:', envKeyId);
+    console.log('Fallback Key ID:', fallbackKeyId);
+    console.log('Final Key ID:', this.keyId);
+    console.log('All env vars:', import.meta.env);
+    
+    if (this.keyId.startsWith('rzp_live_')) {
+      console.log('🔥 RAZORPAY LIVE MODE ACTIVATED:', this.keyId);
+    } else if (this.keyId.startsWith('rzp_test_')) {
+      console.log('⚠️ RAZORPAY TEST MODE DETECTED:', this.keyId);
+    } else {
+      console.log('❌ UNKNOWN RAZORPAY KEY FORMAT:', this.keyId);
+    }
   }
 
   // Load Razorpay script with better error handling
