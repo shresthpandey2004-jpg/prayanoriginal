@@ -53,20 +53,34 @@ class RazorpayService {
   private keyId: string;
 
   constructor() {
-    // 🚀 FRESH LIVE KEYS - REGENERATED AFTER KYC APPROVAL
-    // These keys are synchronized with activated live account
-    this.keyId = 'rzp_live_S9hhs3GBHcB4tt';
+    // 🚀 MULTIPLE FALLBACK METHODS TO FORCE LIVE MODE
+    // Try environment variable first, then hardcoded as fallback
+    const envKeyId = import.meta.env.VITE_RAZORPAY_KEY_ID;
+    const hardcodedKeyId = 'rzp_live_S9hhs3GBHcB4tt';
     
-    console.log('🚀 FRESH LIVE KEYS ACTIVATED:', this.keyId);
-    console.log('✅ KYC APPROVED - Account fully activated for live payments');
+    // Use environment variable if available, otherwise hardcoded
+    this.keyId = envKeyId || hardcodedKeyId;
     
-    // Verify live mode configuration
+    console.log('🚀 RAZORPAY LIVE MODE INITIALIZATION');
+    console.log('Environment Key:', envKeyId);
+    console.log('Hardcoded Key:', hardcodedKeyId);
+    console.log('Using Key:', this.keyId);
+    
+    // Force live mode verification
     if (this.keyId.startsWith('rzp_live_')) {
-      console.log('✅ LIVE MODE CONFIRMED - Ready for real payments!');
-      console.log('💰 Test mode banner should now be gone!');
+      console.log('✅ LIVE MODE CONFIRMED - Key starts with rzp_live_');
+      console.log('🎯 If test mode banner still shows, this is a Razorpay backend sync issue');
+      console.log('⏰ Usually resolves in 15-30 minutes after key regeneration');
     } else {
-      console.error('❌ ERROR: Test keys detected - should use live keys');
+      console.error('❌ CRITICAL ERROR: Test key detected!');
+      console.error('🔧 Falling back to hardcoded live key...');
+      this.keyId = hardcodedKeyId;
     }
+    
+    // Additional debugging
+    console.log('🔍 Final Key ID:', this.keyId);
+    console.log('🔍 Key Length:', this.keyId.length);
+    console.log('🔍 Is Live Key:', this.keyId.startsWith('rzp_live_'));
   }
 
   // Load Razorpay script with better error handling
