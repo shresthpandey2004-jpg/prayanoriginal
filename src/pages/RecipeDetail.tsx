@@ -24,6 +24,8 @@ const RecipeDetail = () => {
   
   console.log('🔍 RecipeDetail - ID from params:', id);
   console.log('🔍 RecipeDetail - All recipes:', recipes.map(r => r.id));
+  console.log('🔍 RecipeDetail - User Agent:', navigator.userAgent);
+  console.log('🔍 RecipeDetail - Screen size:', window.innerWidth, 'x', window.innerHeight);
   
   const recipe = id ? getRecipeById(id) : null;
   
@@ -66,17 +68,28 @@ const RecipeDetail = () => {
   }
 
   if (!recipe) {
-    console.log('Recipe not found for ID:', id);
-    console.log('Available recipe IDs:', recipes.map(r => r.id));
+    console.log('❌ Recipe not found for ID:', id);
+    console.log('📱 Available recipe IDs:', recipes.map(r => r.id));
+    console.log('🔍 Is mobile?', /Mobi|Android/i.test(navigator.userAgent));
+    
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
         <Header />
         <div className="flex items-center justify-center min-h-[50vh] p-4">
-          <div className="text-center">
+          <div className="text-center max-w-md">
+            <div className="text-6xl mb-4">🍛</div>
             <h2 className="text-xl font-bold text-gray-800 mb-4">Recipe not found</h2>
-            <p className="mb-4 text-sm">Recipe ID: {id}</p>
-            <p className="mb-4 text-sm">Available IDs: {recipes.map(r => r.id).join(', ')}</p>
-            <Button onClick={() => navigate('/recipes')}>
+            <div className="bg-white p-4 rounded-lg mb-4 text-left">
+              <p className="text-sm mb-2"><strong>Recipe ID:</strong> {id}</p>
+              <p className="text-sm mb-2"><strong>Available IDs:</strong></p>
+              <div className="text-xs bg-gray-100 p-2 rounded max-h-32 overflow-y-auto">
+                {recipes.map(r => r.id).join(', ')}
+              </div>
+            </div>
+            <Button 
+              onClick={() => navigate('/recipes')}
+              className="w-full bg-orange-600 hover:bg-orange-700"
+            >
               Back to Recipes
             </Button>
           </div>
@@ -202,6 +215,9 @@ const RecipeDetail = () => {
                   alt={recipe.name}
                   className="w-full h-48 lg:h-64 object-cover"
                   loading="lazy"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&h=400&fit=crop';
+                  }}
                 />
                 <div className="absolute top-4 right-4">
                   <Badge className={getDifficultyColor(recipe.difficulty)}>

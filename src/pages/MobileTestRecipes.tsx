@@ -46,7 +46,41 @@ const MobileTestRecipes = () => {
           </div>
         </div>
 
-        {/* Test Buttons */}
+        {/* Test Recipe Links */}
+        <div className="mb-6 space-y-3">
+          <h3 className="font-semibold mb-2">Direct Recipe Links (for testing):</h3>
+          <div className="space-y-2">
+            <Button 
+              className="w-full h-12 bg-purple-600 hover:bg-purple-700"
+              onClick={() => {
+                addLog('Navigating to dal-tadka recipe');
+                navigate('/recipe/dal-tadka');
+              }}
+            >
+              Test Dal Tadka Recipe
+            </Button>
+            
+            <Button 
+              className="w-full h-12 bg-purple-600 hover:bg-purple-700"
+              onClick={() => {
+                addLog('Navigating to chicken-curry recipe');
+                navigate('/recipe/chicken-curry');
+              }}
+            >
+              Test Chicken Curry Recipe
+            </Button>
+            
+            <Button 
+              className="w-full h-12 bg-purple-600 hover:bg-purple-700"
+              onClick={() => {
+                addLog('Navigating to aloo-gobi recipe');
+                navigate('/recipe/aloo-gobi');
+              }}
+            >
+              Test Aloo Gobi Recipe
+            </Button>
+          </div>
+        </div>
         <div className="mb-6 space-y-3">
           <Button 
             className="w-full h-12 bg-blue-600 hover:bg-blue-700"
