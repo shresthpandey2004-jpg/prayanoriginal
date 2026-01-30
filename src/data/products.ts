@@ -221,9 +221,9 @@ export const products: Product[] = [
   // Combo Packs - 500g
   {
     id: 'combo-haldi-chilli',
-    name: 'Combo Pack: Haldi + Chilli',
+    name: 'Combo Pack: Turmeric + Chilli',
     nameHindi: 'कॉम्बो पैक: हल्दी + मिर्च',
-    description: 'Perfect combo of Haldi + Chilli for everyday cooking needs.',
+    description: 'Perfect combo of Turmeric + Chilli for everyday cooking needs.',
     price: 175, // Base price for 250g combo (reduced by ₹40)
     originalPrice: 270, // Original price higher than current
     image: '/products/combo-pack-2-spice.jpg',
@@ -235,7 +235,7 @@ export const products: Product[] = [
     lowStockThreshold: 15,
     isInStock: true,
     sku: 'PM-COMBO-HC-250', // Default SKU (updated)
-    ingredients: ['Haldi', 'Red Chilli'],
+    ingredients: ['Turmeric Powder', 'Red Chilli Powder'],
     benefits: ['Complete spice solution', 'Cost effective', 'Fresh quality'],
     usageIdeas: ['Daily cooking', 'All curries', 'Rice dishes'],
     weightOptions: [
@@ -300,7 +300,7 @@ export const products: Product[] = [
     description: 'Classic combination of Haldi + Dhaniya for traditional cooking.',
     price: 155, // Base price for 250g combo (updated - total 500g)
     originalPrice: 195, // Original price higher than current
-    image: '/products/combo-pack-2-spice.jpg',
+    image: '/products/combo-pack-haldi-dhaniya.jpg',
     category: 'Combo Packs',
     weight: '250g', // Default weight (updated)
     rating: 4.8,
@@ -309,7 +309,7 @@ export const products: Product[] = [
     lowStockThreshold: 15,
     isInStock: true,
     sku: 'PM-COMBO-HD-250', // Default SKU (updated)
-    ingredients: ['Haldi', 'Dhaniya'],
+    ingredients: ['Haldi Powder', 'Dhaniya Powder'],
     benefits: ['Health benefits', 'Traditional combo', 'Premium quality'],
     usageIdeas: ['Dal tadka', 'Curry base', 'Vegetable cooking'],
     weightOptions: [
