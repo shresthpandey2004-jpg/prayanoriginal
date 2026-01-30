@@ -263,7 +263,7 @@ export const products: Product[] = [
     description: 'Essential combo of Dhaniya + Chilli for authentic Indian flavors.',
     price: 150, // Base price for 250g combo (updated - total 500g)
     originalPrice: 190, // Original price higher than current
-    image: '/products/combo-pack.jpeg',
+    image: '/products/dhaniya-chilli-combo.jpg',
     category: 'Combo Packs',
     weight: '250g', // Default weight (updated)
     rating: 4.7,
