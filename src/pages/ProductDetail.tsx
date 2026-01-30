@@ -6,18 +6,28 @@ import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/cart/CartDrawer';
 import WhatsAppButton from '@/components/common/WhatsAppButton';
 import ProductCard from '@/components/product/ProductCard';
+import RecentlyViewed from '@/components/product/RecentlyViewed';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
+import { useRecentlyViewed } from '@/context/RecentlyViewedContext';
 import { products } from '@/data/products';
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
+  const { addToRecentlyViewed } = useRecentlyViewed();
   const [quantity, setQuantity] = React.useState(1);
   const [selectedWeightIndex, setSelectedWeightIndex] = React.useState(0);
 
   const product = products.find(p => p.id === id);
   const relatedProducts = products.filter(p => p.id !== id && p.category === product?.category).slice(0, 4);
+
+  // Add to recently viewed when product loads
+  React.useEffect(() => {
+    if (product) {
+      addToRecentlyViewed(product);
+    }
+  }, [product, addToRecentlyViewed]);
 
   if (!product) {
     return <div className="min-h-screen flex items-center justify-center">Product not found</div>;
@@ -150,6 +160,11 @@ const ProductDetail: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* Recently Viewed Products */}
+          <section className="mb-16">
+            <RecentlyViewed maxItems={5} />
+          </section>
 
           {/* Related Products */}
           {relatedProducts.length > 0 && (

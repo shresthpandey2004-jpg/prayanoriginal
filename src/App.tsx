@@ -48,6 +48,7 @@ import TestLoyalty from "./pages/TestLoyalty";
 import TestAuth from "./pages/TestAuth";
 import DebugUsers from "./pages/DebugUsers";
 import MobileBottomNav from "./components/mobile/MobileBottomNav";
+import { RecentlyViewedProvider } from "@/context/RecentlyViewedContext";
 import MobileTestRecipes from "./pages/MobileTestRecipes";
 import PWAInstallPrompt from "./components/mobile/PWAInstallPrompt";
 
@@ -68,7 +69,8 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <LoyaltyProvider>
+        <RecentlyViewedProvider>
+          <LoyaltyProvider>
           <ReviewProvider>
             <WishlistProvider>
               <CouponProvider>
@@ -129,7 +131,8 @@ const App = () => {
               </WishlistProvider>
             </ReviewProvider>
           </LoyaltyProvider>
-        </AuthProvider>
+        </RecentlyViewedProvider>
+      </AuthProvider>
       </QueryClientProvider>
   );
 };
