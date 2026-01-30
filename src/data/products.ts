@@ -263,7 +263,7 @@ export const products: Product[] = [
     description: 'Essential combo of Dhaniya + Chilli for authentic Indian flavors.',
     price: 150, // Base price for 250g combo (updated - total 500g)
     originalPrice: 190, // Original price higher than current
-    image: '/products/combo-pack-2-spice.jpg',
+    image: '/products/combo-pack.jpeg',
     category: 'Combo Packs',
     weight: '250g', // Default weight (updated)
     rating: 4.7,
@@ -300,7 +300,7 @@ export const products: Product[] = [
     description: 'Classic combination of Haldi + Dhaniya for traditional cooking.',
     price: 155, // Base price for 250g combo (updated - total 500g)
     originalPrice: 195, // Original price higher than current
-    image: '/products/combo-pack-haldi-dhaniya.jpg',
+    image: '/products/combo-pack-2-spice.jpg',
     category: 'Combo Packs',
     weight: '250g', // Default weight (updated)
     rating: 4.8,
