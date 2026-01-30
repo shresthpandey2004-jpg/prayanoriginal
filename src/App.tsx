@@ -30,7 +30,7 @@ import AdminLogin from "./pages/AdminLogin";
 import Loyalty from "./pages/Loyalty";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import Recipes from "./pages/Recipes";
-import RecipeDetail from "./pages/RecipeDetail";
+import RecipeDetailSimple from "./pages/RecipeDetailSimple";
 import RecipeDetailDebug from "./pages/RecipeDetailDebug";
 import SimpleRecipes from "./pages/SimpleRecipes";
 import SimpleRecipeDetail from "./pages/SimpleRecipeDetail";
@@ -95,7 +95,7 @@ const App = () => {
                               <Route path="/loyalty" element={<Loyalty />} />
                               <Route path="/return-policy" element={<ReturnPolicy />} />
                               <Route path="/recipes" element={<Recipes />} />
-                              <Route path="/recipe/:id" element={<RecipeDetail />} />
+                              <Route path="/recipe/:id" element={<RecipeDetailSimple />} />
                               <Route path="/recipe-debug/:id" element={<RecipeDetailDebug />} />
                               <Route path="/simple-recipes" element={<SimpleRecipes />} />
                               <Route path="/simple-recipe/:id" element={<SimpleRecipeDetail />} />
