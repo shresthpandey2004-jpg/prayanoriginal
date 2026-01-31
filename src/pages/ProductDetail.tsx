@@ -7,6 +7,7 @@ import CartDrawer from '@/components/cart/CartDrawer';
 import WhatsAppButton from '@/components/common/WhatsAppButton';
 import ProductCard from '@/components/product/ProductCard';
 import RecentlyViewed from '@/components/product/RecentlyViewed';
+import SEOHead from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useRecentlyViewed } from '@/context/RecentlyViewedContext';
@@ -55,6 +56,17 @@ const ProductDetail: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title={`${product.name} - Premium ${product.category} | Prayan Masale`}
+        description={`Buy ${product.name} online. ${product.description} ₹${currentPrice} with free delivery. 100% authentic, lab tested quality.`}
+        keywords={`${product.name.toLowerCase()}, ${product.category.toLowerCase()}, buy ${product.name.toLowerCase()} online, ${product.nameHindi}, premium spices, organic spices`}
+        image={`https://prayan-shop.shop${product.image}`}
+        url={`https://prayan-shop.shop/product/${product.id}`}
+        type="product"
+        price={currentPrice}
+        availability={currentStock > 0 ? "InStock" : "OutOfStock"}
+        category={product.category}
+      />
       <Header />
       <CartDrawer />
 

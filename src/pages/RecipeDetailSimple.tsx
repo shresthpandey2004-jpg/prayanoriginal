@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Header from '@/components/layout/Header';
+import SEOHead from '@/components/seo/SEOHead';
 import { recipes } from '@/data/recipes';
 
 const RecipeDetailSimple = () => {
@@ -46,6 +47,14 @@ const RecipeDetailSimple = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 pb-20 lg:pb-0">
+      <SEOHead 
+        title={`${recipe.name} Recipe - ${recipe.nameHindi} | Prayan Masale`}
+        description={`Learn how to make ${recipe.name} (${recipe.nameHindi}) with authentic Prayan spices. ${recipe.description} Cooking time: ${recipe.cookingTime}, Serves: ${recipe.servings}.`}
+        keywords={`${recipe.name.toLowerCase()} recipe, ${recipe.nameHindi}, how to make ${recipe.name.toLowerCase()}, indian recipes, ${recipe.category.toLowerCase()} recipes, authentic recipes, prayan spices recipes`}
+        image={`https://prayan-shop.shop${recipe.image}`}
+        url={`https://prayan-shop.shop/recipe/${recipe.id}`}
+        type="article"
+      />
       <Header />
       
       <div className="container mx-auto px-4 py-4 lg:py-8">

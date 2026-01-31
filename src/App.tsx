@@ -49,6 +49,7 @@ import TestAuth from "./pages/TestAuth";
 import DebugUsers from "./pages/DebugUsers";
 import MobileBottomNav from "./components/mobile/MobileBottomNav";
 import { RecentlyViewedProvider } from "@/context/RecentlyViewedContext";
+import { HelmetProvider } from 'react-helmet-async';
 import MobileTestRecipes from "./pages/MobileTestRecipes";
 import PWAInstallPrompt from "./components/mobile/PWAInstallPrompt";
 
@@ -67,7 +68,8 @@ const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <RecentlyViewedProvider>
           <LoyaltyProvider>
@@ -134,6 +136,7 @@ const App = () => {
         </RecentlyViewedProvider>
       </AuthProvider>
       </QueryClientProvider>
+    </HelmetProvider>
   );
 };
 
