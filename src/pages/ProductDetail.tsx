@@ -60,8 +60,8 @@ const ProductDetail: React.FC = () => {
         title={`${product.name} - Premium ${product.category} | Prayan Masale`}
         description={`Buy ${product.name} online. ${product.description} ₹${currentPrice} with free delivery. 100% authentic, lab tested quality.`}
         keywords={`${product.name.toLowerCase()}, ${product.category.toLowerCase()}, buy ${product.name.toLowerCase()} online, ${product.nameHindi}, premium spices, organic spices`}
-        image={`https://prayan-shop.shop${product.image}`}
-        url={`https://prayan-shop.shop/product/${product.id}`}
+        image={product.image}
+        url={typeof window !== 'undefined' ? window.location.href : undefined}
         type="product"
         price={currentPrice}
         availability={currentStock > 0 ? "InStock" : "OutOfStock"}

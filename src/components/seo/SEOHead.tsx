@@ -19,8 +19,8 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   title = "Prayan Masale - Premium Organic Spices Online | Pure Indian Spices",
   description = "Buy premium organic spices online from Prayan Masale. Pure Haldi, Red Chilli, Dhaniya, Garam Masala. Free delivery, authentic taste, lab tested quality. Order now!",
   keywords = "organic spices online, pure spices, haldi powder, red chilli powder, dhaniya powder, garam masala, indian spices, spices online india, premium spices, authentic spices",
-  image = "https://prayan-shop.shop/prayan-logo.png",
-  url = "https://prayan-shop.shop",
+  image = "/prayan-logo.png",
+  url,
   type = "website",
   price,
   currency = "INR",
@@ -28,13 +28,18 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   brand = "Prayan Masale",
   category
 }) => {
+  // Get current domain dynamically
+  const currentDomain = typeof window !== 'undefined' ? window.location.origin : 'https://prayan-shop.shop';
+  const fullUrl = url || currentDomain;
+  const fullImageUrl = image?.startsWith('http') ? image : `${currentDomain}${image}`;
+  
   const structuredData = {
     "@context": "https://schema.org",
     "@type": type === 'product' ? "Product" : "WebSite",
     "name": title,
     "description": description,
-    "url": url,
-    "image": image,
+    "url": fullUrl,
+    "image": fullImageUrl,
     ...(type === 'product' && price && {
       "offers": {
         "@type": "Offer",
@@ -57,7 +62,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": `${url}/search?q={search_term_string}`
+          "urlTemplate": `${fullUrl}/search?q={search_term_string}`
         },
         "query-input": "required name=search_term_string"
       }
@@ -78,8 +83,8 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta property="og:type" content={type} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
-      <meta property="og:url" content={url} />
+      <meta property="og:image" content={fullImageUrl} />
+      <meta property="og:url" content={fullUrl} />
       <meta property="og:site_name" content="Prayan Masale" />
       <meta property="og:locale" content="en_IN" />
       
@@ -87,12 +92,12 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+      <meta name="twitter:image" content={fullImageUrl} />
       
       {/* Additional SEO Tags */}
       <meta name="theme-color" content="#ea580c" />
       <meta name="msapplication-TileColor" content="#ea580c" />
-      <link rel="canonical" href={url} />
+      <link rel="canonical" href={fullUrl} />
       
       {/* Structured Data */}
       <script type="application/ld+json">
@@ -107,7 +112,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
             "@type": "LocalBusiness",
             "name": "Prayan Masale",
             "description": "Premium organic spices and masalas online store",
-            "url": "https://prayan-shop.shop",
+            "url": currentDomain,
             "telephone": "+91-XXXXXXXXXX",
             "address": {
               "@type": "PostalAddress",

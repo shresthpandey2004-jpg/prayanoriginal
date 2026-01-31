@@ -51,8 +51,8 @@ const RecipeDetailSimple = () => {
         title={`${recipe.name} Recipe - ${recipe.nameHindi} | Prayan Masale`}
         description={`Learn how to make ${recipe.name} (${recipe.nameHindi}) with authentic Prayan spices. ${recipe.description} Cooking time: ${recipe.cookingTime}, Serves: ${recipe.servings}.`}
         keywords={`${recipe.name.toLowerCase()} recipe, ${recipe.nameHindi}, how to make ${recipe.name.toLowerCase()}, indian recipes, ${recipe.category.toLowerCase()} recipes, authentic recipes, prayan spices recipes`}
-        image={`https://prayan-shop.shop${recipe.image}`}
-        url={`https://prayan-shop.shop/recipe/${recipe.id}`}
+        image={recipe.image}
+        url={typeof window !== 'undefined' ? window.location.href : undefined}
         type="article"
       />
       <Header />

@@ -20,7 +20,7 @@ const Index: React.FC = () => {
         title="Prayan Masale - Premium Organic Spices Online | Pure Indian Spices | Free Delivery"
         description="Buy premium organic spices online from Prayan Masale. Pure Haldi, Red Chilli, Dhaniya, Garam Masala. 100% authentic, lab tested, free delivery. Order now and taste the difference!"
         keywords="organic spices online, pure spices india, haldi powder online, red chilli powder, dhaniya powder, garam masala, indian spices online, spices home delivery, premium masale, authentic spices, lab tested spices, free delivery spices"
-        url="https://prayan-shop.shop"
+        url={typeof window !== 'undefined' ? window.location.href : undefined}
         type="website"
       />
       <Header />
