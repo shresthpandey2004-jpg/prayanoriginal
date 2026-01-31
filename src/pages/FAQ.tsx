@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown, ChevronUp, Search, MessageCircle, Phone, Mail } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -22,97 +22,25 @@ const faqs: FAQ[] = [
     id: "organic-certification",
     question: "Are your spices really organic and certified?",
     questionHindi: "क्या आपके मसाले वास्तव में जैविक और प्रमाणित हैं?",
-    answer: "Yes, all our spices are 100% organic and certified by India Organic and FSSAI. We source directly from certified organic farms and conduct regular third-party lab testing to ensure purity. Each batch comes with certification documents and lab reports for complete transparency.",
+    answer: "Yes, all our spices are 100% organic and certified by India Organic and FSSAI. We source directly from certified organic farms and conduct regular third-party lab testing to ensure purity.",
     category: "Quality & Certification",
-    tags: ["organic", "certification", "quality", "lab-tested"]
+    tags: ["organic", "certification", "quality"]
   },
   {
     id: "spice-freshness",
     question: "How do you ensure the freshness of your spices?",
     questionHindi: "आप अपने मसालों की ताजगी कैसे सुनिश्चित करते हैं?",
-    answer: "We grind our spices in small batches to order, ensuring maximum freshness. Our spices are stored in temperature-controlled environments and packaged in airtight, food-grade materials. We also provide manufacturing and expiry dates on all products, and most of our ground spices have a shelf life of 12-18 months.",
+    answer: "We grind our spices in small batches to order, ensuring maximum freshness. Our spices are stored in temperature-controlled environments and packaged in airtight, food-grade materials.",
     category: "Freshness & Storage",
-    tags: ["freshness", "grinding", "storage", "shelf-life"]
-  },
-  {
-    id: "turmeric-benefits",
-    question: "What makes your turmeric powder special?",
-    questionHindi: "आपका हल्दी पाउडर क्या खास है?",
-    answer: "Our turmeric powder is made from premium organic turmeric roots with high curcumin content (3-5%). It's grown without chemicals, naturally dried, and stone-ground to preserve essential oils. The vibrant color and strong aroma indicate its purity and potency. It's perfect for both cooking and health benefits.",
-    category: "Product Specific",
-    tags: ["turmeric", "curcumin", "health-benefits", "organic"]
-  },
-  {
-    id: "storage-tips",
-    question: "How should I store spices for maximum freshness?",
-    questionHindi: "अधिकतम ताजगी के लिए मसालों को कैसे स्टोर करना चाहिए?",
-    answer: "Store spices in airtight containers away from light, heat, and moisture. Keep them in a cool, dry pantry rather than above the stove. Whole spices last 2-4 years, while ground spices are best used within 1-3 years. Label containers with purchase dates and check regularly for freshness.",
-    category: "Freshness & Storage",
-    tags: ["storage", "freshness", "containers", "shelf-life"]
+    tags: ["freshness", "grinding", "storage"]
   },
   {
     id: "shipping-delivery",
     question: "What are your shipping and delivery options?",
     questionHindi: "आपके शिपिंग और डिलीवरी विकल्प क्या हैं?",
-    answer: "We offer free shipping on orders above ₹500. Standard delivery takes 3-5 business days, while express delivery is available in 1-2 days for major cities. We use secure packaging to prevent damage and provide tracking information for all orders. Cash on delivery is available in select areas.",
+    answer: "We offer free shipping on orders above ₹500. Standard delivery takes 3-5 business days, while express delivery is available in 1-2 days for major cities.",
     category: "Shipping & Delivery",
-    tags: ["shipping", "delivery", "free-shipping", "tracking"]
-  },
-  {
-    id: "bulk-orders",
-    question: "Do you offer bulk orders for restaurants or businesses?",
-    questionHindi: "क्या आप रेस्टोरेंट या व्यवसायों के लिए बल्क ऑर्डर देते हैं?",
-    answer: "Yes, we provide special bulk pricing for restaurants, hotels, and food businesses. Minimum order quantity is 10kg per spice variety. We offer customized packaging, dedicated account management, and flexible payment terms. Contact our bulk sales team for personalized quotes and terms.",
-    category: "Bulk Orders",
-    tags: ["bulk-orders", "restaurants", "business", "wholesale"]
-  },
-  {
-    id: "return-policy",
-    question: "What is your return and refund policy?",
-    questionHindi: "आपकी वापसी और रिफंड नीति क्या है?",
-    answer: "We offer a 30-day return policy for unopened products. If you're not satisfied with the quality, we provide full refund or replacement. For opened products, we evaluate on a case-by-case basis. Damaged or defective products are replaced immediately at no cost to you.",
-    category: "Returns & Refunds",
-    tags: ["returns", "refunds", "quality-guarantee", "replacement"]
-  },
-  {
-    id: "spice-authenticity",
-    question: "How can I verify the authenticity of your spices?",
-    questionHindi: "मैं आपके मसालों की प्रामाणिकता कैसे सत्यापित कर सकता हूं?",
-    answer: "Each product comes with a QR code that links to lab test reports and certification documents. You can also verify by the natural color, aroma, and taste. Our packaging includes batch numbers for traceability. We encourage customers to compare with other brands to experience the difference in quality.",
-    category: "Quality & Certification",
-    tags: ["authenticity", "verification", "lab-reports", "traceability"]
-  },
-  {
-    id: "health-benefits",
-    question: "What are the health benefits of using organic spices?",
-    questionHindi: "जैविक मसालों के उपयोग से क्या स्वास्थ्य लाभ हैं?",
-    answer: "Organic spices are free from harmful pesticides and chemicals, making them safer for consumption. They retain higher levels of antioxidants, essential oils, and nutrients. Regular use can boost immunity, aid digestion, reduce inflammation, and provide various therapeutic benefits without the risk of chemical residues.",
-    category: "Health & Nutrition",
-    tags: ["health-benefits", "organic", "antioxidants", "immunity"]
-  },
-  {
-    id: "grinding-process",
-    question: "What is your spice grinding process?",
-    questionHindi: "आपकी मसाला पीसने की प्रक्रिया क्या है?",
-    answer: "We use traditional stone grinding methods combined with modern hygiene standards. Spices are cleaned, sorted, and ground in temperature-controlled environments to preserve essential oils. We avoid metal grinding which can generate heat and destroy nutrients. Each batch is tested for particle size and purity.",
-    category: "Processing",
-    tags: ["grinding", "stone-grinding", "processing", "quality"]
-  },
-  {
-    id: "recipe-suggestions",
-    question: "Do you provide recipes and cooking tips?",
-    questionHindi: "क्या आप रेसिपी और खाना पकाने की टिप्स देते हैं?",
-    answer: "Yes, we have a comprehensive recipe section on our website with traditional and modern Indian recipes. Each recipe includes spice usage tips, cooking techniques, and health benefits. We also share cooking tips through our blog and social media channels. Our customer service team can provide personalized cooking advice.",
-    category: "Recipes & Cooking",
-    tags: ["recipes", "cooking-tips", "usage", "guidance"]
-  },
-  {
-    id: "price-comparison",
-    question: "Why are organic spices more expensive than regular ones?",
-    questionHindi: "जैविक मसाले नियमित मसालों से महंगे क्यों होते हैं?",
-    answer: "Organic spices cost more due to chemical-free farming, lower yields, manual processing, and certification costs. However, they offer better value through higher potency (you use less), superior taste, health benefits, and no harmful residues. The price difference is typically 20-40%, which is minimal considering the health benefits.",
-    category: "Pricing",
-    tags: ["pricing", "organic-cost", "value", "comparison"]
+    tags: ["shipping", "delivery", "free-shipping"]
   }
 ];
 
@@ -125,11 +53,8 @@ const FAQ = () => {
 
   const filteredFAQs = faqs.filter(faq => {
     const matchesSearch = faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         faq.answer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         faq.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-    
+                         faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || faq.category === selectedCategory;
-    
     return matchesSearch && matchesCategory;
   });
 
@@ -160,42 +85,41 @@ const FAQ = () => {
           </p>
         </div>
 
-        {/* Search and Filter */}
+        {/* Search */}
         <div className="mb-8">
-          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-            <div className="relative w-full lg:w-96">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <Input
-                type="text"
-                placeholder="Search questions..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            
-            <div className="flex flex-wrap gap-2">
-              <Button
-                variant={selectedCategory === 'All' ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedCategory('All')}
-                className={selectedCategory === 'All' ? "bg-orange-600 hover:bg-orange-700" : ""}
-              >
-                All
-              </Button>
-              {categories.map(category => (
-                <Button
-                  key={category}
-                  variant={selectedCategory === category ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                  className={selectedCategory === category ? "bg-orange-600 hover:bg-orange-700" : ""}
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
+          <div className="relative w-full lg:w-96 mx-auto">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Input
+              type="text"
+              placeholder="Search questions..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
           </div>
+        </div>
+
+        {/* Category Filters */}
+        <div className="flex flex-wrap gap-2 justify-center mb-8">
+          <Button
+            variant={selectedCategory === 'All' ? "default" : "outline"}
+            size="sm"
+            onClick={() => setSelectedCategory('All')}
+            className={selectedCategory === 'All' ? "bg-orange-600 hover:bg-orange-700" : ""}
+          >
+            All
+          </Button>
+          {categories.map(category => (
+            <Button
+              key={category}
+              variant={selectedCategory === category ? "default" : "outline"}
+              size="sm"
+              onClick={() => setSelectedCategory(category)}
+              className={selectedCategory === category ? "bg-orange-600 hover:bg-orange-700" : ""}
+            >
+              {category}
+            </Button>
+          ))}
         </div>
 
         {/* FAQ List */}
@@ -224,11 +148,9 @@ const FAQ = () => {
                             {faq.questionHindi}
                           </p>
                         )}
-                        <div className="flex items-center gap-2 mt-2">
-                          <Badge variant="secondary" className="text-xs">
-                            {faq.category}
-                          </Badge>
-                        </div>
+                        <Badge variant="secondary" className="text-xs mt-2">
+                          {faq.category}
+                        </Badge>
                       </div>
                       <div className="ml-4">
                         {expandedFAQ === faq.id ? (
@@ -243,16 +165,9 @@ const FAQ = () => {
                   {expandedFAQ === faq.id && (
                     <CardContent className="pt-0 pb-6">
                       <div className="border-t pt-4">
-                        <p className="text-gray-700 leading-relaxed mb-4">
+                        <p className="text-gray-700 leading-relaxed">
                           {faq.answer}
                         </p>
-                        <div className="flex flex-wrap gap-2">
-                          {faq.tags.map(tag => (
-                            <Badge key={tag} variant="outline" className="text-xs">
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
                       </div>
                     </CardContent>
                   )}
