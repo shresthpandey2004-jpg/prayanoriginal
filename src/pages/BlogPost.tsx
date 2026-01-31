@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { getBlogPostBySlug } from '@/data/blogPosts';
+import '@/styles/blog.css';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -92,12 +93,127 @@ const BlogPost = () => {
           </header>
 
           {/* Article Content */}
-          <div className="prose prose-lg max-w-none">
+          <div className="max-w-none">
             <div className="bg-white rounded-lg p-8 shadow-lg">
-              <div 
-                className="text-gray-700 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />') }}
-              />
+              <div className="blog-content">
+                {post.content.split('\n\n').map((section, index) => {
+                  const trimmedSection = section.trim();
+                  
+                  if (!trimmedSection) return null;
+                  
+                  // Handle main headings
+                  if (trimmedSection.startsWith('# ')) {
+                    return (
+                      <h1 key={index}>
+                        {trimmedSection.replace('# ', '')}
+                      </h1>
+                    );
+                  }
+                  
+                  // Handle sub headings
+                  if (trimmedSection.startsWith('## ')) {
+                    return (
+                      <h2 key={index}>
+                        {trimmedSection.replace('## ', '')}
+                      </h2>
+                    );
+                  }
+                  
+                  // Handle sub-sub headings
+                  if (trimmedSection.startsWith('### ')) {
+                    return (
+                      <h3 key={index}>
+                        {trimmedSection.replace('### ', '')}
+                      </h3>
+                    );
+                  }
+                  
+                  // Handle recipe boxes
+                  if (trimmedSection.includes('**Ingredients:**') || trimmedSection.includes('**Instructions:**')) {
+                    return (
+                      <div key={index} className="recipe-box">
+                        {trimmedSection.split('\n').map((line, lineIndex) => {
+                          if (line.startsWith('**') && line.endsWith('**')) {
+                            return (
+                              <h4 key={lineIndex} className="text-green-700 font-semibold text-lg mb-3">
+                                {line.replace(/\*\*/g, '')}
+                              </h4>
+                            );
+                          }
+                          if (line.startsWith('- ')) {
+                            return (
+                              <div key={lineIndex} className="ingredients-list">
+                                <ul>
+                                  <li>{line.replace('- ', '')}</li>
+                                </ul>
+                              </div>
+                            );
+                          }
+                          if (/^\d+\./.test(line)) {
+                            return (
+                              <ol key={lineIndex} className="instructions-list">
+                                <li>{line.replace(/^\d+\.\s/, '')}</li>
+                              </ol>
+                            );
+                          }
+                          return line ? <p key={lineIndex}>{line}</p> : null;
+                        })}
+                      </div>
+                    );
+                  }
+                  
+                  // Handle bullet points
+                  if (trimmedSection.includes('\n- ') || trimmedSection.startsWith('- ')) {
+                    const items = trimmedSection.split('\n').filter(item => item.trim().startsWith('- '));
+                    return (
+                      <ul key={index} className="space-y-2 mb-6">
+                        {items.map((item, i) => (
+                          <li key={i} className="flex items-start">
+                            <span className="text-orange-500 mr-3 mt-1">•</span>
+                            <span>{item.replace('- ', '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                  }
+                  
+                  // Handle numbered lists
+                  if (/^\d+\./.test(trimmedSection) || trimmedSection.includes('\n1.')) {
+                    const items = trimmedSection.split('\n').filter(item => /^\d+\./.test(item.trim()));
+                    return (
+                      <ol key={index} className="instructions-list space-y-3 mb-6">
+                        {items.map((item, i) => (
+                          <li key={i}>
+                            {item.replace(/^\d+\.\s/, '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}
+                          </li>
+                        ))}
+                      </ol>
+                    );
+                  }
+                  
+                  // Handle highlighted content
+                  if (trimmedSection.includes('**') && trimmedSection.length < 200) {
+                    return (
+                      <div key={index} className="blog-highlight">
+                        <p className="font-semibold text-orange-800 mb-0">
+                          {trimmedSection.replace(/\*\*(.*?)\*\*/g, '$1')}
+                        </p>
+                      </div>
+                    );
+                  }
+                  
+                  // Regular paragraphs with bold text support
+                  return (
+                    <p key={index} className="mb-4">
+                      {trimmedSection.split('**').map((part, i) => 
+                        i % 2 === 1 ? 
+                          <strong key={i} className="font-semibold text-gray-800">{part}</strong> : 
+                          part
+                      )}
+                    </p>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
