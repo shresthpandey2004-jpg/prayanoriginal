@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/layout/Header';
-import { getRecipeById, recipes } from '@/data/recipes';
+import { getRecipeBySlug, recipes } from '@/data/recipes';
 
 const RecipeDetailDebug = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,7 +12,7 @@ const RecipeDetailDebug = () => {
   console.log('🔍 DEBUG - All recipes:', recipes.length);
   console.log('🔍 DEBUG - Recipe IDs:', recipes.map(r => r.id));
   
-  const recipe = id ? getRecipeById(id) : null;
+  const recipe = id ? recipes.find(r => r.id === id) : null;
   
   console.log('🔍 DEBUG - Found recipe:', recipe);
 
@@ -57,15 +57,15 @@ const RecipeDetailDebug = () => {
           <div className="bg-green-100 p-4 rounded-lg">
             <h3 className="text-green-800 font-bold">✅ Recipe Found!</h3>
             <div className="mt-4 bg-white p-4 rounded border">
-              <h1 className="text-2xl font-bold text-gray-800 mb-2">{recipe.name}</h1>
-              <p className="text-orange-600 font-medium mb-2">{recipe.nameHindi}</p>
+              <h1 className="text-2xl font-bold text-gray-800 mb-2">{recipe.title}</h1>
+              <p className="text-orange-600 font-medium mb-2">{recipe.titleHindi}</p>
               <p className="text-gray-600 mb-4">{recipe.description}</p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-semibold mb-2">Recipe Details:</h4>
                   <ul className="text-sm space-y-1">
-                    <li><strong>Cooking Time:</strong> {recipe.cookingTime}</li>
+                    <li><strong>Total Time:</strong> {recipe.totalTime}</li>
                     <li><strong>Servings:</strong> {recipe.servings}</li>
                     <li><strong>Difficulty:</strong> {recipe.difficulty}</li>
                     <li><strong>Category:</strong> {recipe.category}</li>
@@ -76,7 +76,7 @@ const RecipeDetailDebug = () => {
                   <h4 className="font-semibold mb-2">Ingredients ({recipe.ingredients.length}):</h4>
                   <ul className="text-sm space-y-1">
                     {recipe.ingredients.map((ing, idx) => (
-                      <li key={idx}>{ing.name} - {ing.quantity}</li>
+                      <li key={idx}>{ing.name} - {ing.amount}</li>
                     ))}
                   </ul>
                 </div>
@@ -86,7 +86,7 @@ const RecipeDetailDebug = () => {
                 <h4 className="font-semibold mb-2">Instructions ({recipe.instructions.length}):</h4>
                 <ol className="text-sm space-y-1 list-decimal list-inside">
                   {recipe.instructions.map((inst, idx) => (
-                    <li key={idx}>{inst}</li>
+                    <li key={idx}>{inst.instruction}</li>
                   ))}
                 </ol>
               </div>

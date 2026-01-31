@@ -42,6 +42,10 @@ import FAQs from "./pages/FAQs";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import Blog from "./pages/Blog";
+// import BlogPost from "./pages/BlogPost";
+// import FAQ from "./pages/FAQ";
+// import SpiceGuide from "./pages/SpiceGuide";
+// import RecipeDetail from "./pages/RecipeDetail";
 import BulkOrders from "./pages/BulkOrders";
 import NotFound from "./pages/NotFound";
 import TestLoyalty from "./pages/TestLoyalty";
@@ -97,10 +101,13 @@ const App = () => {
                               <Route path="/loyalty" element={<Loyalty />} />
                               <Route path="/return-policy" element={<ReturnPolicy />} />
                               <Route path="/recipes" element={<Recipes />} />
+                              {/* <Route path="/recipe/:slug" element={<RecipeDetail />} /> */}
                               <Route path="/recipe/:id" element={<RecipeDetailSimple />} />
                               <Route path="/recipe-debug/:id" element={<RecipeDetailDebug />} />
                               <Route path="/simple-recipes" element={<SimpleRecipes />} />
                               <Route path="/simple-recipe/:id" element={<SimpleRecipeDetail />} />
+                              {/* <Route path="/spice-guide" element={<SpiceGuide />} /> */}
+                              {/* <Route path="/faq" element={<FAQ />} /> */}
                               <Route path="/about" element={<OurStory />} />
                               <Route path="/export" element={<ExportInquiry />} />
                               <Route path="/contact" element={<Contact />} />
@@ -109,6 +116,7 @@ const App = () => {
                               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                               <Route path="/terms-conditions" element={<TermsConditions />} />
                               <Route path="/blog" element={<Blog />} />
+                              {/* <Route path="/blog/:slug" element={<BlogPost />} /> */}
                               <Route path="/bulk-orders" element={<BulkOrders />} />
                               <Route path="/admin" element={<AdminDashboard />} />
                               <Route path="/admin/orders" element={<AdminOrdersPage />} />

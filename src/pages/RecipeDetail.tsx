@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
-  Clock, Users, ChefHat, Star, Heart, Share2, Print, 
+  Clock, Users, ChefHat, Star, Heart, Share2, Printer, 
   CheckCircle, Circle, Leaf, ShoppingCart, ArrowLeft 
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -203,7 +203,7 @@ const RecipeDetail = () => {
                 Share
               </Button>
               <Button variant="outline">
-                <Print className="w-4 h-4 mr-2" />
+                <Printer className="w-4 h-4 mr-2" />
                 Print
               </Button>
             </div>
