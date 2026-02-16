@@ -147,29 +147,32 @@ class RazorpayService {
     });
   }
 
-  // Mobile-optimized payment initiation
+  // Mobile-optimized payment initiation - SIMPLIFIED
   async initiatePayment(orderData: OrderData): Promise<{ success: boolean; error?: string; paymentId?: string; orderId?: string; signature?: string }> {
     try {
       console.log('🚀 Starting payment process...');
       console.log('📱 Device:', /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop');
       console.log('💰 Amount:', orderData.amount);
       
-      // Load Razorpay script
-      const scriptLoaded = await this.loadRazorpayScript();
-      if (!scriptLoaded) {
-        console.error('❌ Script loading failed');
-        return {
-          success: false,
-          error: 'Failed to load payment gateway. Please check your internet connection and try again.'
-        };
+      // Check if Razorpay is already loaded (from HTML script tag)
+      if (!window.Razorpay) {
+        console.log('⏳ Razorpay not loaded yet, loading dynamically...');
+        const scriptLoaded = await this.loadRazorpayScript();
+        if (!scriptLoaded) {
+          console.error('❌ Script loading failed');
+          return {
+            success: false,
+            error: 'Failed to load payment gateway. Please check your internet connection and try again.'
+          };
+        }
+        // Wait for initialization
+        await new Promise(resolve => setTimeout(resolve, 1500));
+      } else {
+        console.log('✅ Razorpay already loaded from HTML');
       }
 
-      // Wait longer for mobile browsers
-      console.log('⏳ Waiting for Razorpay to initialize...');
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
       if (!window.Razorpay) {
-        console.error('❌ Razorpay not available after waiting');
+        console.error('❌ Razorpay not available');
         return {
           success: false,
           error: 'Payment gateway not available. Please refresh the page and try again.'
@@ -179,26 +182,31 @@ class RazorpayService {
       console.log('✅ Razorpay ready, creating payment...');
 
       return new Promise((resolve) => {
-        const options: RazorpayOptions = {
+        // Simplified options for maximum mobile compatibility
+        const options: any = {
           key: this.keyId,
           amount: Math.round(orderData.amount * 100), // Convert to paise and round
           currency: orderData.currency,
           name: 'PRAYAN Masale',
           description: `Order #${orderData.orderId}`,
           image: 'https://prayan.shop/prayan-new-logo.png',
-          handler: (response: RazorpayResponse) => {
+          handler: (response: any) => {
             console.log('✅ Payment successful:', response);
             resolve({ 
               success: true, 
               paymentId: response.razorpay_payment_id,
-              orderId: response.razorpay_order_id,
-              signature: response.razorpay_signature
+              orderId: orderData.orderId, // Use our order ID
+              signature: response.razorpay_signature || ''
             });
           },
           prefill: {
             name: orderData.customerDetails.name,
             email: orderData.customerDetails.email || '',
             contact: orderData.customerDetails.phone,
+          },
+          notes: {
+            order_id: orderData.orderId,
+            address: orderData.customerDetails.address
           },
           theme: {
             color: '#ea580c',
@@ -211,26 +219,8 @@ class RazorpayService {
                 error: 'Payment cancelled. No money was charged.' 
               });
             },
-          },
-          // Simplified config for better mobile compatibility
-          config: {
-            display: {
-              blocks: {
-                banks: {
-                  name: 'All Payment Methods',
-                  instruments: [
-                    { method: 'upi' },
-                    { method: 'card' },
-                    { method: 'netbanking' },
-                    { method: 'wallet' }
-                  ]
-                }
-              },
-              sequence: ['block.banks'],
-              preferences: {
-                show_default_blocks: true
-              }
-            }
+            escape: true,
+            backdropclose: false
           }
         };
 
@@ -257,10 +247,28 @@ class RazorpayService {
           
         } catch (error: any) {
           console.error('❌ Error creating Razorpay instance:', error);
-          resolve({ 
-            success: false, 
-            error: `Failed to open payment: ${error.message || 'Unknown error'}. Please try again.` 
-          });
+          
+          // Emergency fallback - offer WhatsApp order
+          const useWhatsApp = confirm(
+            'Payment gateway issue detected. Would you like to place order via WhatsApp instead? (No payment needed now, pay on delivery)'
+          );
+          
+          if (useWhatsApp) {
+            // Redirect to WhatsApp with order details
+            const message = `Hi! I want to place an order:\n\nOrder ID: ${orderData.orderId}\nAmount: ₹${orderData.amount}\n\nCustomer: ${orderData.customerDetails.name}\nPhone: ${orderData.customerDetails.phone}\nAddress: ${orderData.customerDetails.address}`;
+            const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            
+            resolve({ 
+              success: false, 
+              error: 'Redirected to WhatsApp for order placement.' 
+            });
+          } else {
+            resolve({ 
+              success: false, 
+              error: `Failed to open payment: ${error.message || 'Unknown error'}. Please try again or use Cash on Delivery.` 
+            });
+          }
         }
       });
 
