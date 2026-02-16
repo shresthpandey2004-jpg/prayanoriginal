@@ -20,7 +20,6 @@ console.log('🌐 Auth Domain:', firebaseConfig.authDomain);
 
 // Instructions for testing
 console.log(`
-🧪 Firebase Integration Testing Steps:
 
 1. Open website: http://localhost:8080/
 2. Go to /test-auth page

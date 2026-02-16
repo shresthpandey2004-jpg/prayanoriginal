@@ -228,82 +228,98 @@ Delivery: ${deliveryInfo.isFree || isFreeShipping ? 'FREE 🎉' : `₹${delivery
       // Handle payment based on method
       if (customerDetails.paymentMethod === 'online') {
         // Process online payment with Razorpay - ONLY CREATE ORDER AFTER SUCCESSFUL PAYMENT
-        const paymentResult = await razorpayService.initiatePayment({
-          orderId,
-          amount: totalAmount,
-          currency: 'INR',
-          customerDetails: {
-            name: customerDetails.name,
-            email: customerDetails.email,
-            phone: customerDetails.phone,
-            address: `${customerDetails.address}, ${customerDetails.city}, ${customerDetails.pincode}`
-          },
-          items: items.map(item => ({
-            name: item.name,
-            quantity: item.quantity,
-            price: item.price
-          }))
-        });
+        console.log('💳 Initiating online payment...');
+        
+        try {
+          const paymentResult = await razorpayService.initiatePayment({
+            orderId,
+            amount: totalAmount,
+            currency: 'INR',
+            customerDetails: {
+              name: customerDetails.name,
+              email: customerDetails.email,
+              phone: customerDetails.phone,
+              address: `${customerDetails.address}, ${customerDetails.city}, ${customerDetails.pincode}`
+            },
+            items: items.map(item => ({
+              name: item.name,
+              quantity: item.quantity,
+              price: item.price
+            }))
+          });
 
-        if (!paymentResult.success) {
+          console.log('💳 Payment result:', paymentResult);
+
+          if (!paymentResult.success) {
+            console.error('❌ Payment failed:', paymentResult.error);
+            toast({
+              title: "Payment Failed",
+              description: paymentResult.error || "Payment was cancelled or failed. No money was charged. Please try again or use Cash on Delivery.",
+              variant: "destructive"
+            });
+            setIsLoading(false);
+            return;
+          }
+
+          // ✅ PAYMENT SUCCESSFUL - NOW CREATE ORDER
+          console.log('✅ Payment successful, creating order...', paymentResult);
+          
+          const order = {
+            id: orderId,
+            items: [...items],
+            customerDetails: { ...customerDetails },
+            totalPrice: totalAmount,
+            deliveryCharge: deliveryInfo.charge,
+            timestamp: new Date().toISOString(),
+            status: 'confirmed' as const,
+            paymentStatus: 'completed' as const,
+            paymentId: (paymentResult as any).paymentId || 'razorpay_payment',
+            paymentMethod: 'online',
+            statusHistory: [{
+              status: 'confirmed',
+              timestamp: new Date().toISOString(),
+              message: 'Order confirmed after successful payment',
+              location: 'Online'
+            }],
+            notifications: {
+              sms: true,
+              email: true,
+              whatsapp: true
+            }
+          };
+          
+          const success = await addOrder(order);
+          
+          // Redeem loyalty points if used
+          if (useLoyaltyPoints && loyaltyPointsToUse > 0 && user?.id) {
+            const redeemSuccess = redeemCustomPoints(loyaltyPointsToUse, loyaltyDiscount, orderId);
+            if (redeemSuccess) {
+              toast({
+                title: `${loyaltyPointsToUse} loyalty points redeemed! 💎`,
+                description: `You saved ₹${loyaltyDiscount} with your loyalty points.`,
+              });
+            }
+          }
+          
+          clearCart();
+
           toast({
-            title: "Payment Failed",
-            description: paymentResult.error || "Payment was cancelled or failed. No money was charged.",
+            title: "Payment Successful! 🎉",
+            description: `Order ID: ${orderId}. Payment of ₹${totalAmount} completed successfully.`,
+          });
+
+          navigate(`/order-confirmation/${orderId}`);
+          
+        } catch (paymentError: any) {
+          console.error('❌ Payment error:', paymentError);
+          toast({
+            title: "Payment Error",
+            description: paymentError.message || "Something went wrong with the payment. Please try again or use Cash on Delivery.",
             variant: "destructive"
           });
           setIsLoading(false);
           return;
         }
-
-        // ✅ PAYMENT SUCCESSFUL - NOW CREATE ORDER
-        console.log('Payment successful, creating order...', paymentResult);
-        
-        const order = {
-          id: orderId,
-          items: [...items],
-          customerDetails: { ...customerDetails },
-          totalPrice: totalAmount,
-          deliveryCharge: deliveryInfo.charge,
-          timestamp: new Date().toISOString(),
-          status: 'confirmed' as const,
-          paymentStatus: 'completed' as const,
-          paymentId: (paymentResult as any).paymentId || 'razorpay_payment',
-          paymentMethod: 'online',
-          statusHistory: [{
-            status: 'confirmed',
-            timestamp: new Date().toISOString(),
-            message: 'Order confirmed after successful payment',
-            location: 'Online'
-          }],
-          notifications: {
-            sms: true,
-            email: true,
-            whatsapp: true
-          }
-        };
-        
-        const success = await addOrder(order);
-        
-        // Redeem loyalty points if used
-        if (useLoyaltyPoints && loyaltyPointsToUse > 0 && user?.id) {
-          const redeemSuccess = redeemCustomPoints(loyaltyPointsToUse, loyaltyDiscount, orderId);
-          if (redeemSuccess) {
-            toast({
-              title: `${loyaltyPointsToUse} loyalty points redeemed! 💎`,
-              description: `You saved ₹${loyaltyDiscount} with your loyalty points.`,
-            });
-          }
-        }
-        
-        clearCart();
-
-        toast({
-          title: "Payment Successful! 🎉",
-          description: `Order ID: ${orderId}. Payment of ₹${totalAmount} completed successfully.`,
-        });
-
-        navigate(`/order-confirmation/${orderId}`);
-
       } else {
         // ✅ HANDLE COD ORDER - CREATE IMMEDIATELY (NO PAYMENT REQUIRED)
         console.log('Creating COD order...');
